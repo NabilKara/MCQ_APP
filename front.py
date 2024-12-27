@@ -52,7 +52,7 @@ class LoginFrame(ctk.CTkFrame):
         
         self.username_entry = ctk.CTkEntry(
             self,
-            placeholder_text="enter user-name",
+            placeholder_text="Enter username",
             width=200,
             fg_color="gray70"
         )
@@ -79,7 +79,7 @@ class ModeFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#1a237e")
         
-        title = ctk.CTkLabel(self, text="choose the mode:", text_color="white")
+        title = ctk.CTkLabel(self, text="Choose the mode:", text_color="white")
         title.pack(pady=(100, 20))
         
         self.mode_var = ctk.StringVar()
@@ -183,7 +183,7 @@ class WrongFrame(ctk.CTkFrame):
             self,
             text="The right answer is:",
             text_color="white"
-        ).pack(pady=10)
+        ).pack(pady=5)
         
         question = parent.questions[parent.current_question]
         correct_answer = question["options"][int(question["correct"]) - 1]
@@ -192,14 +192,14 @@ class WrongFrame(ctk.CTkFrame):
             self,
             text=correct_answer,
             text_color="white"
-        ).pack(pady=10)
+        ).pack(pady=1)
         
         ctk.CTkButton(
             self,
             text="Next",
             fg_color="green",
             command=lambda: parent.show_frame("quiz")
-        ).pack(pady=20)
+        ).pack(pady=20,padx=5)
 
 class ScoreFrame(ctk.CTkFrame):
     def __init__(self, parent):
@@ -217,7 +217,7 @@ class ScoreFrame(ctk.CTkFrame):
             text="Next",
             fg_color="green",
             command=self.save_and_return
-        ).pack(pady=20)
+        ).pack(pady=20,padx=5)
     
     def save_and_return(self):
         with open('users.json', 'r') as f:
@@ -262,7 +262,7 @@ class HistoryFrame(ctk.CTkFrame):
             text="Next",
             fg_color="green",
             command=lambda: parent.show_frame("mode")
-        ).pack(pady=20)
+        ).pack(pady=20,padx=5)
 
 if __name__ == "__main__":
     app = MCQApp()
