@@ -1,0 +1,116 @@
+{
+    "Python": [
+        {
+            "question": "What is the keyword used to define a function in Python?",
+            "options": [
+                "def",
+                "func",
+                "lambda"
+            ],
+            "answer": "def"
+        },
+        {
+            "question": "Which of the following is used to handle exceptions in Python?",
+            "options": [
+                "try-except",
+                "if-else",
+                "for-while"
+            ],
+            "answer": "try-except"
+        },
+        {
+            "question": "What is the output of: print(type('hello'))?",
+            "options": [
+                "<class 'int'>",
+                "<class 'string'>",
+                "<class 'str'>"
+            ],
+            "answer": "<class 'str'>"
+        },
+        {
+            "question": "What is the output of: print(type([1, 2, 3]))?",
+            "options": [
+                "<class 'list'>",
+                "<class 'tuple'>",
+                "<class 'dict'>"
+            ],
+            "answer": "<class 'list'>"
+        },
+        {
+            "question": "Which of the following is NOT a valid Python variable name?",
+            "options": [
+                "_variable",
+                "2variable",
+                "variable_name"
+            ],
+            "answer": "2variable"
+        },
+        {
+            "question": "What does len([10, 20, 30]) return?",
+            "options": [
+                "2",
+                "3",
+                "30"
+            ],
+            "answer": "3"
+        }
+    ],
+    "Networking": [
+        {
+            "question": "What does the acronym 'IP' stand for?",
+            "options": [
+                "Internet Protocol",
+                "Interconnection Protocol",
+                "Internet Package"
+            ],
+            "answer": "Internet Protocol"
+        },
+        {
+            "question": "Which protocol is used to transfer files over the internet?",
+            "options": [
+                "HTTP",
+                "FTP",
+                "SMTP"
+            ],
+            "answer": "FTP"
+        },
+        {
+            "question": "What is the default port number for HTTPS?",
+            "options": [
+                "80",
+                "443",
+                "22"
+            ],
+            "answer": "443"
+        }
+    ],
+    "Computer Science": [
+        {
+            "question": "What is the time complexity of binary search?",
+            "options": [
+                "O(n)",
+                "O(log n)",
+                "O(n^2)"
+            ],
+            "answer": "O(log n)"
+        },
+        {
+            "question": "Which data structure is LIFO (Last In, First Out)?",
+            "options": [
+                "Queue",
+                "Stack",
+                "Heap"
+            ],
+            "answer": "Stack"
+        },
+        {
+            "question": "Which sorting algorithm is the most efficient for large datasets?",
+            "options": [
+                "Bubble Sort",
+                "Quick Sort",
+                "Insertion Sort"
+            ],
+            "answer": "Quick Sort"
+        }
+    ]
+}
