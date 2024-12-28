@@ -1,1358 +1,175 @@
 {
-    "Python": [
-        {
-            "question": "Sample Python question 1?",
-            "options": [
-                "Option A1",
-                "Option B1",
-                "Option C1"
-            ],
-            "answer": "Option A1"
-        },
-        {
-            "question": "Sample Python question 2?",
-            "options": [
-                "Option A2",
-                "Option B2",
-                "Option C2"
-            ],
-            "answer": "Option A2"
-        },
-        {
-            "question": "Sample Python question 3?",
-            "options": [
-                "Option A3",
-                "Option B3",
-                "Option C3"
-            ],
-            "answer": "Option A3"
-        },
-        {
-            "question": "Sample Python question 4?",
-            "options": [
-                "Option A4",
-                "Option B4",
-                "Option C4"
-            ],
-            "answer": "Option A4"
-        },
-        {
-            "question": "Sample Python question 5?",
-            "options": [
-                "Option A5",
-                "Option B5",
-                "Option C5"
-            ],
-            "answer": "Option A5"
-        },
-        {
-            "question": "Sample Python question 6?",
-            "options": [
-                "Option A6",
-                "Option B6",
-                "Option C6"
-            ],
-            "answer": "Option A6"
-        },
-        {
-            "question": "Sample Python question 7?",
-            "options": [
-                "Option A7",
-                "Option B7",
-                "Option C7"
-            ],
-            "answer": "Option A7"
-        },
-        {
-            "question": "Sample Python question 8?",
-            "options": [
-                "Option A8",
-                "Option B8",
-                "Option C8"
-            ],
-            "answer": "Option A8"
-        },
-        {
-            "question": "Sample Python question 9?",
-            "options": [
-                "Option A9",
-                "Option B9",
-                "Option C9"
-            ],
-            "answer": "Option A9"
-        },
-        {
-            "question": "Sample Python question 10?",
-            "options": [
-                "Option A10",
-                "Option B10",
-                "Option C10"
-            ],
-            "answer": "Option A10"
-        },
-        {
-            "question": "Sample Python question 11?",
-            "options": [
-                "Option A11",
-                "Option B11",
-                "Option C11"
-            ],
-            "answer": "Option A11"
-        },
-        {
-            "question": "Sample Python question 12?",
-            "options": [
-                "Option A12",
-                "Option B12",
-                "Option C12"
-            ],
-            "answer": "Option A12"
-        },
-        {
-            "question": "Sample Python question 13?",
-            "options": [
-                "Option A13",
-                "Option B13",
-                "Option C13"
-            ],
-            "answer": "Option A13"
-        },
-        {
-            "question": "Sample Python question 14?",
-            "options": [
-                "Option A14",
-                "Option B14",
-                "Option C14"
-            ],
-            "answer": "Option A14"
-        },
-        {
-            "question": "Sample Python question 15?",
-            "options": [
-                "Option A15",
-                "Option B15",
-                "Option C15"
-            ],
-            "answer": "Option A15"
-        },
-        {
-            "question": "Sample Python question 16?",
-            "options": [
-                "Option A16",
-                "Option B16",
-                "Option C16"
-            ],
-            "answer": "Option A16"
-        },
-        {
-            "question": "Sample Python question 17?",
-            "options": [
-                "Option A17",
-                "Option B17",
-                "Option C17"
-            ],
-            "answer": "Option A17"
-        },
-        {
-            "question": "Sample Python question 18?",
-            "options": [
-                "Option A18",
-                "Option B18",
-                "Option C18"
-            ],
-            "answer": "Option A18"
-        },
-        {
-            "question": "Sample Python question 19?",
-            "options": [
-                "Option A19",
-                "Option B19",
-                "Option C19"
-            ],
-            "answer": "Option A19"
-        },
-        {
-            "question": "Sample Python question 20?",
-            "options": [
-                "Option A20",
-                "Option B20",
-                "Option C20"
-            ],
-            "answer": "Option A20"
-        },
-        {
-            "question": "Sample Python question 21?",
-            "options": [
-                "Option A21",
-                "Option B21",
-                "Option C21"
-            ],
-            "answer": "Option A21"
-        },
-        {
-            "question": "Sample Python question 22?",
-            "options": [
-                "Option A22",
-                "Option B22",
-                "Option C22"
-            ],
-            "answer": "Option A22"
-        },
-        {
-            "question": "Sample Python question 23?",
-            "options": [
-                "Option A23",
-                "Option B23",
-                "Option C23"
-            ],
-            "answer": "Option A23"
-        },
-        {
-            "question": "Sample Python question 24?",
-            "options": [
-                "Option A24",
-                "Option B24",
-                "Option C24"
-            ],
-            "answer": "Option A24"
-        },
-        {
-            "question": "Sample Python question 25?",
-            "options": [
-                "Option A25",
-                "Option B25",
-                "Option C25"
-            ],
-            "answer": "Option A25"
-        },
-        {
-            "question": "Sample Python question 26?",
-            "options": [
-                "Option A26",
-                "Option B26",
-                "Option C26"
-            ],
-            "answer": "Option A26"
-        },
-        {
-            "question": "Sample Python question 27?",
-            "options": [
-                "Option A27",
-                "Option B27",
-                "Option C27"
-            ],
-            "answer": "Option A27"
-        },
-        {
-            "question": "Sample Python question 28?",
-            "options": [
-                "Option A28",
-                "Option B28",
-                "Option C28"
-            ],
-            "answer": "Option A28"
-        },
-        {
-            "question": "Sample Python question 29?",
-            "options": [
-                "Option A29",
-                "Option B29",
-                "Option C29"
-            ],
-            "answer": "Option A29"
-        },
-        {
-            "question": "Sample Python question 30?",
-            "options": [
-                "Option A30",
-                "Option B30",
-                "Option C30"
-            ],
-            "answer": "Option A30"
-        },
-        {
-            "question": "Sample Python question 31?",
-            "options": [
-                "Option A31",
-                "Option B31",
-                "Option C31"
-            ],
-            "answer": "Option A31"
-        },
-        {
-            "question": "Sample Python question 32?",
-            "options": [
-                "Option A32",
-                "Option B32",
-                "Option C32"
-            ],
-            "answer": "Option A32"
-        },
-        {
-            "question": "Sample Python question 33?",
-            "options": [
-                "Option A33",
-                "Option B33",
-                "Option C33"
-            ],
-            "answer": "Option A33"
-        },
-        {
-            "question": "Sample Python question 34?",
-            "options": [
-                "Option A34",
-                "Option B34",
-                "Option C34"
-            ],
-            "answer": "Option A34"
-        },
-        {
-            "question": "Sample Python question 35?",
-            "options": [
-                "Option A35",
-                "Option B35",
-                "Option C35"
-            ],
-            "answer": "Option A35"
-        },
-        {
-            "question": "Sample Python question 36?",
-            "options": [
-                "Option A36",
-                "Option B36",
-                "Option C36"
-            ],
-            "answer": "Option A36"
-        },
-        {
-            "question": "Sample Python question 37?",
-            "options": [
-                "Option A37",
-                "Option B37",
-                "Option C37"
-            ],
-            "answer": "Option A37"
-        },
-        {
-            "question": "Sample Python question 38?",
-            "options": [
-                "Option A38",
-                "Option B38",
-                "Option C38"
-            ],
-            "answer": "Option A38"
-        },
-        {
-            "question": "Sample Python question 39?",
-            "options": [
-                "Option A39",
-                "Option B39",
-                "Option C39"
-            ],
-            "answer": "Option A39"
-        },
-        {
-            "question": "Sample Python question 40?",
-            "options": [
-                "Option A40",
-                "Option B40",
-                "Option C40"
-            ],
-            "answer": "Option A40"
-        },
-        {
-            "question": "Sample Python question 41?",
-            "options": [
-                "Option A41",
-                "Option B41",
-                "Option C41"
-            ],
-            "answer": "Option A41"
-        },
-        {
-            "question": "Sample Python question 42?",
-            "options": [
-                "Option A42",
-                "Option B42",
-                "Option C42"
-            ],
-            "answer": "Option A42"
-        },
-        {
-            "question": "Sample Python question 43?",
-            "options": [
-                "Option A43",
-                "Option B43",
-                "Option C43"
-            ],
-            "answer": "Option A43"
-        },
-        {
-            "question": "Sample Python question 44?",
-            "options": [
-                "Option A44",
-                "Option B44",
-                "Option C44"
-            ],
-            "answer": "Option A44"
-        },
-        {
-            "question": "Sample Python question 45?",
-            "options": [
-                "Option A45",
-                "Option B45",
-                "Option C45"
-            ],
-            "answer": "Option A45"
-        },
-        {
-            "question": "Sample Python question 46?",
-            "options": [
-                "Option A46",
-                "Option B46",
-                "Option C46"
-            ],
-            "answer": "Option A46"
-        },
-        {
-            "question": "Sample Python question 47?",
-            "options": [
-                "Option A47",
-                "Option B47",
-                "Option C47"
-            ],
-            "answer": "Option A47"
-        },
-        {
-            "question": "Sample Python question 48?",
-            "options": [
-                "Option A48",
-                "Option B48",
-                "Option C48"
-            ],
-            "answer": "Option A48"
-        },
-        {
-            "question": "Sample Python question 49?",
-            "options": [
-                "Option A49",
-                "Option B49",
-                "Option C49"
-            ],
-            "answer": "Option A49"
-        },
-        {
-            "question": "Sample Python question 50?",
-            "options": [
-                "Option A50",
-                "Option B50",
-                "Option C50"
-            ],
-            "answer": "Option A50"
-        }
-    ],
-    "Networking": [
-        {
-            "question": "Sample Networking question 1?",
-            "options": [
-                "Option A1",
-                "Option B1",
-                "Option C1"
-            ],
-            "answer": "Option A1"
-        },
-        {
-            "question": "Sample Networking question 2?",
-            "options": [
-                "Option A2",
-                "Option B2",
-                "Option C2"
-            ],
-            "answer": "Option A2"
-        },
-        {
-            "question": "Sample Networking question 3?",
-            "options": [
-                "Option A3",
-                "Option B3",
-                "Option C3"
-            ],
-            "answer": "Option A3"
-        },
-        {
-            "question": "Sample Networking question 4?",
-            "options": [
-                "Option A4",
-                "Option B4",
-                "Option C4"
-            ],
-            "answer": "Option A4"
-        },
-        {
-            "question": "Sample Networking question 5?",
-            "options": [
-                "Option A5",
-                "Option B5",
-                "Option C5"
-            ],
-            "answer": "Option A5"
-        },
-        {
-            "question": "Sample Networking question 6?",
-            "options": [
-                "Option A6",
-                "Option B6",
-                "Option C6"
-            ],
-            "answer": "Option A6"
-        },
-        {
-            "question": "Sample Networking question 7?",
-            "options": [
-                "Option A7",
-                "Option B7",
-                "Option C7"
-            ],
-            "answer": "Option A7"
-        },
-        {
-            "question": "Sample Networking question 8?",
-            "options": [
-                "Option A8",
-                "Option B8",
-                "Option C8"
-            ],
-            "answer": "Option A8"
-        },
-        {
-            "question": "Sample Networking question 9?",
-            "options": [
-                "Option A9",
-                "Option B9",
-                "Option C9"
-            ],
-            "answer": "Option A9"
-        },
-        {
-            "question": "Sample Networking question 10?",
-            "options": [
-                "Option A10",
-                "Option B10",
-                "Option C10"
-            ],
-            "answer": "Option A10"
-        },
-        {
-            "question": "Sample Networking question 11?",
-            "options": [
-                "Option A11",
-                "Option B11",
-                "Option C11"
-            ],
-            "answer": "Option A11"
-        },
-        {
-            "question": "Sample Networking question 12?",
-            "options": [
-                "Option A12",
-                "Option B12",
-                "Option C12"
-            ],
-            "answer": "Option A12"
-        },
-        {
-            "question": "Sample Networking question 13?",
-            "options": [
-                "Option A13",
-                "Option B13",
-                "Option C13"
-            ],
-            "answer": "Option A13"
-        },
-        {
-            "question": "Sample Networking question 14?",
-            "options": [
-                "Option A14",
-                "Option B14",
-                "Option C14"
-            ],
-            "answer": "Option A14"
-        },
-        {
-            "question": "Sample Networking question 15?",
-            "options": [
-                "Option A15",
-                "Option B15",
-                "Option C15"
-            ],
-            "answer": "Option A15"
-        },
-        {
-            "question": "Sample Networking question 16?",
-            "options": [
-                "Option A16",
-                "Option B16",
-                "Option C16"
-            ],
-            "answer": "Option A16"
-        },
-        {
-            "question": "Sample Networking question 17?",
-            "options": [
-                "Option A17",
-                "Option B17",
-                "Option C17"
-            ],
-            "answer": "Option A17"
-        },
-        {
-            "question": "Sample Networking question 18?",
-            "options": [
-                "Option A18",
-                "Option B18",
-                "Option C18"
-            ],
-            "answer": "Option A18"
-        },
-        {
-            "question": "Sample Networking question 19?",
-            "options": [
-                "Option A19",
-                "Option B19",
-                "Option C19"
-            ],
-            "answer": "Option A19"
-        },
-        {
-            "question": "Sample Networking question 20?",
-            "options": [
-                "Option A20",
-                "Option B20",
-                "Option C20"
-            ],
-            "answer": "Option A20"
-        },
-        {
-            "question": "Sample Networking question 21?",
-            "options": [
-                "Option A21",
-                "Option B21",
-                "Option C21"
-            ],
-            "answer": "Option A21"
-        },
-        {
-            "question": "Sample Networking question 22?",
-            "options": [
-                "Option A22",
-                "Option B22",
-                "Option C22"
-            ],
-            "answer": "Option A22"
-        },
-        {
-            "question": "Sample Networking question 23?",
-            "options": [
-                "Option A23",
-                "Option B23",
-                "Option C23"
-            ],
-            "answer": "Option A23"
-        },
-        {
-            "question": "Sample Networking question 24?",
-            "options": [
-                "Option A24",
-                "Option B24",
-                "Option C24"
-            ],
-            "answer": "Option A24"
-        },
-        {
-            "question": "Sample Networking question 25?",
-            "options": [
-                "Option A25",
-                "Option B25",
-                "Option C25"
-            ],
-            "answer": "Option A25"
-        },
-        {
-            "question": "Sample Networking question 26?",
-            "options": [
-                "Option A26",
-                "Option B26",
-                "Option C26"
-            ],
-            "answer": "Option A26"
-        },
-        {
-            "question": "Sample Networking question 27?",
-            "options": [
-                "Option A27",
-                "Option B27",
-                "Option C27"
-            ],
-            "answer": "Option A27"
-        },
-        {
-            "question": "Sample Networking question 28?",
-            "options": [
-                "Option A28",
-                "Option B28",
-                "Option C28"
-            ],
-            "answer": "Option A28"
-        },
-        {
-            "question": "Sample Networking question 29?",
-            "options": [
-                "Option A29",
-                "Option B29",
-                "Option C29"
-            ],
-            "answer": "Option A29"
-        },
-        {
-            "question": "Sample Networking question 30?",
-            "options": [
-                "Option A30",
-                "Option B30",
-                "Option C30"
-            ],
-            "answer": "Option A30"
-        },
-        {
-            "question": "Sample Networking question 31?",
-            "options": [
-                "Option A31",
-                "Option B31",
-                "Option C31"
-            ],
-            "answer": "Option A31"
-        },
-        {
-            "question": "Sample Networking question 32?",
-            "options": [
-                "Option A32",
-                "Option B32",
-                "Option C32"
-            ],
-            "answer": "Option A32"
-        },
-        {
-            "question": "Sample Networking question 33?",
-            "options": [
-                "Option A33",
-                "Option B33",
-                "Option C33"
-            ],
-            "answer": "Option A33"
-        },
-        {
-            "question": "Sample Networking question 34?",
-            "options": [
-                "Option A34",
-                "Option B34",
-                "Option C34"
-            ],
-            "answer": "Option A34"
-        },
-        {
-            "question": "Sample Networking question 35?",
-            "options": [
-                "Option A35",
-                "Option B35",
-                "Option C35"
-            ],
-            "answer": "Option A35"
-        },
-        {
-            "question": "Sample Networking question 36?",
-            "options": [
-                "Option A36",
-                "Option B36",
-                "Option C36"
-            ],
-            "answer": "Option A36"
-        },
-        {
-            "question": "Sample Networking question 37?",
-            "options": [
-                "Option A37",
-                "Option B37",
-                "Option C37"
-            ],
-            "answer": "Option A37"
-        },
-        {
-            "question": "Sample Networking question 38?",
-            "options": [
-                "Option A38",
-                "Option B38",
-                "Option C38"
-            ],
-            "answer": "Option A38"
-        },
-        {
-            "question": "Sample Networking question 39?",
-            "options": [
-                "Option A39",
-                "Option B39",
-                "Option C39"
-            ],
-            "answer": "Option A39"
-        },
-        {
-            "question": "Sample Networking question 40?",
-            "options": [
-                "Option A40",
-                "Option B40",
-                "Option C40"
-            ],
-            "answer": "Option A40"
-        },
-        {
-            "question": "Sample Networking question 41?",
-            "options": [
-                "Option A41",
-                "Option B41",
-                "Option C41"
-            ],
-            "answer": "Option A41"
-        },
-        {
-            "question": "Sample Networking question 42?",
-            "options": [
-                "Option A42",
-                "Option B42",
-                "Option C42"
-            ],
-            "answer": "Option A42"
-        },
-        {
-            "question": "Sample Networking question 43?",
-            "options": [
-                "Option A43",
-                "Option B43",
-                "Option C43"
-            ],
-            "answer": "Option A43"
-        },
-        {
-            "question": "Sample Networking question 44?",
-            "options": [
-                "Option A44",
-                "Option B44",
-                "Option C44"
-            ],
-            "answer": "Option A44"
-        },
-        {
-            "question": "Sample Networking question 45?",
-            "options": [
-                "Option A45",
-                "Option B45",
-                "Option C45"
-            ],
-            "answer": "Option A45"
-        },
-        {
-            "question": "Sample Networking question 46?",
-            "options": [
-                "Option A46",
-                "Option B46",
-                "Option C46"
-            ],
-            "answer": "Option A46"
-        },
-        {
-            "question": "Sample Networking question 47?",
-            "options": [
-                "Option A47",
-                "Option B47",
-                "Option C47"
-            ],
-            "answer": "Option A47"
-        },
-        {
-            "question": "Sample Networking question 48?",
-            "options": [
-                "Option A48",
-                "Option B48",
-                "Option C48"
-            ],
-            "answer": "Option A48"
-        },
-        {
-            "question": "Sample Networking question 49?",
-            "options": [
-                "Option A49",
-                "Option B49",
-                "Option C49"
-            ],
-            "answer": "Option A49"
-        },
-        {
-            "question": "Sample Networking question 50?",
-            "options": [
-                "Option A50",
-                "Option B50",
-                "Option C50"
-            ],
-            "answer": "Option A50"
-        }
-    ],
-    "Computer Science": [
-        {
-            "question": "Sample Computer Science question 1?",
-            "options": [
-                "Option A1",
-                "Option B1",
-                "Option C1"
-            ],
-            "answer": "Option A1"
-        },
-        {
-            "question": "Sample Computer Science question 2?",
-            "options": [
-                "Option A2",
-                "Option B2",
-                "Option C2"
-            ],
-            "answer": "Option A2"
-        },
-        {
-            "question": "Sample Computer Science question 3?",
-            "options": [
-                "Option A3",
-                "Option B3",
-                "Option C3"
-            ],
-            "answer": "Option A3"
-        },
-        {
-            "question": "Sample Computer Science question 4?",
-            "options": [
-                "Option A4",
-                "Option B4",
-                "Option C4"
-            ],
-            "answer": "Option A4"
-        },
-        {
-            "question": "Sample Computer Science question 5?",
-            "options": [
-                "Option A5",
-                "Option B5",
-                "Option C5"
-            ],
-            "answer": "Option A5"
-        },
-        {
-            "question": "Sample Computer Science question 6?",
-            "options": [
-                "Option A6",
-                "Option B6",
-                "Option C6"
-            ],
-            "answer": "Option A6"
-        },
-        {
-            "question": "Sample Computer Science question 7?",
-            "options": [
-                "Option A7",
-                "Option B7",
-                "Option C7"
-            ],
-            "answer": "Option A7"
-        },
-        {
-            "question": "Sample Computer Science question 8?",
-            "options": [
-                "Option A8",
-                "Option B8",
-                "Option C8"
-            ],
-            "answer": "Option A8"
-        },
-        {
-            "question": "Sample Computer Science question 9?",
-            "options": [
-                "Option A9",
-                "Option B9",
-                "Option C9"
-            ],
-            "answer": "Option A9"
-        },
-        {
-            "question": "Sample Computer Science question 10?",
-            "options": [
-                "Option A10",
-                "Option B10",
-                "Option C10"
-            ],
-            "answer": "Option A10"
-        },
-        {
-            "question": "Sample Computer Science question 11?",
-            "options": [
-                "Option A11",
-                "Option B11",
-                "Option C11"
-            ],
-            "answer": "Option A11"
-        },
-        {
-            "question": "Sample Computer Science question 12?",
-            "options": [
-                "Option A12",
-                "Option B12",
-                "Option C12"
-            ],
-            "answer": "Option A12"
-        },
-        {
-            "question": "Sample Computer Science question 13?",
-            "options": [
-                "Option A13",
-                "Option B13",
-                "Option C13"
-            ],
-            "answer": "Option A13"
-        },
-        {
-            "question": "Sample Computer Science question 14?",
-            "options": [
-                "Option A14",
-                "Option B14",
-                "Option C14"
-            ],
-            "answer": "Option A14"
-        },
-        {
-            "question": "Sample Computer Science question 15?",
-            "options": [
-                "Option A15",
-                "Option B15",
-                "Option C15"
-            ],
-            "answer": "Option A15"
-        },
-        {
-            "question": "Sample Computer Science question 16?",
-            "options": [
-                "Option A16",
-                "Option B16",
-                "Option C16"
-            ],
-            "answer": "Option A16"
-        },
-        {
-            "question": "Sample Computer Science question 17?",
-            "options": [
-                "Option A17",
-                "Option B17",
-                "Option C17"
-            ],
-            "answer": "Option A17"
-        },
-        {
-            "question": "Sample Computer Science question 18?",
-            "options": [
-                "Option A18",
-                "Option B18",
-                "Option C18"
-            ],
-            "answer": "Option A18"
-        },
-        {
-            "question": "Sample Computer Science question 19?",
-            "options": [
-                "Option A19",
-                "Option B19",
-                "Option C19"
-            ],
-            "answer": "Option A19"
-        },
-        {
-            "question": "Sample Computer Science question 20?",
-            "options": [
-                "Option A20",
-                "Option B20",
-                "Option C20"
-            ],
-            "answer": "Option A20"
-        },
-        {
-            "question": "Sample Computer Science question 21?",
-            "options": [
-                "Option A21",
-                "Option B21",
-                "Option C21"
-            ],
-            "answer": "Option A21"
-        },
-        {
-            "question": "Sample Computer Science question 22?",
-            "options": [
-                "Option A22",
-                "Option B22",
-                "Option C22"
-            ],
-            "answer": "Option A22"
-        },
-        {
-            "question": "Sample Computer Science question 23?",
-            "options": [
-                "Option A23",
-                "Option B23",
-                "Option C23"
-            ],
-            "answer": "Option A23"
-        },
-        {
-            "question": "Sample Computer Science question 24?",
-            "options": [
-                "Option A24",
-                "Option B24",
-                "Option C24"
-            ],
-            "answer": "Option A24"
-        },
-        {
-            "question": "Sample Computer Science question 25?",
-            "options": [
-                "Option A25",
-                "Option B25",
-                "Option C25"
-            ],
-            "answer": "Option A25"
-        },
-        {
-            "question": "Sample Computer Science question 26?",
-            "options": [
-                "Option A26",
-                "Option B26",
-                "Option C26"
-            ],
-            "answer": "Option A26"
-        },
-        {
-            "question": "Sample Computer Science question 27?",
-            "options": [
-                "Option A27",
-                "Option B27",
-                "Option C27"
-            ],
-            "answer": "Option A27"
-        },
-        {
-            "question": "Sample Computer Science question 28?",
-            "options": [
-                "Option A28",
-                "Option B28",
-                "Option C28"
-            ],
-            "answer": "Option A28"
-        },
-        {
-            "question": "Sample Computer Science question 29?",
-            "options": [
-                "Option A29",
-                "Option B29",
-                "Option C29"
-            ],
-            "answer": "Option A29"
-        },
-        {
-            "question": "Sample Computer Science question 30?",
-            "options": [
-                "Option A30",
-                "Option B30",
-                "Option C30"
-            ],
-            "answer": "Option A30"
-        },
-        {
-            "question": "Sample Computer Science question 31?",
-            "options": [
-                "Option A31",
-                "Option B31",
-                "Option C31"
-            ],
-            "answer": "Option A31"
-        },
-        {
-            "question": "Sample Computer Science question 32?",
-            "options": [
-                "Option A32",
-                "Option B32",
-                "Option C32"
-            ],
-            "answer": "Option A32"
-        },
-        {
-            "question": "Sample Computer Science question 33?",
-            "options": [
-                "Option A33",
-                "Option B33",
-                "Option C33"
-            ],
-            "answer": "Option A33"
-        },
-        {
-            "question": "Sample Computer Science question 34?",
-            "options": [
-                "Option A34",
-                "Option B34",
-                "Option C34"
-            ],
-            "answer": "Option A34"
-        },
-        {
-            "question": "Sample Computer Science question 35?",
-            "options": [
-                "Option A35",
-                "Option B35",
-                "Option C35"
-            ],
-            "answer": "Option A35"
-        },
-        {
-            "question": "Sample Computer Science question 36?",
-            "options": [
-                "Option A36",
-                "Option B36",
-                "Option C36"
-            ],
-            "answer": "Option A36"
-        },
-        {
-            "question": "Sample Computer Science question 37?",
-            "options": [
-                "Option A37",
-                "Option B37",
-                "Option C37"
-            ],
-            "answer": "Option A37"
-        },
-        {
-            "question": "Sample Computer Science question 38?",
-            "options": [
-                "Option A38",
-                "Option B38",
-                "Option C38"
-            ],
-            "answer": "Option A38"
-        },
-        {
-            "question": "Sample Computer Science question 39?",
-            "options": [
-                "Option A39",
-                "Option B39",
-                "Option C39"
-            ],
-            "answer": "Option A39"
-        },
-        {
-            "question": "Sample Computer Science question 40?",
-            "options": [
-                "Option A40",
-                "Option B40",
-                "Option C40"
-            ],
-            "answer": "Option A40"
-        },
-        {
-            "question": "Sample Computer Science question 41?",
-            "options": [
-                "Option A41",
-                "Option B41",
-                "Option C41"
-            ],
-            "answer": "Option A41"
-        },
-        {
-            "question": "Sample Computer Science question 42?",
-            "options": [
-                "Option A42",
-                "Option B42",
-                "Option C42"
-            ],
-            "answer": "Option A42"
-        },
-        {
-            "question": "Sample Computer Science question 43?",
-            "options": [
-                "Option A43",
-                "Option B43",
-                "Option C43"
-            ],
-            "answer": "Option A43"
-        },
-        {
-            "question": "Sample Computer Science question 44?",
-            "options": [
-                "Option A44",
-                "Option B44",
-                "Option C44"
-            ],
-            "answer": "Option A44"
-        },
-        {
-            "question": "Sample Computer Science question 45?",
-            "options": [
-                "Option A45",
-                "Option B45",
-                "Option C45"
-            ],
-            "answer": "Option A45"
-        },
-        {
-            "question": "Sample Computer Science question 46?",
-            "options": [
-                "Option A46",
-                "Option B46",
-                "Option C46"
-            ],
-            "answer": "Option A46"
-        },
-        {
-            "question": "Sample Computer Science question 47?",
-            "options": [
-                "Option A47",
-                "Option B47",
-                "Option C47"
-            ],
-            "answer": "Option A47"
-        },
-        {
-            "question": "Sample Computer Science question 48?",
-            "options": [
-                "Option A48",
-                "Option B48",
-                "Option C48"
-            ],
-            "answer": "Option A48"
-        },
-        {
-            "question": "Sample Computer Science question 49?",
-            "options": [
-                "Option A49",
-                "Option B49",
-                "Option C49"
-            ],
-            "answer": "Option A49"
-        },
-        {
-            "question": "Sample Computer Science question 50?",
-            "options": [
-                "Option A50",
-                "Option B50",
-                "Option C50"
-            ],
-            "answer": "Option A50"
-        }
-    ]
+    "categories": {
+        "Python": [
+            {
+                "question": "What is the output of the following code?\nprint(type(3.14))",
+                "options": [
+                    "int",
+                    "float",
+                    "str",
+                    "list"
+                ],
+                "answer": "float",
+                "difficulty": "easy"
+            },
+            {
+                "question": "Which of the following methods is used to add an element to a list?",
+                "options": [
+                    "append()",
+                    "add()",
+                    "insert()",
+                    "push()"
+                ],
+                "answer": "append()",
+                "difficulty": "easy"
+            },
+            {
+                "question": "What keyword is used to define a function in Python?",
+                "options": [
+                    "function",
+                    "def",
+                    "lambda",
+                    "func"
+                ],
+                "answer": "def",
+                "difficulty": "easy"
+            },
+            {
+                "question": "What is the output of the following code?\nx = [1, 2, 3]\nprint(x[1])",
+                "options": [
+                    "1",
+                    "2",
+                    "3",
+                    "IndexError"
+                ],
+                "answer": "2",
+                "difficulty": "easy"
+            },
+            {
+                "question": "Which of the following is used to handle exceptions in Python?",
+                "options": [
+                    "try",
+                    "catch",
+                    "handle",
+                    "except"
+                ],
+                "answer": "try",
+                "difficulty": "medium"
+            }
+        ],
+        "Networking": [
+            {
+                "question": "Which protocol is used to send email?",
+                "options": [
+                    "SMTP",
+                    "HTTP",
+                    "FTP",
+                    "DNS"
+                ],
+                "answer": "SMTP",
+                "difficulty": "easy"
+            },
+            {
+                "question": "What does the IP in IP address stand for?",
+                "options": [
+                    "Internet Protocol",
+                    "Internet Packet",
+                    "Internal Protocol",
+                    "Information Protocol"
+                ],
+                "answer": "Internet Protocol",
+                "difficulty": "easy"
+            },
+            {
+                "question": "Which layer of the OSI model handles routing?",
+                "options": [
+                    "Network",
+                    "Transport",
+                    "Data Link",
+                    "Session"
+                ],
+                "answer": "Network",
+                "difficulty": "medium"
+            },
+            {
+                "question": "What is the default port number for HTTP?",
+                "options": [
+                    "80",
+                    "443",
+                    "21",
+                    "25"
+                ],
+                "answer": "80",
+                "difficulty": "easy"
+            },
+            {
+                "question": "Which protocol is used to resolve IP addresses to MAC addresses?",
+                "options": [
+                    "ARP",
+                    "DNS",
+                    "RARP",
+                    "DHCP"
+                ],
+                "answer": "ARP",
+                "difficulty": "medium"
+            }
+        ],
+        "Computer Science": [
+            {
+                "question": "What is the time complexity of binary search?",
+                "options": [
+                    "O(log n)",
+                    "O(n)",
+                    "O(n^2)",
+                    "O(1)"
+                ],
+                "answer": "O(log n)",
+                "difficulty": "medium"
+            },
+            {
+                "question": "Which data structure is used for implementing recursion?",
+                "options": [
+                    "Stack",
+                    "Queue",
+                    "Linked List",
+                    "Array"
+                ],
+                "answer": "Stack",
+                "difficulty": "medium"
+            },
+            {
+                "question": "What does CPU stand for?",
+                "options": [
+                    "Central Processing Unit",
+                    "Central Process Unit",
+                    "Control Processing Unit",
+                    "Computer Processing Unit"
+                ],
+                "answer": "Central Processing Unit",
+                "difficulty": "easy"
+            },
+            {
+                "question": "What is the result of 2^3 in Python?",
+                "options": [
+                    "8",
+                    "6",
+                    "9",
+                    "2"
+                ],
+                "answer": "8",
+                "difficulty": "easy"
+            },
+            {
+                "question": "Which algorithm is used for finding the shortest path in a graph?",
+                "options": [
+                    "Dijkstra's algorithm",
+                    "Bubble sort",
+                    "Binary search",
+                    "Quick sort"
+                ],
+                "answer": "Dijkstra's algorithm",
+                "difficulty": "hard"
+            }
+        ]
+    }
 }
