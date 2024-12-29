@@ -1,268 +1,308 @@
 import customtkinter as ctk
 import json
-from datetime import datetime
+
 
 class MCQApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("MCQ Quiz App")
         self.geometry("600x400")
-        
-        # Set dark blue theme
-        self.configure(fg_color="#1a237e")  # Dark blue background
-        
+        self.configure(fg_color="#1a237e")
+
         self.current_user = None
         self.score = 0
         self.current_question = 0
-        
-        # Sample offline questions
-        self.questions = [
-            {
-                "question": "What is Python?",
-                "options": ["A snake", "A programming language", "A bird", "A food"],
-                "correct": "2"
-            },
-            
-            # Add more questions as needed
-        ]
-        
+        self.selected_categories = []
+        self.questions = []
+        self.mode = None
+
+        # Load questions from JSON file or fallback to default
+        self.all_questions = self.load_questions()
+        self.history = []
+
+        # Frames
         self.frames = {
             "login": LoginFrame,
             "mode": ModeFrame,
+            "category": CategoryFrame,
             "history": HistoryFrame,
             "quiz": QuizFrame,
             "wrong": WrongFrame,
             "score": ScoreFrame
         }
-        
+
         self.current_frame = None
         self.show_frame("login")
-    
+
+    def load_questions(self):
+        """Load questions from JSON file, or use defaults if the file is not found."""
+        try:
+            with open('data/questions.json', 'r') as f:
+                print("File opening succeeded")
+                return json.load(f)
+        except FileNotFoundError:
+            # Default questions if JSON file is missing
+            return {
+                "Python": [
+                    {
+                        "question": "What is Python?",
+                        "options": ["Programming Language", "Snake", "Movie", "Game"],
+                        "answer": "Programming Language"
+                    }
+                ],
+                "Computer Science": [
+                    {
+                        "question": "What does CPU stand for?",
+                        "options": [
+                            "Central Processing Unit",
+                            "Central Programming Unit",
+                            "Control Processing Unit",
+                            "Compute Program Unit"
+                        ],
+                        "answer": "Central Processing Unit"
+                    }
+                ],
+                "Networking": [
+                    {
+                        "question": "What is the use of an IP address?",
+                        "options": [
+                            "Identifies a device on a network",
+                            "Encrypts data",
+                            "Runs applications",
+                            "None of these"
+                        ],
+                        "answer": "Identifies a device on a network"
+                    }
+                ]
+            }
+
     def show_frame(self, frame_name):
+        """Display a specific frame."""
         if self.current_frame:
             self.current_frame.destroy()
-        
+
         Frame = self.frames[frame_name]
         self.current_frame = Frame(self)
         self.current_frame.pack(fill="both", expand=True)
 
+    def prepare_quiz(self):
+        """Prepare quiz questions based on selected categories."""
+        self.questions = []
+        for category in self.selected_categories:
+            print(category)
+            self.questions.extend(self.all_questions.get(category, []))
+        print(self.questions)
+        self.current_question = 0
+        self.score = 0
+
+    def save_history(self):
+        """Save the user's quiz history."""
+        self.history.append({
+            "user": self.current_user,
+            "score": self.score,
+            "total_questions": len(self.questions),
+            "categories": self.selected_categories
+        })
+
+
 class LoginFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#1a237e")
-        
-        self.username_entry = ctk.CTkEntry(
-            self,
-            placeholder_text="Enter username",
-            width=200,
-            fg_color="gray70"
-        )
-        self.username_entry.pack(pady=(150, 0))
-        self.username_entry.bind('<Return>', lambda e: self.check_user())
-    
-    def check_user(self):
+
+        title = ctk.CTkLabel(self, text="Welcome to MCQ Quiz App", text_color="white", font=("Arial", 20))
+        title.pack(pady=(50, 20))
+
+        username_label = ctk.CTkLabel(self, text="Enter Username:", text_color="white")
+        username_label.pack(pady=10)
+        self.username_entry = ctk.CTkEntry(self)
+        self.username_entry.pack()
+
+        login_button = ctk.CTkButton(self, text="Login", command=self.login)
+        login_button.pack(pady=20)
+
+    def login(self):
         username = self.username_entry.get()
-        try:
-            with open('users.json', 'r') as f:
-                users = json.load(f)
-        except FileNotFoundError:
-            users = {}
-        
-        if username not in users:
-            users[username] = []
-            with open('users.json', 'w') as f:
-                json.dump(users, f)
-        
-        self.master.current_user = username
-        self.master.show_frame("mode")
+        if username:
+            self.master.current_user = username
+            self.master.show_frame("mode")
+
 
 class ModeFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#1a237e")
-        
-        title = ctk.CTkLabel(self, text="Choose the mode:", text_color="white")
-        title.pack(pady=(100, 20))
-        
-        self.mode_var = ctk.StringVar()
-        
-        online = ctk.CTkRadioButton(
+
+        title = ctk.CTkLabel(self, text="Choose Quiz Mode", text_color="white", font=("Arial", 20))
+        title.pack(pady=(50, 20))
+
+        offline_button = ctk.CTkButton(self, text="Offline Mode", command=lambda: self.set_mode("offline"))
+        offline_button.pack(pady=10)
+
+        online_button = ctk.CTkButton(self, text="Online Mode (Unavailable)", command=lambda: self.set_mode("online"))
+        online_button.pack(pady=10)
+
+    def set_mode(self, mode):
+        self.master.mode = mode
+        self.master.show_frame("category")
+
+
+class CategoryFrame(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(parent, fg_color="#1a237e")
+
+        title = ctk.CTkLabel(
             self,
-            text="online mode",
-            variable=self.mode_var,
-            value="online",
-            text_color="white"
-        )
-        online.pack(pady=5)
-        
-        offline = ctk.CTkRadioButton(
-            self,
-            text="offline mode",
-            variable=self.mode_var,
-            value="offline",
+            text=f"Select Categories ({parent.mode.title()} Mode):",
             text_color="white",
-            command=lambda: parent.show_frame("quiz")
+            font=("Arial", 20),
+            wraplength=500,
+            anchor="center"
         )
-        offline.pack(pady=5)
-        
+        title.pack(pady=(50, 20))
+
+        self.category_vars = {}
+        categories = ["Python", "Computer Science", "Networking"]
+
+        checkbox_frame = ctk.CTkFrame(self, fg_color="transparent")
+        checkbox_frame.pack(pady=(20, 10))
+
+        for category in categories:
+            var = ctk.BooleanVar()
+            self.category_vars[category] = var
+            ctk.CTkCheckBox(
+                checkbox_frame,
+                text=category,
+                variable=var,
+                text_color="white"
+            ).pack(anchor="w", padx=10, pady=5)
+
+        btn_frame = ctk.CTkFrame(self, fg_color="transparent")
+        btn_frame.pack(pady=20)
+
+        start_btn = ctk.CTkButton(
+            btn_frame,
+            text="Start Quiz",
+            fg_color="green",
+            command=self.start_quiz
+        )
+        start_btn.pack(side="left", padx=5)
+
         return_btn = ctk.CTkButton(
-            self,
-            text="Return",
+            btn_frame,
+            text="Change Mode",
             fg_color="red",
-            command=lambda: parent.show_frame("login")
+            command=lambda: parent.show_frame("mode")
         )
-        return_btn.pack(pady=20)
+        return_btn.pack(side="left", padx=5)
+
+    def start_quiz(self):
+        selected = [cat for cat, var in self.category_vars.items() if var.get()]
+        if not selected:
+            ctk.CTkLabel(
+                self,
+                text="Please select at least one category",
+                text_color="yellow"
+            ).pack(pady=10)
+            return
+
+        self.master.selected_categories = selected
+        self.master.prepare_quiz()
+
+        if self.master.mode == "online" and not self.master.questions:
+            ctk.CTkLabel(
+                self,
+                text="Online mode is not available yet",
+                text_color="yellow"
+            ).pack(pady=10)
+            return
+
+        self.master.show_frame("quiz")
+
 
 class QuizFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#1a237e")
-        
-        self.parent = parent
-        self.answer_var = ctk.StringVar()
-        test = self.parent.questions[0]["question"]
-        title = ctk.CTkLabel(
-            self,
-            text=test,
-            text_color="white"
-        )
-        title.pack(pady=(50, 20))
-        
-        question = self.parent.questions[self.parent.current_question]
-        
-        for i, option in enumerate(question["options"], 1):
-            ctk.CTkRadioButton(
-                self,
-                text=option,
-                variable=self.answer_var,
-                value=str(i),
-                text_color="white"
-            ).pack(pady=5)
-        
-        btn_frame = ctk.CTkFrame(self, fg_color="transparent")
-        btn_frame.pack(pady=20)
-        
-        ctk.CTkButton(
-            btn_frame,
-            text="Return",
-            fg_color="red",
-            command=lambda: parent.show_frame("mode")
-        ).pack(side="left", padx=5)
-        
-        ctk.CTkButton(
-            btn_frame,
-            text="Next",
-            fg_color="green",
-            command=self.check_answer
-        ).pack(side="left", padx=5)
 
-    def check_answer(self):
-        question = self.parent.questions[self.parent.current_question]
-        if self.answer_var.get() == question["correct"]:
-            self.parent.score += 1
-            self.next_question()
+        if parent.questions:
+            print("enter parent.questions")
+            question = parent.questions[parent.current_question]["question"]
+            print(question)
+            options = parent.questions[parent.current_question]["options"]
+            print(options)
+            question_label = ctk.CTkLabel(self, text=question, text_color="white", wraplength=500)
+            question_label.pack(pady=20)
+
+            for option in options:
+                ctk.CTkButton(self, text=option, command=lambda opt=option: self.check_answer(opt)).pack(pady=5)
         else:
-            self.parent.show_frame("wrong")
+            ctk.CTkLabel(self, text="No questions available.", text_color="yellow").pack(pady=20)
 
-    def next_question(self):
-        self.parent.current_question += 1
-        if self.parent.current_question >= len(self.parent.questions):
-            self.parent.show_frame("score")
+    def check_answer(self, selected_option):
+        correct_answer = self.master.questions[self.master.current_question]["answer"]
+        if selected_option == correct_answer:
+            self.master.score += 1
+        self.master.current_question += 1
+
+        if self.master.current_question >= len(self.master.questions):
+            self.master.save_history()
+            self.master.show_frame("score")
         else:
-            self.parent.show_frame("quiz")
+            self.master.show_frame("quiz")
 
-class WrongFrame(ctk.CTkFrame):
-    def __init__(self, parent):
-        super().__init__(parent, fg_color="#1a237e")
-        
-        ctk.CTkLabel(
-            self,
-            text="YOUR ANSWER WAS WRONG!!",
-            text_color="red",
-            font=("Arial", 20, "bold")
-        ).pack(pady=(100, 20))
-        
-        ctk.CTkLabel(
-            self,
-            text="The right answer is:",
-            text_color="white"
-        ).pack(pady=5)
-        
-        question = parent.questions[parent.current_question]
-        correct_answer = question["options"][int(question["correct"]) - 1]
-        
-        ctk.CTkLabel(
-            self,
-            text=correct_answer,
-            text_color="white"
-        ).pack(pady=1)
-        
-        ctk.CTkButton(
-            self,
-            text="Next",
-            fg_color="green",
-            command=lambda: parent.show_frame("quiz")
-        ).pack(pady=20,padx=5)
 
 class ScoreFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#1a237e")
-        
-        ctk.CTkLabel(
-            self,
-            text=f"Your final score: {parent.score}/{len(parent.questions)}",
-            text_color="white",
-            font=("Arial", 20)
-        ).pack(pady=(150, 20))
-        
-        ctk.CTkButton(
-            self,
-            text="Next",
-            fg_color="green",
-            command=self.save_and_return
-        ).pack(pady=20,padx=5)
-    
-    def save_and_return(self):
-        with open('users.json', 'r') as f:
-            users = json.load(f)
-        
-        users[self.master.current_user].append({
-            'date': datetime.now().strftime('%d/%m/%Y'),
-            'score': f"{self.master.score}/{len(self.master.questions)}"
-        })
-        
-        with open('users.json', 'w') as f:
-            json.dump(users, f)
-        
-        self.master.show_frame("history")
+
+        ctk.CTkLabel(self, text="Quiz Completed!", text_color="white", font=("Arial", 20)).pack(pady=20)
+        ctk.CTkLabel(self, text=f"Your Score: {parent.score}/{len(parent.questions)}", text_color="yellow").pack(pady=10)
+
+        restart_button = ctk.CTkButton(self, text="Restart", command=lambda: parent.show_frame("mode"))
+        restart_button.pack(pady=20)
+
+        history_button = ctk.CTkButton(self, text="View History", command=lambda: parent.show_frame("history"))
+        history_button.pack(pady=10)
+
 
 class HistoryFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#1a237e")
-        
-        ctk.CTkLabel(
-            self,
-            text=f"History of\n{parent.current_user}:",
-            text_color="white"
-        ).pack(pady=(100, 20))
-        
-        try:
-            with open('users.json', 'r') as f:
-                users = json.load(f)
-                history = users[parent.current_user]
-                
-                for entry in history[-3:]:
-                    ctk.CTkLabel(
-                        self,
-                        text=f"date: {entry['date']}, score: {entry['score']}",
-                        text_color="white"
-                    ).pack(pady=5)
-        except:
-            pass
-        
-        ctk.CTkButton(
-            self,
-            text="Next",
-            fg_color="green",
-            command=lambda: parent.show_frame("mode")
-        ).pack(pady=20,padx=5)
+
+        title = ctk.CTkLabel(self, text="Quiz History", text_color="white", font=("Arial", 20))
+        title.pack(pady=20)
+
+        if not parent.history:
+            ctk.CTkLabel(self, text="No history available.", text_color="yellow").pack(pady=10)
+        else:
+            for record in parent.history:
+                history_text = f"User: {record['user']}, Score: {record['score']}/{record['total_questions']}, Categories: {', '.join(record['categories'])}"
+                ctk.CTkLabel(self, text=history_text, text_color="white").pack(pady=5)
+
+        back_button = ctk.CTkButton(self, text="Back", command=lambda: parent.show_frame("score"))
+        back_button.pack(pady=20)
+
+
+class WrongFrame(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(parent, fg_color="#1a237e")
+
+        title = ctk.CTkLabel(self, text="Wrong Answers", text_color="white", font=("Arial", 20))
+        title.pack(pady=20)
+
+        wrong_answers = []
+        for idx, question in enumerate(parent.questions):
+            user_answer = question.get("user_answer")
+            if user_answer != question["answer"]:
+                wrong_answers.append(f"Q: {question['question']} - Your Answer: {user_answer} - Correct Answer: {question['answer']}")
+
+        if wrong_answers:
+            for answer in wrong_answers:
+                ctk.CTkLabel(self, text=answer, text_color="yellow").pack(pady=5)
+        else:
+            ctk.CTkLabel(self, text="No wrong answers.", text_color="yellow").pack(pady=10)
+
+        back_button = ctk.CTkButton(self, text="Back", command=lambda: parent.show_frame("score"))
+        back_button.pack(pady=20)
+
 
 if __name__ == "__main__":
     app = MCQApp()
