@@ -8,26 +8,23 @@ class MCQApp(ctk.CTk):
         self.title("MCQ Quiz App")
         self.geometry("600x400")
         
-        # Set dark blue theme
-        self.configure(fg_color="#1a237e")  # Dark blue background
+        self.configure(fg_color="#3f51b5")
         
         self.current_user = None
         self.score = 0
         self.current_question = 0
         
-        # Sample offline questions
         self.questions = [
             {
                 "question": "What is Python?",
                 "options": ["A snake", "A programming language", "A bird", "A food"],
                 "correct": "2"
             },
-            
-            # Add more questions as needed
         ]
         
         self.frames = {
             "login": LoginFrame,
+            "welcome": WelcomeFrame,  # New welcome frame to show history
             "mode": ModeFrame,
             "history": HistoryFrame,
             "quiz": QuizFrame,
@@ -46,9 +43,18 @@ class MCQApp(ctk.CTk):
         self.current_frame = Frame(self)
         self.current_frame.pack(fill="both", expand=True)
 
+
 class LoginFrame(ctk.CTkFrame):
     def __init__(self, parent):
-        super().__init__(parent, fg_color="#1a237e")
+        super().__init__(parent, fg_color="#3f51b5")
+        
+        greeting = ctk.CTkLabel(
+            self,
+            text="Welcome to the MCQ Quiz App!",
+            text_color="white",
+            font=("Arial", 24, "bold")
+        )
+        greeting.pack(pady=(100, 20))
         
         self.username_entry = ctk.CTkEntry(
             self,
@@ -56,11 +62,13 @@ class LoginFrame(ctk.CTkFrame):
             width=200,
             fg_color="gray70"
         )
-        self.username_entry.pack(pady=(150, 0))
+        self.username_entry.pack(pady=20)
         self.username_entry.bind('<Return>', lambda e: self.check_user())
     
     def check_user(self):
         username = self.username_entry.get()
+        is_new_user = False
+        
         try:
             with open('users.json', 'r') as f:
                 users = json.load(f)
@@ -71,34 +79,108 @@ class LoginFrame(ctk.CTkFrame):
             users[username] = []
             with open('users.json', 'w') as f:
                 json.dump(users, f)
+            is_new_user = True
         
         self.master.current_user = username
-        self.master.show_frame("mode")
+        
+        # Show mode directly for new users, welcome screen for existing users
+        if is_new_user:
+            self.master.show_frame("mode")
+        elif not users[username]:
+            self.master.show_frame("mode")
+        else:
+            self.master.show_frame("welcome")
 
+class WelcomeFrame(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(parent, fg_color="#3f51b5")
+        
+        # Welcome message
+        ctk.CTkLabel(
+            self,
+            text=f"Welcome, {parent.current_user}!",
+            text_color="white",
+            font=("Arial", 24, "bold")
+        ).pack(pady=(50, 20))
+        
+        # Create a frame for history
+        history_frame = ctk.CTkFrame(self, fg_color="transparent")
+        history_frame.pack(pady=20)
+        
+        # Try to load and display user history
+        try:
+            with open('users.json', 'r') as f:
+                users = json.load(f)
+                history = users[parent.current_user]
+                
+                if history:  # Only show history if it exists
+                    ctk.CTkLabel(
+                        history_frame,
+                        text="Your previous attempts:",
+                        text_color="white",
+                        font=("Arial", 18)
+                    ).pack(pady=(0, 10))
+                    
+                    for entry in history[-3:]:  # Show last 3 entries
+                        ctk.CTkLabel(
+                            history_frame,
+                            text=f"Date: {entry['date']}, Score: {entry['score']}",
+                            text_color="white",
+                            font=("Arial", 14)
+                        ).pack(pady=5)
+        except:
+            pass
+        
+        # Continue button
+        ctk.CTkButton(
+            self,
+            text="Start Quiz",
+            fg_color="green",
+            font=("Arial", 14),
+            command=lambda: parent.show_frame("mode")
+        ).pack(pady=40)
+        
+        # Return button
+        ctk.CTkButton(
+            self,
+            text="Change User",
+            fg_color="red",
+            font=("Arial", 14),
+            command=lambda: parent.show_frame("login")
+        ).pack(pady=(0, 20))
+
+# [Rest of the classes remain the same as in the previous version]
 class ModeFrame(ctk.CTkFrame):
     def __init__(self, parent):
-        super().__init__(parent, fg_color="#1a237e")
+        super().__init__(parent, fg_color="#3f51b5")
         
-        title = ctk.CTkLabel(self, text="Choose the mode:", text_color="white")
+        title = ctk.CTkLabel(
+            self, 
+            text="Choose the mode:", 
+            text_color="white",
+            font=("Arial", 20)
+        )
         title.pack(pady=(100, 20))
         
         self.mode_var = ctk.StringVar()
         
         online = ctk.CTkRadioButton(
             self,
-            text="online mode",
+            text="Online Mode",
             variable=self.mode_var,
             value="online",
-            text_color="white"
+            text_color="white",
+            font=("Arial", 16)
         )
         online.pack(pady=5)
         
         offline = ctk.CTkRadioButton(
             self,
-            text="offline mode",
+            text="Offline Mode",
             variable=self.mode_var,
             value="offline",
             text_color="white",
+            font=("Arial", 16),
             command=lambda: parent.show_frame("quiz")
         )
         offline.pack(pady=5)
@@ -107,51 +189,61 @@ class ModeFrame(ctk.CTkFrame):
             self,
             text="Return",
             fg_color="red",
-            command=lambda: parent.show_frame("login")
+            command=lambda: parent.show_frame("welcome")  # Return to welcome instead of login
         )
-        return_btn.pack(pady=20)
+        return_btn.pack(pady=40)
+        
 
 class QuizFrame(ctk.CTkFrame):
     def __init__(self, parent):
-        super().__init__(parent, fg_color="#1a237e")
+        super().__init__(parent, fg_color="#3f51b5")
         
         self.parent = parent
         self.answer_var = ctk.StringVar()
+        
+        # Bigger font for question
         test = self.parent.questions[0]["question"]
         title = ctk.CTkLabel(
             self,
             text=test,
-            text_color="white"
+            text_color="white",
+            font=("Arial", 18, "bold")
         )
-        title.pack(pady=(50, 20))
+        title.pack(pady=(50, 30))
+        
+        # Create options frame for better alignment
+        options_frame = ctk.CTkFrame(self, fg_color="transparent")
+        options_frame.pack(pady=10)
         
         question = self.parent.questions[self.parent.current_question]
         
+        # Add options with more spacing to the left
         for i, option in enumerate(question["options"], 1):
             ctk.CTkRadioButton(
-                self,
+                options_frame,
                 text=option,
                 variable=self.answer_var,
                 value=str(i),
-                text_color="white"
-            ).pack(pady=5)
+                text_color="white",
+                font=("Arial", 14)
+            ).pack(pady=10, padx=(50, 0), anchor="w")  # Left alignment with padding
         
         btn_frame = ctk.CTkFrame(self, fg_color="transparent")
-        btn_frame.pack(pady=20)
+        btn_frame.pack(pady=40)  # Increased spacing between buttons
         
         ctk.CTkButton(
             btn_frame,
             text="Return",
             fg_color="red",
             command=lambda: parent.show_frame("mode")
-        ).pack(side="left", padx=5)
+        ).pack(side="left", padx=20)  # Increased spacing between buttons
         
         ctk.CTkButton(
             btn_frame,
             text="Next",
             fg_color="green",
             command=self.check_answer
-        ).pack(side="left", padx=5)
+        ).pack(side="left", padx=20)  # Increased spacing between buttons
 
     def check_answer(self):
         question = self.parent.questions[self.parent.current_question]
@@ -170,46 +262,49 @@ class QuizFrame(ctk.CTkFrame):
 
 class WrongFrame(ctk.CTkFrame):
     def __init__(self, parent):
-        super().__init__(parent, fg_color="#1a237e")
+        super().__init__(parent, fg_color="#3f51b5")
         
         ctk.CTkLabel(
             self,
             text="YOUR ANSWER WAS WRONG!!",
             text_color="red",
-            font=("Arial", 20, "bold")
+            font=("Arial", 24, "bold")
         ).pack(pady=(100, 20))
         
         ctk.CTkLabel(
             self,
             text="The right answer is:",
-            text_color="white"
+            text_color="white",
+            font=("Arial", 16)
         ).pack(pady=5)
         
         question = parent.questions[parent.current_question]
         correct_answer = question["options"][int(question["correct"]) - 1]
         
+        # Highlight the correct answer in green
         ctk.CTkLabel(
             self,
             text=correct_answer,
-            text_color="white"
-        ).pack(pady=1)
+            text_color="#4CAF50",  # Green color for correct answer
+            font=("Arial", 18, "bold")
+        ).pack(pady=10)
         
         ctk.CTkButton(
             self,
             text="Next",
             fg_color="green",
             command=lambda: parent.show_frame("quiz")
-        ).pack(pady=20,padx=5)
+        ).pack(pady=40)
 
 class ScoreFrame(ctk.CTkFrame):
     def __init__(self, parent):
-        super().__init__(parent, fg_color="#1a237e")
+        super().__init__(parent, fg_color="#3f51b5")
         
         ctk.CTkLabel(
             self,
             text=f"Your final score: {parent.score}/{len(parent.questions)}",
             text_color="white",
-            font=("Arial", 20)
+            font=("Arial", 24)
         ).pack(pady=(150, 20))
         
         ctk.CTkButton(
@@ -217,7 +312,7 @@ class ScoreFrame(ctk.CTkFrame):
             text="Next",
             fg_color="green",
             command=self.save_and_return
-        ).pack(pady=20,padx=5)
+        ).pack(pady=40)
     
     def save_and_return(self):
         with open('users.json', 'r') as f:
@@ -235,12 +330,13 @@ class ScoreFrame(ctk.CTkFrame):
 
 class HistoryFrame(ctk.CTkFrame):
     def __init__(self, parent):
-        super().__init__(parent, fg_color="#1a237e")
+        super().__init__(parent, fg_color="#3f51b5")
         
         ctk.CTkLabel(
             self,
             text=f"History of\n{parent.current_user}:",
-            text_color="white"
+            text_color="white",
+            font=("Arial", 20)
         ).pack(pady=(100, 20))
         
         try:
@@ -252,8 +348,9 @@ class HistoryFrame(ctk.CTkFrame):
                     ctk.CTkLabel(
                         self,
                         text=f"date: {entry['date']}, score: {entry['score']}",
-                        text_color="white"
-                    ).pack(pady=5)
+                        text_color="white",
+                        font=("Arial", 14)
+                    ).pack(pady=10)
         except:
             pass
         
@@ -262,7 +359,7 @@ class HistoryFrame(ctk.CTkFrame):
             text="Next",
             fg_color="green",
             command=lambda: parent.show_frame("mode")
-        ).pack(pady=20,padx=5)
+        ).pack(pady=40)
 
 if __name__ == "__main__":
     app = MCQApp()
