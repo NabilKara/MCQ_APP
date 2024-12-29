@@ -170,7 +170,7 @@ class LoginFrame(ctk.CTkFrame):
 
         # Load user data
         try:
-            with open('users.json', 'r') as f:
+            with open('data/users.json', 'r') as f:
                 users = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
             users = {}
@@ -179,7 +179,7 @@ class LoginFrame(ctk.CTkFrame):
         if username not in users:
             self.display_feedback(f"👤 User '{username}' does not exist. Creating a new account...", "blue")
             users[username] = []  # Create an empty history for the new user
-            with open('users.json', 'w') as f:
+            with open('data/users.json', 'w') as f:
                 json.dump(users, f, indent=4)
 
         # Set the current user and navigate to the next frame
@@ -361,13 +361,20 @@ class CategoryFrame(ctk.CTkFrame):
         self.master.prepare_quiz()
         self.master.show_frame("quiz")
 
+import customtkinter as ctk
+
 class QuizFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
         
+        # Configure frame size
+        self.configure(width=600, height=400)
+        self.pack_propagate(False)
+        
         self.parent = parent
         self.answer_var = ctk.StringVar()
         
+        # Handle case when no questions are available
         if not parent.questions:
             ctk.CTkLabel(
                 self,
@@ -377,49 +384,92 @@ class QuizFrame(ctk.CTkFrame):
             ).pack(pady=50)
             return
         
+        # Create main container for content
+        content_frame = ctk.CTkFrame(self, fg_color="transparent")
+        content_frame.pack(expand=True, fill="both", padx=20, pady=20)
+        
+        # Display current question
         question = parent.questions[parent.current_question]
         
+        # Question title
         title = ctk.CTkLabel(
-            self,
+            content_frame,
             text=question["question"],
             text_color="white",
-            font=("Arial", 18, "bold")
+            font=("Arial", 18, "bold"),
+            wraplength=500  # Ensure long questions wrap properly
         )
-        title.pack(pady=(50, 30))
+        title.pack(pady=(20, 30))
         
-        options_frame = ctk.CTkFrame(self, fg_color="transparent")
-        options_frame.pack(pady=10)
+        # Options frame
+        options_frame = ctk.CTkFrame(content_frame, fg_color="transparent")
+        options_frame.pack(pady=10, expand=True)
         
+        # Create radio buttons for options
         for i, option in enumerate(question["options"], 1):
-            ctk.CTkRadioButton(
+            option_btn = ctk.CTkRadioButton(
                 options_frame,
                 text=option,
                 variable=self.answer_var,
                 value=str(i),
                 text_color="white",
-                font=("Arial", 14)
-            ).pack(pady=10, padx=(50, 0), anchor="w")
+                font=("Arial", 14),
+                hover_color="#4a5fc1",  # Slightly lighter than background for hover effect
+                fg_color="#2196f3",     # Material design blue
+            )
+            option_btn.pack(pady=10, padx=(50, 0), anchor="w")
         
+        # Button frame at the bottom
         btn_frame = ctk.CTkFrame(self, fg_color="transparent")
-        btn_frame.pack(pady=40)
+        btn_frame.pack(side="bottom", pady=(0, 20), fill="x", padx=20)
         
+        # Center the buttons using a container frame
+        button_container = ctk.CTkFrame(btn_frame, fg_color="transparent")
+        button_container.pack(expand=True)
+        
+        # Submit button
         ctk.CTkButton(
-            btn_frame,
+            button_container,
             text="Submit Answer",
-            fg_color="green",
-            font=("Arial", 14),
+            fg_color="#4caf50",  # Material design green
+            hover_color="#388e3c",
+            font=("Arial", 14, "bold"),
+            width=150,
+            height=40,
+            corner_radius=8,
             command=self.check_answer
-        ).pack(side="left", padx=20)
+        ).pack(side="left", padx=10)
         
+        # Quit button
         ctk.CTkButton(
-            btn_frame,
+            button_container,
             text="Quit Quiz",
-            fg_color="red",
-            font=("Arial", 14),
+            fg_color="#f44336",  # Material design red
+            hover_color="#d32f2f",
+            font=("Arial", 14, "bold"),
+            width=150,
+            height=40,
+            corner_radius=8,
             command=lambda: parent.show_frame("mode")
-        ).pack(side="left", padx=20)
+        ).pack(side="left", padx=10)
+        
+        # Progress indicator
+        progress_text = f"Question {parent.current_question + 1} of {len(parent.questions)}"
+        progress_label = ctk.CTkLabel(
+            self,
+            text=progress_text,
+            text_color="Green",
+            font=("Arial", 12)
+        )
+        progress_label.pack(side="bottom", pady=(0, 5))
     
     def check_answer(self):
+        """Verify the selected answer and handle the response"""
+        # Ensure an answer is selected
+        if not self.answer_var.get():
+            self.show_error("Please select an answer")
+            return
+            
         question = self.parent.questions[self.parent.current_question]
         if self.answer_var.get() == question["correct"]:
             self.parent.score += 1
@@ -428,11 +478,33 @@ class QuizFrame(ctk.CTkFrame):
             self.parent.show_frame("wrong")
     
     def next_question(self):
+        """Advance to the next question or show final score"""
         self.parent.current_question += 1
         if self.parent.current_question >= len(self.parent.questions):
             self.parent.show_frame("score")
         else:
             self.parent.show_frame("quiz")
+            
+    def show_error(self, message):
+        """Display an error message to the user"""
+        error_window = ctk.CTkToplevel(self)
+        error_window.title("Error")
+        error_window.geometry("300x150")
+        error_window.transient(self)  # Make the window modal
+        
+        ctk.CTkLabel(
+            error_window,
+            text=message,
+            font=("Arial", 14),
+            text_color="white"
+        ).pack(pady=20)
+        
+        ctk.CTkButton(
+            error_window,
+            text="OK",
+            command=error_window.destroy,
+            width=100
+        ).pack(pady=10)
 
 class WrongFrame(ctk.CTkFrame):
     def __init__(self, parent):
@@ -500,7 +572,7 @@ class HistoryFrame(ctk.CTkFrame):
 
         # Load and display history
         try:
-            with open('users.json', 'r') as f:
+            with open('data/users.json', 'r') as f:
                 users = json.load(f)
                 history = users.get(parent.current_user, [])
 
@@ -672,9 +744,8 @@ class ScoreFrame(ctk.CTkFrame):
     def save_score(self, parent):
         """Save the quiz score to user history."""
         try:
-            with open('users.json', 'r') as f:
+            with open('data/users.json', 'r') as f:
                 users = json.load(f)
-                print(f"Loaded users: {users}")
             
             # Create score entry
             score_entry = {
@@ -689,7 +760,7 @@ class ScoreFrame(ctk.CTkFrame):
             users[parent.current_user].append(score_entry)
             
             # Save updated history
-            with open('users.json', 'w') as f:
+            with open('data/users.json', 'w') as f:
                 json.dump(users, f, indent=4)
                 
         except Exception as e:
