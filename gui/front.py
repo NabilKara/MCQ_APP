@@ -178,55 +178,51 @@ class LoginFrame(ctk.CTkFrame):
 class WelcomeFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
-        
+
+        # Welcome message
         ctk.CTkLabel(
             self,
             text=f"Welcome back, {parent.current_user}!",
             text_color="white",
             font=("Arial", 24, "bold")
         ).pack(pady=(50, 20))
-        
-        history_frame = ctk.CTkFrame(self, fg_color="transparent")
-        history_frame.pack(pady=20)
-        
-        try:
-            with open('users.json', 'r') as f:
-                users = json.load(f)
-                history = users[parent.current_user]
-                
-                if history:
-                    ctk.CTkLabel(
-                        history_frame,
-                        text="Your previous attempts:",
-                        text_color="white",
-                        font=("Arial", 18)
-                    ).pack(pady=(0, 10))
-                    
-                    for entry in history[-3:]:
-                        ctk.CTkLabel(
-                            history_frame,
-                            text=f"Date: {entry['date']}, Score: {entry['score']}",
-                            text_color="white",
-                            font=("Arial", 14)
-                        ).pack(pady=5)
-        except:
-            pass
-        
+
+        # Spacer to push content above
+        spacer = ctk.CTkLabel(self, text="")
+        spacer.pack(expand=True)  # Expand fills the available vertical space
+
+        # Create a frame for the buttons
+        button_container = ctk.CTkFrame(self, fg_color="transparent")
+        button_container.pack(side="bottom", pady=20)  # Place at the bottom with padding
+
+        # Button to view history
         ctk.CTkButton(
-            self,
+            button_container,
+            text="Display History",
+            fg_color="#FF9800",
+            font=("Arial", 14),
+            command=lambda: parent.show_frame("history")
+        ).pack(side="left", padx=10)
+
+        # Button to start a new quiz
+        ctk.CTkButton(
+            button_container,
             text="Start Quiz",
             fg_color="green",
             font=("Arial", 14),
             command=lambda: parent.show_frame("mode")
-        ).pack(pady=40)
-        
+        ).pack(side="left", padx=10)
+
+        # Button to log out and return to login screen
         ctk.CTkButton(
-            self,
-            text="Change User",
+            button_container,
+            text="Log out",
             fg_color="red",
             font=("Arial", 14),
             command=lambda: parent.show_frame("login")
-        ).pack(pady=(0, 20))
+        ).pack(side="left", padx=10)
+
+
 
 class ModeFrame(ctk.CTkFrame):
     def __init__(self, parent):
@@ -458,10 +454,11 @@ class WrongFrame(ctk.CTkFrame):
             self.master.show_frame("score")
         else:
             self.master.show_frame("quiz")
+
 class HistoryFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
-        
+
         # Title
         ctk.CTkLabel(
             self,
@@ -469,22 +466,22 @@ class HistoryFrame(ctk.CTkFrame):
             text_color="white",
             font=("Arial", 24, "bold")
         ).pack(pady=(30, 20))
-        
+
         # Create scrollable frame for history entries
         history_container = ctk.CTkScrollableFrame(
             self,
             width=500,
-            height=250,
+            height=300,  # Adjust the height to fit more content
             fg_color="transparent"
         )
         history_container.pack(pady=20, padx=20, fill="both", expand=True)
-        
+
         # Load and display history
         try:
             with open('users.json', 'r') as f:
                 users = json.load(f)
                 history = users.get(parent.current_user, [])
-                
+
                 if not history:
                     ctk.CTkLabel(
                         history_container,
@@ -501,7 +498,7 @@ class HistoryFrame(ctk.CTkFrame):
                             corner_radius=10
                         )
                         entry_frame.pack(pady=5, padx=10, fill="x")
-                        
+
                         # Date
                         ctk.CTkLabel(
                             entry_frame,
@@ -509,7 +506,7 @@ class HistoryFrame(ctk.CTkFrame):
                             text_color="white",
                             font=("Arial", 14)
                         ).pack(pady=(5, 0), padx=10, anchor="w")
-                        
+
                         # Score
                         ctk.CTkLabel(
                             entry_frame,
@@ -517,7 +514,7 @@ class HistoryFrame(ctk.CTkFrame):
                             text_color="#4CAF50",
                             font=("Arial", 14, "bold")
                         ).pack(pady=(0, 5), padx=10, anchor="w")
-                        
+
                         # Categories
                         if 'categories' in entry:
                             categories_text = ", ".join(entry['categories'])
@@ -527,15 +524,7 @@ class HistoryFrame(ctk.CTkFrame):
                                 text_color="white",
                                 font=("Arial", 12)
                             ).pack(pady=(0, 5), padx=10, anchor="w")
-                        
-                        # Add separator except for last item
-                        if entry != history[-1]:
-                            ctk.CTkFrame(
-                                history_container,
-                                height=1,
-                                fg_color="gray70"
-                            ).pack(fill="x", pady=5)
-                            
+
         except Exception as e:
             ctk.CTkLabel(
                 history_container,
@@ -544,35 +533,36 @@ class HistoryFrame(ctk.CTkFrame):
                 font=("Arial", 16)
             ).pack(pady=20)
             print(f"Error loading history: {e}")
-        
-        # Button frame
-        btn_frame = ctk.CTkFrame(self, fg_color="transparent")
-        btn_frame.pack(pady=20)
-        
-        # Add buttons
+
+        # Add buttons at the bottom of the scrollable container
+        btn_frame = ctk.CTkFrame(history_container, fg_color="transparent")
+        btn_frame.pack(pady=(20, 10), padx=20, fill="x", side="bottom")
+
+        # Buttons
         ctk.CTkButton(
             btn_frame,
             text="New Quiz",
             fg_color="green",
             font=("Arial", 14),
             command=lambda: parent.show_frame("mode")
-        ).pack(side="left", padx=10)
-        
+        ).pack(side="left", padx=10, pady=10)
+
         ctk.CTkButton(
             btn_frame,
             text="Return to Welcome",
             fg_color="#FF9800",
             font=("Arial", 14),
             command=lambda: parent.show_frame("welcome")
-        ).pack(side="left", padx=10)
-        
+        ).pack(side="left", padx=10, pady=10)
+
         ctk.CTkButton(
             btn_frame,
             text="Change User",
             fg_color="red",
             font=("Arial", 14),
             command=lambda: parent.show_frame("login")
-        ).pack(side="left", padx=10)
+        ).pack(side="left", padx=10, pady=10)
+
 
 class ScoreFrame(ctk.CTkFrame):
     def __init__(self, parent):
@@ -662,6 +652,7 @@ class ScoreFrame(ctk.CTkFrame):
         try:
             with open('users.json', 'r') as f:
                 users = json.load(f)
+                print(f"Loaded users: {users}")
             
             # Create score entry
             score_entry = {
