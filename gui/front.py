@@ -1,6 +1,7 @@
 import customtkinter as ctk
 import json
 from datetime import datetime
+import os
 
 class MCQApp(ctk.CTk):
     def __init__(self):
@@ -10,20 +11,24 @@ class MCQApp(ctk.CTk):
         
         self.configure(fg_color="#3f51b5")
         
+        # Initialize instance variables
         self.current_user = None
         self.score = 0
         self.current_question = 0
         self.selected_categories = []
         self.questions = []
         
-        # Load questions from JSON file or fallback to default
+        # Ensure the data directory exists
+        os.makedirs('data', exist_ok=True)
+        
+        # Load questions
         self.all_questions = self.load_questions()
         
         self.frames = {
             "login": LoginFrame,
             "welcome": WelcomeFrame,
             "mode": ModeFrame,
-            "categories": CategoryFrame,  # Added CategoryFrame
+            "categories": CategoryFrame,
             "history": HistoryFrame,
             "quiz": QuizFrame,
             "wrong": WrongFrame,
@@ -34,43 +39,50 @@ class MCQApp(ctk.CTk):
         self.show_frame("login")
     
     def load_questions(self):
+        default_questions = {
+            "Python": [
+                {
+                    "question": "What is Python?",
+                    "options": ["Programming Language", "Snake", "Movie", "Game"],
+                    "correct": "1"
+                }
+            ],
+            "Computer Science": [
+                {
+                    "question": "What does CPU stand for?",
+                    "options": [
+                        "Central Processing Unit",
+                        "Central Programming Unit",
+                        "Control Processing Unit",
+                        "Compute Program Unit"
+                    ],
+                    "correct": "1"
+                }
+            ],
+            "Networking": [
+                {
+                    "question": "What is the use of an IP address?",
+                    "options": [
+                        "Identifies a device on a network",
+                        "Encrypts data",
+                        "Runs applications",
+                        "None of these"
+                    ],
+                    "correct": "1"
+                }
+            ]
+        }
+        
         try:
-            with open('questions.json', 'r') as f:
-                return json.load(f)
-        except FileNotFoundError:
-            return {
-                "Python": [
-                    {
-                        "question": "What is Python?",
-                        "options": ["Programming Language", "Snake", "Movie", "Game"],
-                        "correct": "1"
-                    }
-                ],
-                "Computer Science": [
-                    {
-                        "question": "What does CPU stand for?",
-                        "options": [
-                            "Central Processing Unit",
-                            "Central Programming Unit",
-                            "Control Processing Unit",
-                            "Compute Program Unit"
-                        ],
-                        "correct": "1"
-                    }
-                ],
-                "Networking": [
-                    {
-                        "question": "What is the use of an IP address?",
-                        "options": [
-                            "Identifies a device on a network",
-                            "Encrypts data",
-                            "Runs applications",
-                            "None of these"
-                        ],
-                        "correct": "1"
-                    }
-                ]
-            }
+            with open('data/questions.json', 'r') as f:
+                loaded_questions = json.load(f)
+                if not loaded_questions:
+                    return default_questions
+                return loaded_questions
+        except (FileNotFoundError, json.JSONDecodeError):
+            with open('data/questions.json', 'w') as f:
+                json.dump(default_questions, f, indent=4)
+            return default_questions
     
     def show_frame(self, frame_name):
         if self.current_frame:
@@ -85,13 +97,14 @@ class MCQApp(ctk.CTk):
         self.questions = []
         for category in self.selected_categories:
             category_questions = self.all_questions.get(category, [])
-            for q in category_questions:
-                formatted_q = {
+            self.questions.extend([
+                {
                     "question": q["question"],
                     "options": q["options"],
                     "correct": q["correct"]
                 }
-                self.questions.append(formatted_q)
+                for q in category_questions
+            ])
         self.current_question = 0
         self.score = 0
 
@@ -105,95 +118,42 @@ class LoginFrame(ctk.CTkFrame):
             text_color="white",
             font=("Arial", 24, "bold")
         )
-        greeting.pack(pady=(100, 20))
+        greeting.pack(pady=(50, 20))
+        
+        login_container = ctk.CTkFrame(self, fg_color="transparent")
+        login_container.pack(pady=20)
         
         self.username_entry = ctk.CTkEntry(
-            self,
+            login_container,
             placeholder_text="Enter username",
-            width=200,
-            fg_color="gray70"
+            width=250,
+            fg_color="gray70",
+            text_color="black"
+
         )
-        self.username_entry.pack(pady=20)
+        self.username_entry.pack(pady=(0, 30))
         self.username_entry.bind('<Return>', lambda e: self.check_user())
+        
+        self.login_button = ctk.CTkButton(
+            login_container,
+            text="Login",
+            command=self.check_user,
+            fg_color="#4CAF50",
+            hover_color="#45a049",
+            width=120,
+            height=32,
+            text_color="white",
+            font=("Arial", 14),
+            corner_radius=8
+        )
+        self.login_button.pack(pady=(0, 10))
     
     def check_user(self):
-        username = self.username_entry.get()
-        try:
-            with open('users.json', 'r') as f:
-                users = json.load(f)
-        except FileNotFoundError:
-            users = {}
-        
-        if username not in users:
-            users[username] = []
-            with open('users.json', 'w') as f:
-                json.dump(users, f)
-        
-        self.master.current_user = username
-        
-        # Show mode directly if no history, otherwise show welcome screen
-        if not users[username]:
-            self.master.show_frame("mode")
-        else:
-            self.master.show_frame("welcome")
-
-class CategoryFrame(ctk.CTkFrame):
-    def __init__(self, parent):
-        super().__init__(parent, fg_color="#3f51b5")
-        
-        title = ctk.CTkLabel(
-            self,
-            text="Select Categories:",
-            text_color="white",
-            font=("Arial", 20)
-        )
-        title.pack(pady=(50, 20))
-        
-        self.category_vars = {}
-        categories = list(parent.all_questions.keys())
-        
-        # Create a frame for checkboxes
-        checkbox_frame = ctk.CTkFrame(self, fg_color="transparent")
-        checkbox_frame.pack(pady=20)
-        
-        for category in categories:
-            var = ctk.BooleanVar()
-            self.category_vars[category] = var
-            ctk.CTkCheckBox(
-                checkbox_frame,
-                text=category,
-                variable=var,
-                text_color="white",
-                font=("Arial", 14)
-            ).pack(pady=10, padx=20, anchor="w")
-        
-        # Button frame
-        btn_frame = ctk.CTkFrame(self, fg_color="transparent")
-        btn_frame.pack(pady=30)
-        
-        ctk.CTkButton(
-            btn_frame,
-            text="Start Quiz",
-            fg_color="green",
-            font=("Arial", 14),
-            command=self.start_quiz
-        ).pack(side="left", padx=10)
-        
-        ctk.CTkButton(
-            btn_frame,
-            text="Change Mode",
-            fg_color="red",
-            font=("Arial", 14),
-            command=lambda: parent.show_frame("mode")
-        ).pack(side="left", padx=10)
-    
-    def start_quiz(self):
-        selected = [cat for cat, var in self.category_vars.items() if var.get()]
-        if not selected:
-            # Show warning if no categories selected
+        username = self.username_entry.get().strip()
+        if not username:
             warning = ctk.CTkLabel(
                 self,
-                text="Please select at least one category",
+                text="Please enter a username",
                 text_color="yellow",
                 font=("Arial", 14)
             )
@@ -201,33 +161,40 @@ class CategoryFrame(ctk.CTkFrame):
             self.after(2000, warning.destroy)
             return
         
-        self.master.selected_categories = selected
-        self.master.prepare_quiz()
-        self.master.show_frame("quiz")
+        try:
+            with open('users.json', 'r') as f:
+                users = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            users = {}
+        
+        if username not in users:
+            users[username] = []
+            with open('users.json', 'w') as f:
+                json.dump(users, f, indent=4)
+        
+        self.master.current_user = username
+        self.master.show_frame("mode" if not users[username] else "welcome")
 
 class WelcomeFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
         
-        # Welcome message
         ctk.CTkLabel(
             self,
-            text=f"Welcome, {parent.current_user}!",
+            text=f"Welcome back, {parent.current_user}!",
             text_color="white",
             font=("Arial", 24, "bold")
         ).pack(pady=(50, 20))
         
-        # Create a frame for history
         history_frame = ctk.CTkFrame(self, fg_color="transparent")
         history_frame.pack(pady=20)
         
-        # Try to load and display user history
         try:
             with open('users.json', 'r') as f:
                 users = json.load(f)
                 history = users[parent.current_user]
                 
-                if history:  # Only show history if it exists
+                if history:
                     ctk.CTkLabel(
                         history_frame,
                         text="Your previous attempts:",
@@ -235,7 +202,7 @@ class WelcomeFrame(ctk.CTkFrame):
                         font=("Arial", 18)
                     ).pack(pady=(0, 10))
                     
-                    for entry in history[-3:]:  # Show last 3 entries
+                    for entry in history[-3:]:
                         ctk.CTkLabel(
                             history_frame,
                             text=f"Date: {entry['date']}, Score: {entry['score']}",
@@ -245,7 +212,6 @@ class WelcomeFrame(ctk.CTkFrame):
         except:
             pass
         
-        # Continue button
         ctk.CTkButton(
             self,
             text="Start Quiz",
@@ -254,7 +220,6 @@ class WelcomeFrame(ctk.CTkFrame):
             command=lambda: parent.show_frame("mode")
         ).pack(pady=40)
         
-        # Return button
         ctk.CTkButton(
             self,
             text="Change User",
@@ -263,14 +228,13 @@ class WelcomeFrame(ctk.CTkFrame):
             command=lambda: parent.show_frame("login")
         ).pack(pady=(0, 20))
 
-# [Rest of the classes remain the same as in the previous version]
 class ModeFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
         
         title = ctk.CTkLabel(
-            self, 
-            text="Choose the mode:", 
+            self,
+            text="Choose your mode:",
             text_color="white",
             font=("Arial", 20)
         )
@@ -294,19 +258,90 @@ class ModeFrame(ctk.CTkFrame):
             variable=self.mode_var,
             value="offline",
             text_color="white",
-            font=("Arial", 16),
-            command=lambda: parent.show_frame("categories")  # Changed to categories
+            font=("Arial", 16)
         )
         offline.pack(pady=5)
         
-        return_btn = ctk.CTkButton(
+        ctk.CTkButton(
+            self,
+            text="Continue",
+            fg_color="green",
+            font=("Arial", 14),
+            command=lambda: parent.show_frame("categories")
+        ).pack(pady=(20, 0))
+        
+        ctk.CTkButton(
             self,
             text="Return",
             fg_color="red",
+            font=("Arial", 14),
             command=lambda: parent.show_frame("welcome")
-        )
-        return_btn.pack(pady=40)
+        ).pack(pady=10)
+
+class CategoryFrame(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(parent, fg_color="#3f51b5")
         
+        title = ctk.CTkLabel(
+            self,
+            text="Select Categories:",
+            text_color="white",
+            font=("Arial", 20)
+        )
+        title.pack(pady=(50, 20))
+        
+        self.category_vars = {}
+        categories = list(parent.all_questions.keys())
+        
+        checkbox_frame = ctk.CTkFrame(self, fg_color="transparent")
+        checkbox_frame.pack(pady=20)
+        
+        for category in categories:
+            var = ctk.BooleanVar()
+            self.category_vars[category] = var
+            ctk.CTkCheckBox(
+                checkbox_frame,
+                text=category,
+                variable=var,
+                text_color="white",
+                font=("Arial", 14)
+            ).pack(pady=10, padx=20, anchor="w")
+        
+        btn_frame = ctk.CTkFrame(self, fg_color="transparent")
+        btn_frame.pack(pady=30)
+        
+        ctk.CTkButton(
+            btn_frame,
+            text="Start Quiz",
+            fg_color="green",
+            font=("Arial", 14),
+            command=self.start_quiz
+        ).pack(side="left", padx=10)
+        
+        ctk.CTkButton(
+            btn_frame,
+            text="Change Mode",
+            fg_color="red",
+            font=("Arial", 14),
+            command=lambda: parent.show_frame("mode")
+        ).pack(side="left", padx=10)
+    
+    def start_quiz(self):
+        selected = [cat for cat, var in self.category_vars.items() if var.get()]
+        if not selected:
+            warning = ctk.CTkLabel(
+                self,
+                text="Please select at least one category",
+                text_color="yellow",
+                font=("Arial", 14)
+            )
+            warning.pack(pady=10)
+            self.after(2000, warning.destroy)
+            return
+        
+        self.master.selected_categories = selected
+        self.master.prepare_quiz()
+        self.master.show_frame("quiz")
 
 class QuizFrame(ctk.CTkFrame):
     def __init__(self, parent):
@@ -315,23 +350,28 @@ class QuizFrame(ctk.CTkFrame):
         self.parent = parent
         self.answer_var = ctk.StringVar()
         
-        # Bigger font for question
-        test = self.parent.questions[0]["question"]
+        if not parent.questions:
+            ctk.CTkLabel(
+                self,
+                text="No questions available",
+                text_color="yellow",
+                font=("Arial", 18)
+            ).pack(pady=50)
+            return
+        
+        question = parent.questions[parent.current_question]
+        
         title = ctk.CTkLabel(
             self,
-            text=test,
+            text=question["question"],
             text_color="white",
             font=("Arial", 18, "bold")
         )
         title.pack(pady=(50, 30))
         
-        # Create options frame for better alignment
         options_frame = ctk.CTkFrame(self, fg_color="transparent")
         options_frame.pack(pady=10)
         
-        question = self.parent.questions[self.parent.current_question]
-        
-        # Add options with more spacing to the left
         for i, option in enumerate(question["options"], 1):
             ctk.CTkRadioButton(
                 options_frame,
@@ -340,25 +380,27 @@ class QuizFrame(ctk.CTkFrame):
                 value=str(i),
                 text_color="white",
                 font=("Arial", 14)
-            ).pack(pady=10, padx=(50, 0), anchor="w")  # Left alignment with padding
+            ).pack(pady=10, padx=(50, 0), anchor="w")
         
         btn_frame = ctk.CTkFrame(self, fg_color="transparent")
-        btn_frame.pack(pady=40)  # Increased spacing between buttons
+        btn_frame.pack(pady=40)
         
         ctk.CTkButton(
             btn_frame,
-            text="Return",
-            fg_color="red",
-            command=lambda: parent.show_frame("mode")
-        ).pack(side="left", padx=20)  # Increased spacing between buttons
-        
-        ctk.CTkButton(
-            btn_frame,
-            text="Next",
+            text="Submit Answer",
             fg_color="green",
+            font=("Arial", 14),
             command=self.check_answer
-        ).pack(side="left", padx=20)  # Increased spacing between buttons
-
+        ).pack(side="left", padx=20)
+        
+        ctk.CTkButton(
+            btn_frame,
+            text="Quit Quiz",
+            fg_color="red",
+            font=("Arial", 14),
+            command=lambda: parent.show_frame("mode")
+        ).pack(side="left", padx=20)
+    
     def check_answer(self):
         question = self.parent.questions[self.parent.current_question]
         if self.answer_var.get() == question["correct"]:
@@ -366,7 +408,7 @@ class QuizFrame(ctk.CTkFrame):
             self.next_question()
         else:
             self.parent.show_frame("wrong")
-
+    
     def next_question(self):
         self.parent.current_question += 1
         if self.parent.current_question >= len(self.parent.questions):
@@ -380,14 +422,14 @@ class WrongFrame(ctk.CTkFrame):
         
         ctk.CTkLabel(
             self,
-            text="YOUR ANSWER WAS WRONG!!",
+            text="Incorrect Answer!",
             text_color="red",
             font=("Arial", 24, "bold")
         ).pack(pady=(100, 20))
         
         ctk.CTkLabel(
             self,
-            text="The right answer is:",
+            text="The correct answer is:",
             text_color="white",
             font=("Arial", 16)
         ).pack(pady=5)
@@ -395,85 +437,250 @@ class WrongFrame(ctk.CTkFrame):
         question = parent.questions[parent.current_question]
         correct_answer = question["options"][int(question["correct"]) - 1]
         
-        # Highlight the correct answer in green
         ctk.CTkLabel(
             self,
             text=correct_answer,
-            text_color="#4CAF50",  # Green color for correct answer
+            text_color="#4CAF50",
             font=("Arial", 18, "bold")
         ).pack(pady=10)
         
         ctk.CTkButton(
             self,
-            text="Next",
+            text="Next Question",
             fg_color="green",
-            command=lambda: parent.show_frame("quiz")
+            font=("Arial", 14),
+            command=self.next_question
         ).pack(pady=40)
+    
+    def next_question(self):
+        self.master.current_question += 1
+        if self.master.current_question >= len(self.master.questions):
+            self.master.show_frame("score")
+        else:
+            self.master.show_frame("quiz")
+class HistoryFrame(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(parent, fg_color="#3f51b5")
+        
+        # Title
+        ctk.CTkLabel(
+            self,
+            text=f"Quiz History for {parent.current_user}",
+            text_color="white",
+            font=("Arial", 24, "bold")
+        ).pack(pady=(30, 20))
+        
+        # Create scrollable frame for history entries
+        history_container = ctk.CTkScrollableFrame(
+            self,
+            width=500,
+            height=250,
+            fg_color="transparent"
+        )
+        history_container.pack(pady=20, padx=20, fill="both", expand=True)
+        
+        # Load and display history
+        try:
+            with open('users.json', 'r') as f:
+                users = json.load(f)
+                history = users.get(parent.current_user, [])
+                
+                if not history:
+                    ctk.CTkLabel(
+                        history_container,
+                        text="No quiz history available",
+                        text_color="yellow",
+                        font=("Arial", 16)
+                    ).pack(pady=20)
+                else:
+                    # Display each history entry
+                    for entry in reversed(history):
+                        entry_frame = ctk.CTkFrame(
+                            history_container,
+                            fg_color="#1a237e",
+                            corner_radius=10
+                        )
+                        entry_frame.pack(pady=5, padx=10, fill="x")
+                        
+                        # Date
+                        ctk.CTkLabel(
+                            entry_frame,
+                            text=f"Date: {entry['date']}",
+                            text_color="white",
+                            font=("Arial", 14)
+                        ).pack(pady=(5, 0), padx=10, anchor="w")
+                        
+                        # Score
+                        ctk.CTkLabel(
+                            entry_frame,
+                            text=f"Score: {entry['score']}",
+                            text_color="#4CAF50",
+                            font=("Arial", 14, "bold")
+                        ).pack(pady=(0, 5), padx=10, anchor="w")
+                        
+                        # Categories
+                        if 'categories' in entry:
+                            categories_text = ", ".join(entry['categories'])
+                            ctk.CTkLabel(
+                                entry_frame,
+                                text=f"Categories: {categories_text}",
+                                text_color="white",
+                                font=("Arial", 12)
+                            ).pack(pady=(0, 5), padx=10, anchor="w")
+                        
+                        # Add separator except for last item
+                        if entry != history[-1]:
+                            ctk.CTkFrame(
+                                history_container,
+                                height=1,
+                                fg_color="gray70"
+                            ).pack(fill="x", pady=5)
+                            
+        except Exception as e:
+            ctk.CTkLabel(
+                history_container,
+                text="Error loading history",
+                text_color="red",
+                font=("Arial", 16)
+            ).pack(pady=20)
+            print(f"Error loading history: {e}")
+        
+        # Button frame
+        btn_frame = ctk.CTkFrame(self, fg_color="transparent")
+        btn_frame.pack(pady=20)
+        
+        # Add buttons
+        ctk.CTkButton(
+            btn_frame,
+            text="New Quiz",
+            fg_color="green",
+            font=("Arial", 14),
+            command=lambda: parent.show_frame("mode")
+        ).pack(side="left", padx=10)
+        
+        ctk.CTkButton(
+            btn_frame,
+            text="Return to Welcome",
+            fg_color="#FF9800",
+            font=("Arial", 14),
+            command=lambda: parent.show_frame("welcome")
+        ).pack(side="left", padx=10)
+        
+        ctk.CTkButton(
+            btn_frame,
+            text="Change User",
+            fg_color="red",
+            font=("Arial", 14),
+            command=lambda: parent.show_frame("login")
+        ).pack(side="left", padx=10)
 
 class ScoreFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
         
+        # Calculate percentage score
+        total_questions = len(parent.questions)
+        percentage = (parent.score / total_questions) * 100 if total_questions > 0 else 0
+        
+        # Display score
         ctk.CTkLabel(
             self,
-            text=f"Your final score: {parent.score}/{len(parent.questions)}",
+            text="Quiz Complete!",
             text_color="white",
-            font=("Arial", 24)
-        ).pack(pady=(150, 20))
-        
-        ctk.CTkButton(
-            self,
-            text="Next",
-            fg_color="green",
-            command=self.save_and_return
-        ).pack(pady=40)
-    
-    def save_and_return(self):
-        with open('users.json', 'r') as f:
-            users = json.load(f)
-        
-        users[self.master.current_user].append({
-            'date': datetime.now().strftime('%d/%m/%Y'),
-            'score': f"{self.master.score}/{len(self.master.questions)}"
-        })
-        
-        with open('users.json', 'w') as f:
-            json.dump(users, f)
-        
-        self.master.show_frame("history")
-
-class HistoryFrame(ctk.CTkFrame):
-    def __init__(self, parent):
-        super().__init__(parent, fg_color="#3f51b5")
+            font=("Arial", 24, "bold")
+        ).pack(pady=(50, 20))
         
         ctk.CTkLabel(
             self,
-            text=f"History of\n{parent.current_user}:",
+            text=f"Your Score: {parent.score}/{total_questions}",
             text_color="white",
             font=("Arial", 20)
-        ).pack(pady=(100, 20))
+        ).pack(pady=10)
         
+        ctk.CTkLabel(
+            self,
+            text=f"Percentage: {percentage:.1f}%",
+            text_color="white",
+            font=("Arial", 20)
+        ).pack(pady=10)
+        
+        # Display performance message based on score
+        performance_text = self.get_performance_message(percentage)
+        ctk.CTkLabel(
+            self,
+            text=performance_text,
+            text_color="#4CAF50",
+            font=("Arial", 18)
+        ).pack(pady=20)
+        
+        # Save score to user history
+        self.save_score(parent)
+        
+        # Buttons frame
+        btn_frame = ctk.CTkFrame(self, fg_color="transparent")
+        btn_frame.pack(pady=40)
+        
+        ctk.CTkButton(
+            btn_frame,
+            text="View History",
+            fg_color="#FF9800",
+            font=("Arial", 14),
+            command=lambda: parent.show_frame("history")
+        ).pack(side="left", padx=10)
+        
+        ctk.CTkButton(
+            btn_frame,
+            text="Try Again",
+            fg_color="green",
+            font=("Arial", 14),
+            command=lambda: parent.show_frame("mode")
+        ).pack(side="left", padx=10)
+        
+        ctk.CTkButton(
+            btn_frame,
+            text="Change User",
+            fg_color="red",
+            font=("Arial", 14),
+            command=lambda: parent.show_frame("login")
+        ).pack(side="left", padx=10)
+    
+    def get_performance_message(self, percentage):
+        """Return a performance message based on the score percentage."""
+        if percentage >= 90:
+            return "Excellent! Outstanding performance!"
+        elif percentage >= 80:
+            return "Great job! Very good performance!"
+        elif percentage >= 70:
+            return "Good work! Keep it up!"
+        elif percentage >= 60:
+            return "Not bad! Room for improvement."
+        else:
+            return "Keep practicing! You can do better!"
+    
+    def save_score(self, parent):
+        """Save the quiz score to user history."""
         try:
             with open('users.json', 'r') as f:
                 users = json.load(f)
-                history = users[parent.current_user]
+            
+            # Create score entry
+            score_entry = {
+                "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                "score": f"{parent.score}/{len(parent.questions)}",
+                "categories": parent.selected_categories
+            }
+            
+            # Add to user's history
+            if parent.current_user not in users:
+                users[parent.current_user] = []
+            users[parent.current_user].append(score_entry)
+            
+            # Save updated history
+            with open('users.json', 'w') as f:
+                json.dump(users, f, indent=4)
                 
-                for entry in history[-3:]:
-                    ctk.CTkLabel(
-                        self,
-                        text=f"date: {entry['date']}, score: {entry['score']}",
-                        text_color="white",
-                        font=("Arial", 14)
-                    ).pack(pady=10)
-        except:
-            pass
-        
-        ctk.CTkButton(
-            self,
-            text="Next",
-            fg_color="green",
-            command=lambda: parent.show_frame("mode")
-        ).pack(pady=40)
+        except Exception as e:
+            print(f"Error saving score: {e}")
 
 if __name__ == "__main__":
     app = MCQApp()

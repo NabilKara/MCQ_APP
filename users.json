@@ -1,0 +1,65 @@
+{
+    "Said": [
+        {
+            "date": "29/12/2024",
+            "score": "1/1"
+        },
+        {
+            "date": "29/12/2024",
+            "score": "1/1"
+        },
+        {
+            "date": "2024-12-29 18:55",
+            "score": "0/1",
+            "categories": [
+                "Computer Science"
+            ]
+        },
+        {
+            "date": "2024-12-29 18:57",
+            "score": "0/1",
+            "categories": [
+                "Computer Science"
+            ]
+        },
+        {
+            "date": "2024-12-29 18:57",
+            "score": "0/1",
+            "categories": [
+                "Computer Science"
+            ]
+        }
+    ],
+    "adfm;lamf;laf": [
+        {
+            "date": "29/12/2024",
+            "score": "1/1"
+        }
+    ],
+    "Ahmed": [],
+    "Saud": [
+        {
+            "date": "2024-12-29 18:40",
+            "score": "0/1",
+            "categories": [
+                "Computer Science"
+            ]
+        }
+    ],
+    "Hamid": [
+        {
+            "date": "2024-12-29 19:03",
+            "score": "0/1",
+            "categories": [
+                "Computer Science"
+            ]
+        },
+        {
+            "date": "2024-12-29 19:03",
+            "score": "1/1",
+            "categories": [
+                "Computer Science"
+            ]
+        }
+    ]
+}

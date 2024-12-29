@@ -1,0 +1,158 @@
+{
+    "Python": [
+        {
+            "question": "What is the output of the following code?\nprint(type(3.14))",
+            "options": [
+                "int",
+                "float",
+                "str",
+                "list"
+            ],
+            "correct": "2"
+        },
+        {
+            "question": "Which of the following methods is used to add an element to a list?",
+            "options": [
+                "append()",
+                "add()",
+                "insert()",
+                "push()"
+            ],
+            "correct": "1"
+        },
+        {
+            "question": "What keyword is used to define a function in Python?",
+            "options": [
+                "function",
+                "def",
+                "lambda",
+                "func"
+            ],
+            "correct": "2"
+        },
+        {
+            "question": "What is the output of the following code?\nx = [1, 2, 3]\nprint(x[1])",
+            "options": [
+                "1",
+                "2",
+                "3",
+                "IndexError"
+            ],
+            "correct": "2"
+        },
+        {
+            "question": "Which of the following is used to handle exceptions in Python?",
+            "options": [
+                "try",
+                "catch",
+                "handle",
+                "except"
+            ],
+            "correct": "1"
+        }
+    ],
+    "Networking": [
+        {
+            "question": "Which protocol is used to send email?",
+            "options": [
+                "SMTP",
+                "HTTP",
+                "FTP",
+                "DNS"
+            ],
+            "correct": "1"
+        },
+        {
+            "question": "What does the IP in IP address stand for?",
+            "options": [
+                "Internet Protocol",
+                "Internet Packet",
+                "Internal Protocol",
+                "Information Protocol"
+            ],
+            "correct": "1"
+        },
+        {
+            "question": "Which layer of the OSI model handles routing?",
+            "options": [
+                "Network",
+                "Transport",
+                "Data Link",
+                "Session"
+            ],
+            "correct": "1"
+        },
+        {
+            "question": "What is the default port number for HTTP?",
+            "options": [
+                "80",
+                "443",
+                "21",
+                "25"
+            ],
+            "correct": "1"
+        },
+        {
+            "question": "Which protocol is used to resolve IP addresses to MAC addresses?",
+            "options": [
+                "ARP",
+                "DNS",
+                "RARP",
+                "DHCP"
+            ],
+            "correct": "1"
+        }
+    ],
+    "Computer Science": [
+        {
+            "question": "What is the time complexity of binary search?",
+            "options": [
+                "O(log n)",
+                "O(n)",
+                "O(n^2)",
+                "O(1)"
+            ],
+            "correct": "1"
+        },
+        {
+            "question": "Which data structure is used for implementing recursion?",
+            "options": [
+                "Stack",
+                "Queue",
+                "Linked List",
+                "Array"
+            ],
+            "correct": "1"
+        },
+        {
+            "question": "What does CPU stand for?",
+            "options": [
+                "Central Processing Unit",
+                "Central Process Unit",
+                "Control Processing Unit",
+                "Computer Processing Unit"
+            ],
+            "correct": "1"
+        },
+        {
+            "question": "What is the result of 2^3 in Python?",
+            "options": [
+                "8",
+                "6",
+                "9",
+                "2"
+            ],
+            "correct": "1"
+        },
+        {
+            "question": "Which algorithm is used for finding the shortest path in a graph?",
+            "options": [
+                "Dijkstra's algorithm",
+                "Bubble sort",
+                "Binary search",
+                "Quick sort"
+            ],
+            "correct": "1"
+        }
+    ]
+}
