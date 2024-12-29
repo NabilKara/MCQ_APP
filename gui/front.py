@@ -13,19 +13,17 @@ class MCQApp(ctk.CTk):
         self.current_user = None
         self.score = 0
         self.current_question = 0
+        self.selected_categories = []
+        self.questions = []
         
-        self.questions = [
-            {
-                "question": "What is Python?",
-                "options": ["A snake", "A programming language", "A bird", "A food"],
-                "correct": "2"
-            },
-        ]
+        # Load questions from JSON file or fallback to default
+        self.all_questions = self.load_questions()
         
         self.frames = {
             "login": LoginFrame,
-            "welcome": WelcomeFrame,  # New welcome frame to show history
+            "welcome": WelcomeFrame,
             "mode": ModeFrame,
+            "categories": CategoryFrame,  # Added CategoryFrame
             "history": HistoryFrame,
             "quiz": QuizFrame,
             "wrong": WrongFrame,
@@ -35,6 +33,45 @@ class MCQApp(ctk.CTk):
         self.current_frame = None
         self.show_frame("login")
     
+    def load_questions(self):
+        try:
+            with open('questions.json', 'r') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            return {
+                "Python": [
+                    {
+                        "question": "What is Python?",
+                        "options": ["Programming Language", "Snake", "Movie", "Game"],
+                        "correct": "1"
+                    }
+                ],
+                "Computer Science": [
+                    {
+                        "question": "What does CPU stand for?",
+                        "options": [
+                            "Central Processing Unit",
+                            "Central Programming Unit",
+                            "Control Processing Unit",
+                            "Compute Program Unit"
+                        ],
+                        "correct": "1"
+                    }
+                ],
+                "Networking": [
+                    {
+                        "question": "What is the use of an IP address?",
+                        "options": [
+                            "Identifies a device on a network",
+                            "Encrypts data",
+                            "Runs applications",
+                            "None of these"
+                        ],
+                        "correct": "1"
+                    }
+                ]
+            }
+    
     def show_frame(self, frame_name):
         if self.current_frame:
             self.current_frame.destroy()
@@ -42,7 +79,21 @@ class MCQApp(ctk.CTk):
         Frame = self.frames[frame_name]
         self.current_frame = Frame(self)
         self.current_frame.pack(fill="both", expand=True)
-
+    
+    def prepare_quiz(self):
+        """Prepare quiz questions based on selected categories."""
+        self.questions = []
+        for category in self.selected_categories:
+            category_questions = self.all_questions.get(category, [])
+            for q in category_questions:
+                formatted_q = {
+                    "question": q["question"],
+                    "options": q["options"],
+                    "correct": q["correct"]
+                }
+                self.questions.append(formatted_q)
+        self.current_question = 0
+        self.score = 0
 
 class LoginFrame(ctk.CTkFrame):
     def __init__(self, parent):
@@ -67,8 +118,6 @@ class LoginFrame(ctk.CTkFrame):
     
     def check_user(self):
         username = self.username_entry.get()
-        is_new_user = False
-        
         try:
             with open('users.json', 'r') as f:
                 users = json.load(f)
@@ -79,17 +128,82 @@ class LoginFrame(ctk.CTkFrame):
             users[username] = []
             with open('users.json', 'w') as f:
                 json.dump(users, f)
-            is_new_user = True
         
         self.master.current_user = username
         
-        # Show mode directly for new users, welcome screen for existing users
-        if is_new_user:
-            self.master.show_frame("mode")
-        elif not users[username]:
+        # Show mode directly if no history, otherwise show welcome screen
+        if not users[username]:
             self.master.show_frame("mode")
         else:
             self.master.show_frame("welcome")
+
+class CategoryFrame(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(parent, fg_color="#3f51b5")
+        
+        title = ctk.CTkLabel(
+            self,
+            text="Select Categories:",
+            text_color="white",
+            font=("Arial", 20)
+        )
+        title.pack(pady=(50, 20))
+        
+        self.category_vars = {}
+        categories = list(parent.all_questions.keys())
+        
+        # Create a frame for checkboxes
+        checkbox_frame = ctk.CTkFrame(self, fg_color="transparent")
+        checkbox_frame.pack(pady=20)
+        
+        for category in categories:
+            var = ctk.BooleanVar()
+            self.category_vars[category] = var
+            ctk.CTkCheckBox(
+                checkbox_frame,
+                text=category,
+                variable=var,
+                text_color="white",
+                font=("Arial", 14)
+            ).pack(pady=10, padx=20, anchor="w")
+        
+        # Button frame
+        btn_frame = ctk.CTkFrame(self, fg_color="transparent")
+        btn_frame.pack(pady=30)
+        
+        ctk.CTkButton(
+            btn_frame,
+            text="Start Quiz",
+            fg_color="green",
+            font=("Arial", 14),
+            command=self.start_quiz
+        ).pack(side="left", padx=10)
+        
+        ctk.CTkButton(
+            btn_frame,
+            text="Change Mode",
+            fg_color="red",
+            font=("Arial", 14),
+            command=lambda: parent.show_frame("mode")
+        ).pack(side="left", padx=10)
+    
+    def start_quiz(self):
+        selected = [cat for cat, var in self.category_vars.items() if var.get()]
+        if not selected:
+            # Show warning if no categories selected
+            warning = ctk.CTkLabel(
+                self,
+                text="Please select at least one category",
+                text_color="yellow",
+                font=("Arial", 14)
+            )
+            warning.pack(pady=10)
+            self.after(2000, warning.destroy)
+            return
+        
+        self.master.selected_categories = selected
+        self.master.prepare_quiz()
+        self.master.show_frame("quiz")
 
 class WelcomeFrame(ctk.CTkFrame):
     def __init__(self, parent):
@@ -181,7 +295,7 @@ class ModeFrame(ctk.CTkFrame):
             value="offline",
             text_color="white",
             font=("Arial", 16),
-            command=lambda: parent.show_frame("quiz")
+            command=lambda: parent.show_frame("categories")  # Changed to categories
         )
         offline.pack(pady=5)
         
@@ -189,7 +303,7 @@ class ModeFrame(ctk.CTkFrame):
             self,
             text="Return",
             fg_color="red",
-            command=lambda: parent.show_frame("welcome")  # Return to welcome instead of login
+            command=lambda: parent.show_frame("welcome")
         )
         return_btn.pack(pady=40)
         
