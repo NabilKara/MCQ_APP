@@ -28,5 +28,10 @@
         "password": "$2b$12$YDaWojcVaXAEoHdlu5pO8ex14ke2LQU8jQOQmmteC8O8P3vzyP2Zq",
         "created_at": "2024-12-30 16:00",
         "history": []
+    },
+    "test": {
+        "password": "$2b$12$fLCuWD9QC7wKY9bZmmQzmeCAOjh3MtBP2ixVYp6XP3.FzWXnopEzO",
+        "created_at": "2024-12-31 12:27",
+        "history": []
     }
 }
