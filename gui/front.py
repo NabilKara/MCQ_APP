@@ -1194,31 +1194,30 @@ class ScoreFrame(ctk.CTkFrame):
         else:
             return "Keep practicing! You can do better!"
 
-def save_score(self, parent):
-    try:
-        with open('data/users.json', 'r') as f:
-            users = json.load(f)
+    def save_score(self, parent):
+        """Save the quiz score to user history."""
+        try:
+            with open('data/users.json', 'r') as f:
+                users = json.load(f)
 
-        if not isinstance(users, dict):
-            users = {}
+            # Create score entry
+            score_entry = {
+                "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                "score": f"{parent.score}/{len(parent.questions)}",
+                "categories": parent.selected_categories
+            }
 
-        score_entry = {
-            "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
-            "score": f"{parent.score}/{len(parent.questions)}",
-            "categories": parent.selected_categories
-        }
+            # Add to user's history
+            if parent.current_user not in users:
+                users[parent.current_user] = []
+            users[parent.current_user].append(score_entry)
+            
+            # Save updated history
+            with open('data/users.json', 'w') as f:
+                json.dump(users, f, indent=4)
 
-        if parent.current_user not in users or not isinstance(users[parent.current_user], list):
-            users[parent.current_user] = []
-
-        users[parent.current_user].append(score_entry)
-
-        with open('data/users.json', 'w') as f:
-            json.dump(users, f, indent=4)
-
-    except Exception as e:
-        print(f"Error saving score: {e}")
-
+        except Exception as e:
+            print(f"Error saving score: {e}")
 
 if __name__ == "__main__":
     app = MCQApp()
