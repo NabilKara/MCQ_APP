@@ -33,5 +33,10 @@
         "password": "$2b$12$fLCuWD9QC7wKY9bZmmQzmeCAOjh3MtBP2ixVYp6XP3.FzWXnopEzO",
         "created_at": "2024-12-31 12:27",
         "history": []
+    },
+    "Ahmed": {
+        "password": "$2b$12$70f6HrlmkUCb8G8Yo4ZJ9.iUiaJQkqSKDpED1RUt2Z09rBl.clWGe",
+        "created_at": "2025-01-01 14:17",
+        "history": []
     }
 }

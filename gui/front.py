@@ -158,7 +158,6 @@ class SignupFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
 
-        # Greeting Label
         greeting = ctk.CTkLabel(
             self,
             text="Welcome to the MCQ Quiz App!",
@@ -167,11 +166,9 @@ class SignupFrame(ctk.CTkFrame):
         )
         greeting.pack(pady=(40, 20))
 
-        # Login Container
         login_container = ctk.CTkFrame(self, fg_color="#3949ab", corner_radius=15)
         login_container.pack(pady=20, padx=40)
 
-        # Username Entry
         self.username_entry = ctk.CTkEntry(
             login_container,
             placeholder_text="Enter username",
@@ -181,9 +178,8 @@ class SignupFrame(ctk.CTkFrame):
             font=("Arial", 14)
         )
         self.username_entry.pack(pady=(20, 10), padx=20)
-        self.username_entry.bind('<Return>', lambda e: self.check_user())  # Allow pressing Enter
+        self.username_entry.bind('<Return>', lambda e: self.check_user())
 
-        # Password Entry
         self.password_entry = ctk.CTkEntry(
             login_container,
             placeholder_text="Enter password",
@@ -191,16 +187,16 @@ class SignupFrame(ctk.CTkFrame):
             fg_color="white",
             text_color="black",
             font=("Arial", 14),
-            show="*"  # Masks input characters with "*"
+            show="*"
         )
         self.password_entry.pack(pady=(10, 10), padx=20)
-
-        # Allow pressing Enter to trigger checkuser with both username and password
         self.password_entry.bind('<Return>', lambda e: self.check_user())
 
-        # Login Button
-        self.login_button = ctk.CTkButton(
-            login_container,
+        button_container = ctk.CTkFrame(login_container, fg_color="transparent")
+        button_container.pack(pady=(10, 20))
+
+        self.signup_button = ctk.CTkButton(
+            button_container,
             text="Sign Up",
             command=self.check_user,
             fg_color="#4CAF50",
@@ -210,9 +206,21 @@ class SignupFrame(ctk.CTkFrame):
             font=("Arial", 14, "bold"),
             corner_radius=8
         )
-        self.login_button.pack(pady=(10, 20))
+        self.signup_button.pack(side="left", padx=10)
 
-        # Feedback Label
+        self.return_button = ctk.CTkButton(
+            button_container,
+            text="Return",
+            command=lambda: self.master.show_frame("start"),
+            fg_color="#f44336",
+            hover_color="#d32f2f",
+            width=150,
+            height=40,
+            font=("Arial", 14, "bold"),
+            corner_radius=8
+        )
+        self.return_button.pack(side="left", padx=10)
+
         self.feedback_label = ctk.CTkLabel(
             self,
             text="",
@@ -221,7 +229,6 @@ class SignupFrame(ctk.CTkFrame):
         )
         self.feedback_label.pack(pady=(10, 0))
 
-    # This function will signup the user if it doesn't already exit
     def check_user(self):
         username = self.username_entry.get().strip()
         if not username:
@@ -258,19 +265,13 @@ class SignupFrame(ctk.CTkFrame):
         with open('data/users.json', 'w') as file:
             json.dump(users, file, indent=4)
 
-        # Set the current user and navigate to the next frame
         self.master.current_user = username
         self.master.current_userdata = new_user[username]
         self.master.show_frame("mode" if not users[username] else "welcome")
 
     def display_feedback(self, message, color):
-        """
-        Display feedback message to the user in the feedback label.
-        The message disappears after a short delay.
-        """
         self.feedback_label.configure(text=message, text_color=color)
-        self.after(3000, lambda: self.feedback_label.configure(text=""))  # Clear the feedback after 3 seconds
-
+        self.after(3000, lambda: self.feedback_label.configure(text=""))
 class LoginFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
@@ -298,7 +299,7 @@ class LoginFrame(ctk.CTkFrame):
             font=("Arial", 14)
         )
         self.username_entry.pack(pady=(20, 10), padx=20)
-        self.username_entry.bind('<Return>', lambda e: self.check_user())  # Allow pressing Enter
+        self.username_entry.bind('<Return>', lambda e: self.check_user())
 
         # Password Entry
         self.password_entry = ctk.CTkEntry(
@@ -308,16 +309,18 @@ class LoginFrame(ctk.CTkFrame):
             fg_color="white",
             text_color="black",
             font=("Arial", 14),
-            show="*"  # Masks input characters with "*"
+            show="*"
         )
         self.password_entry.pack(pady=(10, 10), padx=20)
-
-        # Allow pressing Enter to trigger checkuser with both username and password
         self.password_entry.bind('<Return>', lambda e: self.check_user())
+
+        # Button Container
+        button_container = ctk.CTkFrame(login_container, fg_color="transparent")
+        button_container.pack(pady=(10, 20))
 
         # Login Button
         self.login_button = ctk.CTkButton(
-            login_container,
+            button_container,
             text="Login",
             command=self.check_user,
             fg_color="#4CAF50",
@@ -327,7 +330,21 @@ class LoginFrame(ctk.CTkFrame):
             font=("Arial", 14, "bold"),
             corner_radius=8
         )
-        self.login_button.pack(pady=(10, 20))
+        self.login_button.pack(side="left", padx=10)
+
+        # Return Button
+        self.return_button = ctk.CTkButton(
+            button_container,
+            text="Return",
+            command=lambda: self.master.show_frame("start"),
+            fg_color="#f44336",
+            hover_color="#d32f2f",
+            width=150,
+            height=40,
+            font=("Arial", 14, "bold"),
+            corner_radius=8
+        )
+        self.return_button.pack(side="left", padx=10)
 
         # Feedback Label
         self.feedback_label = ctk.CTkLabel(
@@ -364,8 +381,7 @@ class LoginFrame(ctk.CTkFrame):
                 self.master.show_frame("mode" if not users[username] else "welcome")
                 return
 
-        # If user doesn't exist, notify and create a new user
-        self.display_feedback(f"👤 User '{username}' does not exist!", "red")
+        self.display_feedback(f"👤 Wrong username or password", "red")
         return
 
     def display_feedback(self, message, color):
@@ -538,111 +554,97 @@ class CategoryFrame(ctk.CTkFrame):
         self.master.prepare_quiz()
         self.master.show_frame("quiz")
 
-import customtkinter as ctk
-
 class QuizFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
-
-        # Configure frame size
         self.configure(width=600, height=400)
         self.pack_propagate(False)
-
+        
         self.parent = parent
         self.answer_var = ctk.StringVar()
 
-        # Handle case when no questions are available
         if not parent.questions:
-            ctk.CTkLabel(
-                self,
-                text="No questions available",
-                text_color="yellow",
-                font=("Arial", 18)
-            ).pack(pady=50)
+            ctk.CTkLabel(self, text="No questions available", text_color="yellow", font=("Arial", 18)).pack(pady=50)
             return
 
-        # Create main container for content
-        content_frame = ctk.CTkFrame(self, fg_color="transparent")
-        content_frame.pack(expand=True, fill="both", padx=20, pady=20)
+        # Progress bar
+        progress_frame = ctk.CTkFrame(self, fg_color="#2196f3", height=40)
+        progress_frame.pack(fill="x")
+        progress_frame.pack_propagate(False)
+        
+        progress_text = f"Question {parent.current_question + 1} of {len(parent.questions)}"
+        progress_label = ctk.CTkLabel(progress_frame, text=progress_text, text_color="white", font=("Arial", 16, "bold"))
+        progress_label.pack(expand=True)
 
-        # Display current question
+        # Question container
+        question_container = ctk.CTkFrame(self, fg_color="transparent")
+        question_container.pack(expand=True, fill="both", padx=20, pady=(10, 20))
+
         question = parent.questions[parent.current_question]
-
-        # Question title
+        
+        # Question title - centered
         title = ctk.CTkLabel(
-            content_frame,
-            text=question["question"],
-            text_color="white",
-            font=("Arial", 18, "bold"),
-            wraplength=500  # Ensure long questions wrap properly
+            question_container, 
+            text=question["question"], 
+            text_color="white", 
+            font=("Arial", 18, "bold"), 
+            wraplength=500,
+            justify="center"
         )
-        title.pack(pady=(20, 30))
+        title.pack(expand=True, anchor="center", pady=(0, 20))
 
-        # Options frame
-        options_frame = ctk.CTkFrame(content_frame, fg_color="transparent")
-        options_frame.pack(pady=10, expand=True)
+        # Options container - centered
+        options_container = ctk.CTkFrame(question_container, fg_color="transparent")
+        options_container.pack(expand=True, anchor="center", pady=(0, 20))
 
-        # Create radio buttons for options
         for i, option in enumerate(question["options"], 1):
             option_btn = ctk.CTkRadioButton(
-                options_frame,
+                options_container,
                 text=option,
                 variable=self.answer_var,
                 value=str(i),
                 text_color="white",
                 font=("Arial", 14),
-                hover_color="#4a5fc1",  # Slightly lighter than background for hover effect
-                fg_color="#2196f3",     # Material design blue
+                hover_color="#4a5fc1",
+                fg_color="#2196f3"
             )
-            option_btn.pack(pady=10, padx=(50, 0), anchor="w")
+            option_btn.pack(pady=10, anchor="w")
 
-        # Button frame at the bottom
-        btn_frame = ctk.CTkFrame(self, fg_color="transparent")
-        btn_frame.pack(side="bottom", pady=(0, 20), fill="x", padx=20)
+        # Button frame
+        button_frame = ctk.CTkFrame(self, fg_color="transparent", height=80)
+        button_frame.pack(fill="x", side="bottom")
+        button_frame.pack_propagate(False)
 
-        # Center the buttons using a container frame
-        button_container = ctk.CTkFrame(btn_frame, fg_color="transparent")
+        button_container = ctk.CTkFrame(button_frame, fg_color="transparent")
         button_container.pack(expand=True)
 
-        # Submit button
-        ctk.CTkButton(
+        submit_btn = ctk.CTkButton(
             button_container,
             text="Submit Answer",
-            fg_color="#4caf50",  # Material design green
+            command=self.check_answer,
+            fg_color="#4caf50",
             hover_color="#388e3c",
             font=("Arial", 14, "bold"),
             width=150,
             height=40,
-            corner_radius=8,
-            command=self.check_answer
-        ).pack(side="left", padx=10)
+            corner_radius=8
+        )
+        submit_btn.pack(side="left", padx=10)
 
-        # Quit button
-        ctk.CTkButton(
+        quit_btn = ctk.CTkButton(
             button_container,
             text="Quit Quiz",
-            fg_color="#f44336",  # Material design red
+            command=lambda: parent.show_frame("mode"),
+            fg_color="#f44336",
             hover_color="#d32f2f",
             font=("Arial", 14, "bold"),
             width=150,
             height=40,
-            corner_radius=8,
-            command=lambda: parent.show_frame("mode")
-        ).pack(side="left", padx=10)
-
-        # Progress indicator
-        progress_text = f"Question {parent.current_question + 1} of {len(parent.questions)}"
-        progress_label = ctk.CTkLabel(
-            self,
-            text=progress_text,
-            text_color="Green",
-            font=("Arial", 12)
+            corner_radius=8
         )
-        progress_label.pack(side="bottom", pady=(0, 5))
+        quit_btn.pack(side="left", padx=10)
 
     def check_answer(self):
-        """Verify the selected answer and handle the response"""
-        # Ensure an answer is selected
         if not self.answer_var.get():
             self.show_error("Please select an answer")
             return
@@ -655,7 +657,6 @@ class QuizFrame(ctk.CTkFrame):
             self.parent.show_frame("wrong")
 
     def next_question(self):
-        """Advance to the next question or show final score"""
         self.parent.current_question += 1
         if self.parent.current_question >= len(self.parent.questions):
             self.parent.show_frame("score")
@@ -663,25 +664,13 @@ class QuizFrame(ctk.CTkFrame):
             self.parent.show_frame("quiz")
 
     def show_error(self, message):
-        """Display an error message to the user"""
         error_window = ctk.CTkToplevel(self)
         error_window.title("Error")
         error_window.geometry("300x150")
-        error_window.transient(self)  # Make the window modal
+        error_window.transient(self)
 
-        ctk.CTkLabel(
-            error_window,
-            text=message,
-            font=("Arial", 14),
-            text_color="white"
-        ).pack(pady=20)
-
-        ctk.CTkButton(
-            error_window,
-            text="OK",
-            command=error_window.destroy,
-            width=100
-        ).pack(pady=10)
+        ctk.CTkLabel(error_window, text=message, font=("Arial", 14), text_color="white").pack(pady=20)
+        ctk.CTkButton(error_window, text="OK", command=error_window.destroy, width=100).pack(pady=10)
 
 class WrongFrame(ctk.CTkFrame):
     def __init__(self, parent):
@@ -1205,30 +1194,31 @@ class ScoreFrame(ctk.CTkFrame):
         else:
             return "Keep practicing! You can do better!"
 
-    def save_score(self, parent):
-        """Save the quiz score to user history."""
-        try:
-            with open('data/users.json', 'r') as f:
-                users = json.load(f)
+def save_score(self, parent):
+    try:
+        with open('data/users.json', 'r') as f:
+            users = json.load(f)
 
-            # Create score entry
-            score_entry = {
-                "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
-                "score": f"{parent.score}/{len(parent.questions)}",
-                "categories": parent.selected_categories
-            }
+        if not isinstance(users, dict):
+            users = {}
 
-            # Add to user's history
-            if parent.current_user not in users:
-                users[parent.current_user] = []
-            users[parent.current_user].append(score_entry)
+        score_entry = {
+            "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
+            "score": f"{parent.score}/{len(parent.questions)}",
+            "categories": parent.selected_categories
+        }
 
-            # Save updated history
-            with open('data/users.json', 'w') as f:
-                json.dump(users, f, indent=4)
+        if parent.current_user not in users or not isinstance(users[parent.current_user], list):
+            users[parent.current_user] = []
 
-        except Exception as e:
-            print(f"Error saving score: {e}")
+        users[parent.current_user].append(score_entry)
+
+        with open('data/users.json', 'w') as f:
+            json.dump(users, f, indent=4)
+
+    except Exception as e:
+        print(f"Error saving score: {e}")
+
 
 if __name__ == "__main__":
     app = MCQApp()
