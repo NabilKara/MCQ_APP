@@ -176,14 +176,13 @@ class SignupFrame(ctk.CTkFrame):
             text_color="black",
             font=("Arial", 14)
         )
-
         self.feedback_label = ctk.CTkLabel(
             self,
             text="",
             text_color="yellow",
             font=("Arial", 14)
         )
-        
+
         self.username_entry.pack(pady=(20, 10), padx=20)
         self.username_entry.bind('<Return>', lambda e: um.check_user_singup(self))
 
@@ -243,9 +242,6 @@ class LoginFrame(ctk.CTkFrame):
             font=("Arial", 24, "bold")
         )
         greeting.pack(pady=(40, 20))
-
-        
-
         # Login Container
         login_container = ctk.CTkFrame(self, fg_color="#3949ab", corner_radius=15)
         login_container.pack(pady=20, padx=40)
@@ -1082,7 +1078,7 @@ class ScoreFrame(ctk.CTkFrame):
 
         # Buttons frame
         btn_frame = ctk.CTkFrame(self, fg_color="transparent")
-        btn_frame.pack(pady=40)
+        btn_frame.pack(pady=40) 
 
         ctk.CTkButton(
             btn_frame,
