@@ -10,8 +10,17 @@ def evaluate_performance(percentage):
     else:
         return "Keep practicing! You can do better!"
 
-def calculate_percentage(score, total_questions):
+def calculate_percentage(score):
     """Calculate percentage score."""
-    if total_questions == 0:
+
+    nb_questions = 0
+    total_score = 0
+
+    for i, (cat, current_score, num_questions) in enumerate(score):
+        nb_questions += num_questions
+        total_score += current_score
+
+    if nb_questions == 0:
         return 0
-    return (score / total_questions) * 100
+
+    return (total_score / nb_questions) * 100
