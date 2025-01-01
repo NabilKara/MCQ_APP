@@ -1,4 +1,5 @@
-import gui.front
-from backend import *
+from gui.front import MCQApp
 
-gui.front.MCQApp()
+if __name__ == "__main__":
+    app = MCQApp()
+    app.mainloop()

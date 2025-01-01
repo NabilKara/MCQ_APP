@@ -1,1 +1,1 @@
-# import ...backend.user_management as user_management
+class HistoryFrame(ctk.CTkFrame):

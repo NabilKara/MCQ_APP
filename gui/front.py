@@ -1,11 +1,11 @@
-from doctest import master
-
 import bcrypt
 import customtkinter as ctk
 import json
 from datetime import datetime
 import os
-# import ...backend.user_management as user_management
+import backend.question_management as qm
+import backend.score_evaluation as se
+import backend.user_management as um
 
 class MCQApp(ctk.CTk):
     def __init__(self):
@@ -23,10 +23,9 @@ class MCQApp(ctk.CTk):
         self.questions = []
 
         # Ensure the data directory exists
-        os.makedirs('data', exist_ok=True)
+        um.ensure_data_directory()
 
-        # Load questions
-        self.all_questions = self.load_questions()
+        self.all_questions = qm.load_questions()
 
         self.frames = {
             "start": StartFrame,
@@ -177,8 +176,16 @@ class SignupFrame(ctk.CTkFrame):
             text_color="black",
             font=("Arial", 14)
         )
+
+        self.feedback_label = ctk.CTkLabel(
+            self,
+            text="",
+            text_color="yellow",
+            font=("Arial", 14)
+        )
+        
         self.username_entry.pack(pady=(20, 10), padx=20)
-        self.username_entry.bind('<Return>', lambda e: self.check_user())
+        self.username_entry.bind('<Return>', lambda e: um.check_user_singup(self))
 
         self.password_entry = ctk.CTkEntry(
             login_container,
@@ -190,7 +197,7 @@ class SignupFrame(ctk.CTkFrame):
             show="*"
         )
         self.password_entry.pack(pady=(10, 10), padx=20)
-        self.password_entry.bind('<Return>', lambda e: self.check_user())
+        self.password_entry.bind('<Return>', lambda e: um.check_user_singup(self))
 
         button_container = ctk.CTkFrame(login_container, fg_color="transparent")
         button_container.pack(pady=(10, 20))
@@ -198,7 +205,7 @@ class SignupFrame(ctk.CTkFrame):
         self.signup_button = ctk.CTkButton(
             button_container,
             text="Sign Up",
-            command=self.check_user,
+            command= um.check_user_singup(self),
             fg_color="#4CAF50",
             hover_color="#388E3C",
             width=150,
@@ -221,57 +228,9 @@ class SignupFrame(ctk.CTkFrame):
         )
         self.return_button.pack(side="left", padx=10)
 
-        self.feedback_label = ctk.CTkLabel(
-            self,
-            text="",
-            text_color="yellow",
-            font=("Arial", 14)
-        )
+        
         self.feedback_label.pack(pady=(10, 0))
 
-    def check_user(self):
-        username = self.username_entry.get().strip()
-        if not username:
-            self.display_feedback("⚠️ Please enter a username.", "yellow")
-            return
-
-        password = self.password_entry.get().strip()
-        if not password:
-            self.display_feedback("⚠️ Please enter a password.", "yellow")
-            return
-
-        try:
-            with open('data/users.json', 'r') as file:
-                users = json.load(file)
-        except (FileNotFoundError, json.JSONDecodeError) as e:
-            self.display_feedback("⚠️" + e.msg, "yellow")
-            return
-
-        hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-
-        for user in users:
-            if user == username and bcrypt.checkpw(password.encode(), hashed_password.encode()):
-                self.display_feedback("⚠️ User already exists!.", "yellow")
-                return
-        new_user = {
-            username: {
-                "password": hashed_password,
-                "created_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
-                "history": []
-            },
-        }
-
-        users.update(new_user)
-        with open('data/users.json', 'w') as file:
-            json.dump(users, file, indent=4)
-
-        self.master.current_user = username
-        self.master.current_userdata = new_user[username]
-        self.master.show_frame("mode" if not users[username] else "welcome")
-
-    def display_feedback(self, message, color):
-        self.feedback_label.configure(text=message, text_color=color)
-        self.after(3000, lambda: self.feedback_label.configure(text=""))
 class LoginFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
@@ -285,9 +244,19 @@ class LoginFrame(ctk.CTkFrame):
         )
         greeting.pack(pady=(40, 20))
 
+        
+
         # Login Container
         login_container = ctk.CTkFrame(self, fg_color="#3949ab", corner_radius=15)
         login_container.pack(pady=20, padx=40)
+
+        # Feedback Label
+        self.feedback_label = ctk.CTkLabel(
+            self,
+            text="",
+            text_color="yellow",
+            font=("Arial", 14)
+        )
 
         # Username Entry
         self.username_entry = ctk.CTkEntry(
@@ -299,7 +268,7 @@ class LoginFrame(ctk.CTkFrame):
             font=("Arial", 14)
         )
         self.username_entry.pack(pady=(20, 10), padx=20)
-        self.username_entry.bind('<Return>', lambda e: self.check_user())
+        self.username_entry.bind('<Return>', lambda e: um.check_user_login(self))
 
         # Password Entry
         self.password_entry = ctk.CTkEntry(
@@ -312,7 +281,7 @@ class LoginFrame(ctk.CTkFrame):
             show="*"
         )
         self.password_entry.pack(pady=(10, 10), padx=20)
-        self.password_entry.bind('<Return>', lambda e: self.check_user())
+        self.password_entry.bind('<Return>', lambda e: um.check_user_login(self))
 
         # Button Container
         button_container = ctk.CTkFrame(login_container, fg_color="transparent")
@@ -322,7 +291,7 @@ class LoginFrame(ctk.CTkFrame):
         self.login_button = ctk.CTkButton(
             button_container,
             text="Login",
-            command=self.check_user,
+            command= um.check_user_login(self),
             fg_color="#4CAF50",
             hover_color="#388E3C",
             width=150,
@@ -346,51 +315,9 @@ class LoginFrame(ctk.CTkFrame):
         )
         self.return_button.pack(side="left", padx=10)
 
-        # Feedback Label
-        self.feedback_label = ctk.CTkLabel(
-            self,
-            text="",
-            text_color="yellow",
-            font=("Arial", 14)
-        )
+        
         self.feedback_label.pack(pady=(10, 0))
-
-    def check_user(self):
-        username = self.username_entry.get().strip()
-        if not username:
-            self.display_feedback("⚠️ Please enter a username.", "yellow")
-            return
-
-        password = self.password_entry.get().strip()
-        if not password:
-            self.display_feedback("⚠️ Please enter a password.", "yellow")
-            return
-
-        # Load user data
-        try:
-            with open('data/users.json', 'r') as file:
-                users = json.load(file)
-        except (FileNotFoundError, json.JSONDecodeError) as e:
-            self.display_feedback("⚠️" + e.msg, "yellow")
-            return
-
-        for user in users:
-            if user == username and bcrypt.checkpw(password.encode(), users[user]["password"].encode()):
-                self.master.current_user = username
-                self.master.current_userdata = users[user]
-                self.master.show_frame("mode" if not users[username] else "welcome")
-                return
-
-        self.display_feedback(f"👤 Wrong username or password", "red")
         return
-
-    def display_feedback(self, message, color):
-        """
-        Display feedback message to the user in the feedback label.
-        The message disappears after a short delay.
-        """
-        self.feedback_label.configure(text=message, text_color=color)
-        self.after(3000, lambda: self.feedback_label.configure(text=""))  # Clear the feedback after 3 seconds
 
 class WelcomeFrame(ctk.CTkFrame):
     def __init__(self, parent):
@@ -1117,7 +1044,7 @@ class ScoreFrame(ctk.CTkFrame):
 
         # Calculate percentage score
         total_questions = len(parent.questions)
-        percentage = (parent.score / total_questions) * 100 if total_questions > 0 else 0
+        percentage = se.calculate_percentage(parent.score,total_questions)
 
         # Display score
         ctk.CTkLabel(
@@ -1129,7 +1056,7 @@ class ScoreFrame(ctk.CTkFrame):
 
         ctk.CTkLabel(
             self,
-            text=f"Your Score: {parent.score}/{total_questions}",
+            text=f"Your Score: {percentage}",
             text_color="white",
             font=("Arial", 20)
         ).pack(pady=10)
@@ -1142,7 +1069,7 @@ class ScoreFrame(ctk.CTkFrame):
         ).pack(pady=10)
 
         # Display performance message based on score
-        performance_text = self.get_performance_message(percentage)
+        performance_text = se.evaluate_performance(percentage)
         ctk.CTkLabel(
             self,
             text=performance_text,
@@ -1151,7 +1078,7 @@ class ScoreFrame(ctk.CTkFrame):
         ).pack(pady=20)
 
         # Save score to user history
-        self.save_score(parent)
+        um.save_score(parent)
 
         # Buttons frame
         btn_frame = ctk.CTkFrame(self, fg_color="transparent")
@@ -1180,45 +1107,3 @@ class ScoreFrame(ctk.CTkFrame):
             font=("Arial", 14),
             command=lambda: parent.show_frame("login")
         ).pack(side="left", padx=10)
-
-    def get_performance_message(self, percentage):
-        """Return a performance message based on the score percentage."""
-        if percentage >= 90:
-            return "Excellent! Outstanding performance!"
-        elif percentage >= 80:
-            return "Great job! Very good performance!"
-        elif percentage >= 70:
-            return "Good work! Keep it up!"
-        elif percentage >= 60:
-            return "Not bad! Room for improvement."
-        else:
-            return "Keep practicing! You can do better!"
-
-    def save_score(self, parent):
-        """Save the quiz score to user history."""
-        try:
-            with open('data/users.json', 'r') as f:
-                users = json.load(f)
-
-            # Create score entry
-            score_entry = {
-                "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
-                "score": f"{parent.score}/{len(parent.questions)}",
-                "categories": parent.selected_categories
-            }
-
-            # Add to user's history
-            if parent.current_user not in users:
-                users[parent.current_user] = []
-            users[parent.current_user].append(score_entry)
-            
-            # Save updated history
-            with open('data/users.json', 'w') as f:
-                json.dump(users, f, indent=4)
-
-        except Exception as e:
-            print(f"Error saving score: {e}")
-
-if __name__ == "__main__":
-    app = MCQApp()
-    app.mainloop()
