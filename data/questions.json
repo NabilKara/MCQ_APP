@@ -2,144 +2,304 @@
     "Python": [
         {
             "question": "What is the output of the following code?\nprint(type(3.14))",
-            "options": [
-                "int",
-                "str",
-                "float",
-                "list"
-            ],
-            "correct": "3"
-        },
-        {
-            "question": "Which of the following methods is used to add an element to a list?",
-            "options": [
-                "add()",
-                "insert()",
-                "append()",
-                "push()"
-            ],
-            "correct": "3"
-        },
-        {
-            "question": "What keyword is used to define a function in Python?",
-            "options": [
-                "function",
-                "def",
-                "lambda",
-                "func"
-            ],
+            "options": ["int", "float", "str", "list"],
             "correct": "2"
         },
         {
-            "question": "What is the output of the following code?\nx = [1, 2, 3]\nprint(x[1])",
-            "options": [
-                "1",
-                "2",
-                "3",
-                "IndexError"
-            ],
-            "correct": "2"
-        },
-        {
-            "question": "Which of the following is used to handle exceptions in Python?",
-            "options": [
-                "try",
-                "catch",
-                "handle",
-                "except"
-            ],
+            "question": "Which method is used to add an element to a list?",
+            "options": ["append()", "add()", "insert()", "push()"],
             "correct": "1"
         },
         {
-            "question": "Which keyword is used to create a class in Python?",
-            "options": [
-                "def",
-                "struct",
-                "module",
-                "class"
-            ],
-            "correct": "4"
+            "question": "What keyword defines a function in Python?",
+            "options": ["function", "def", "lambda", "func"],
+            "correct": "2"
         },
         {
-            "question": "What is the output of the following code?\nprint(len('Hello'))",
-            "options": [
-                "4",
-                "6",
-                "Error",
-                "5"
-            ],
-            "correct": "4"
+            "question": "What is the output of: x = [1, 2, 3]\nprint(x[1])",
+            "options": ["1", "2", "3", "IndexError"],
+            "correct": "2"
+        },
+        {
+            "question": "Which is used to handle exceptions in Python?",
+            "options": ["try", "catch", "handle", "except"],
+            "correct": "1"
+        },
+        {
+            "question": "What is the result of 'Hello' + ' World'?",
+            "options": ["Hello World", "HelloWorld", "Error", "None"],
+            "correct": "2"
+        },
+        {
+            "question": "Which method converts string to uppercase?",
+            "options": ["upper()", "capitalize()", "toUpper()", "uppercase()"],
+            "correct": "1"
+        },
+        {
+            "question": "What is the output of len([1, 2, 3])?",
+            "options": ["3", "2", "4", "Error"],
+            "correct": "1"
+        },
+        {
+            "question": "Which operator is used for floor division?",
+            "options": ["//", "/", "%", "**"],
+            "correct": "1"
+        },
+        {
+            "question": "What is the correct way to open a file in Python?",
+            "options": ["open()", "file()", "read()", "load()"],
+            "correct": "1"
+        },
+        {
+            "question": "Which method removes whitespace from both ends?",
+            "options": ["strip()", "trim()", "clean()", "remove()"],
+            "correct": "1"
+        },
+        {
+            "question": "What is the result of bool(0)?",
+            "options": ["False", "True", "None", "Error"],
+            "correct": "1"
+        },
+        {
+            "question": "Which method sorts a list in-place?",
+            "options": ["sort()", "sorted()", "order()", "arrange()"],
+            "correct": "1"
+        },
+        {
+            "question": "What is the output of 3 * 'abc'?",
+            "options": ["abcabcabc", "abc3", "Error", "None"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is the correct way to create an empty set?",
+            "options": ["set()", "{}", "[]", "()"],
+            "correct": "1"
+        },
+        {
+            "question": "What is the result of 7 % 3?",
+            "options": ["1", "2", "3", "0"],
+            "correct": "1"
+        },
+        {
+            "question": "Which method returns dictionary keys?",
+            "options": ["keys()", "getKeys()", "dict.keys", "key()"],
+            "correct": "1"
+        },
+        {
+            "question": "What is the output of [1, 2] + [3, 4]?",
+            "options": ["[1, 2, 3, 4]", "[4, 6]", "Error", "None"],
+            "correct": "1"
+        },
+        {
+            "question": "Which statement exits a loop?",
+            "options": ["break", "exit", "continue", "return"],
+            "correct": "1"
+        },
+        {
+            "question": "What is the type of None?",
+            "options": ["NoneType", "null", "void", "undefined"],
+            "correct": "1"
+        },
+        {
+            "question": "Which method reverses a list in-place?",
+            "options": ["reverse()", "reversed()", "flip()", "inverse()"],
+            "correct": "1"
+        },
+        {
+            "question": "What is the result of 2 ** 3?",
+            "options": ["8", "6", "9", "16"],
+            "correct": "1"
+        },
+        {
+            "question": "Which operator checks for identity?",
+            "options": ["is", "==", "===", "equals"],
+            "correct": "1"
+        },
+        {
+            "question": "What is the output of list('abc')?",
+            "options": ["['a', 'b', 'c']", "abc", "Error", "None"],
+            "correct": "1"
+        },
+        {
+            "question": "Which method joins list elements into string?",
+            "options": ["join()", "concat()", "merge()", "combine()"],
+            "correct": "1"
+        },
+        {
+            "question": "What is the result of bool('')?",
+            "options": ["False", "True", "None", "Error"],
+            "correct": "1"
+        },
+        {
+            "question": "Which method adds elements to a set?",
+            "options": ["add()", "append()", "insert()", "push()"],
+            "correct": "1"
+        },
+        {
+            "question": "What is the output of round(3.7)?",
+            "options": ["4", "3", "3.7", "Error"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is used for string formatting?",
+            "options": ["format()", "f-string", "both", "neither"],
+            "correct": "3"
+        },
+        {
+            "question": "What is the result of int('101', 2)?",
+            "options": ["5", "101", "2", "Error"],
+            "correct": "1"
         }
     ],
     "Networking": [
         {
-            "question": "Which protocol is used to send email?",
-            "options": [
-                "HTTP",
-                "FTP",
-                "DNS",
-                "SMTP"
-            ],
-            "correct": "4"
-        },
-        {
-            "question": "What does the IP in IP address stand for?",
-            "options": [
-                "Internet Packet",
-                "Internal Protocol",
-                "Internet Protocol",
-                "Information Protocol"
-            ],
-            "correct": "3"
-        },
-        {
-            "question": "Which layer of the OSI model handles routing?",
-            "options": [
-                "Transport",
-                "Data Link",
-                "Network",
-                "Session"
-            ],
-            "correct": "3"
-        },
-        {
-            "question": "What is the default port number for HTTP?",
-            "options": [
-                "443",
-                "80",
-                "21",
-                "25"
-            ],
-            "correct": "2"
-        },
-        {
-            "question": "Which protocol is used to resolve IP addresses to MAC addresses?",
-            "options": [
-                "DNS",
-                "ARP",
-                "RARP",
-                "DHCP"
-            ],
-            "correct": "2"
-        },
-        {
-            "question": "Which protocol provides secure communication over the internet?",
-            "options": [
-                "HTTPS",
-                "FTP",
-                "Telnet",
-                "SMTP"
-            ],
+            "question": "Which protocol sends email?",
+            "options": ["SMTP", "HTTP", "FTP", "DNS"],
             "correct": "1"
         },
         {
-            "question": "What is the main function of a router?",
-            "options": [
-                "Forward packets between networks",
-                "Connect devices within the same network",
-                "Assign IP addresses to devices",
-                "Encrypt data for transmission"
-            ],
+            "question": "What does IP stand for?",
+            "options": ["Internet Protocol", "Internet Packet", "Internal Protocol", "Information Protocol"],
+            "correct": "1"
+        },
+        {
+            "question": "Which OSI layer handles routing?",
+            "options": ["Network", "Transport", "Data Link", "Session"],
+            "correct": "1"
+        },
+        {
+            "question": "What is HTTP's default port?",
+            "options": ["80", "443", "21", "25"],
+            "correct": "1"
+        },
+        {
+            "question": "Which protocol resolves IP to MAC addresses?",
+            "options": ["ARP", "DNS", "RARP", "DHCP"],
+            "correct": "1"
+        },
+        {
+            "question": "What is the purpose of DNS?",
+            "options": ["Domain name resolution", "Data encryption", "Network routing", "File transfer"],
+            "correct": "1"
+        },
+        {
+            "question": "Which protocol uses port 443?",
+            "options": ["HTTPS", "HTTP", "FTP", "SSH"],
+            "correct": "1"
+        },
+        {
+            "question": "What is a subnet mask used for?",
+            "options": ["Network division", "Password protection", "Data encryption", "Traffic routing"],
+            "correct": "1"
+        },
+        {
+            "question": "Which protocol is connection-oriented?",
+            "options": ["TCP", "UDP", "ICMP", "ARP"],
+            "correct": "1"
+        },
+        {
+            "question": "What is a firewall's primary function?",
+            "options": ["Network security", "Data storage", "Name resolution", "Email delivery"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a private IP range?",
+            "options": ["8.8.8.8", "192.168.0.0", "10.0.0.0", "172.16.0.0"],
+            "correct": "1"
+        },
+        {
+            "question": "What does DHCP provide?",
+            "options": ["IP addresses", "Encryption", "Routing", "Authentication"],
+            "correct": "1"
+        },
+        {
+            "question": "Which protocol is used for secure shell?",
+            "options": ["SSH", "FTP", "HTTP", "SMTP"],
+            "correct": "1"
+        },
+        {
+            "question": "What is a MAC address length?",
+            "options": ["48 bits", "32 bits", "64 bits", "128 bits"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a network topology?",
+            "options": ["Square", "Star", "Ring", "Bus"],
+            "correct": "1"
+        },
+        {
+            "question": "What does NAT do?",
+            "options": ["Address translation", "Name resolution", "Route selection", "Data encryption"],
+            "correct": "1"
+        },
+        {
+            "question": "Which protocol is connectionless?",
+            "options": ["UDP", "TCP", "HTTP", "FTP"],
+            "correct": "1"
+        },
+        {
+            "question": "What is a gateway's purpose?",
+            "options": ["Network connection", "Data storage", "User authentication", "File sharing"],
+            "correct": "1"
+        },
+        {
+            "question": "Which cable has highest speed?",
+            "options": ["Fiber optic", "Coaxial", "Twisted pair", "Ethernet"],
+            "correct": "1"
+        },
+        {
+            "question": "What does SSL provide?",
+            "options": ["Security", "Speed", "Storage", "Sharing"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a network layer?",
+            "options": ["Storage", "Application", "Transport", "Network"],
+            "correct": "1"
+        },
+        {
+            "question": "What is ping used for?",
+            "options": ["Testing connectivity", "File transfer", "Email sending", "Web browsing"],
+            "correct": "1"
+        },
+        {
+            "question": "Which uses port 22?",
+            "options": ["SSH", "HTTP", "FTP", "SMTP"],
+            "correct": "1"
+        },
+        {
+            "question": "What is a proxy's function?",
+            "options": ["Intermediary", "Storage", "Processing", "Gaming"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is a valid IP address?",
+            "options": ["192.168.1.1", "256.1.2.3", "1.2.3.256", "300.1.1.1"],
+            "correct": "1"
+        },
+        {
+            "question": "What does VPN provide?",
+            "options": ["Privacy", "Storage", "Processing", "Gaming"],
+            "correct": "1"
+        },
+        {
+            "question": "Which protocol is layer 2?",
+            "options": ["Ethernet", "IP", "TCP", "HTTP"],
+            "correct": "1"
+        },
+        {
+            "question": "What is RTT?",
+            "options": ["Round Trip Time", "Router Transit Time", "Remote Transfer Time", "Route Trace Time"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a DNS record?",
+            "options": ["LOG", "A", "MX", "CNAME"],
+            "correct": "1"
+        },
+        {
+            "question": "What does TTL indicate?",
+            "options": ["Time to Live", "Time to Load", "Time to Link", "Time to Listen"],
             "correct": "1"
         }
     ],
@@ -147,22 +307,24 @@
         {
             "question": "What is the time complexity of binary search?",
             "options": [
+                "O(log n)",
                 "O(n)",
                 "O(n^2)",
-                "O(log n)",
                 "O(1)"
             ],
-            "correct": "3"
+            "answer": "O(log n)",
+            "difficulty": "medium"
         },
         {
             "question": "Which data structure is used for implementing recursion?",
             "options": [
-                "Queue",
                 "Stack",
+                "Queue",
                 "Linked List",
                 "Array"
             ],
-            "correct": "2"
+            "answer": "Stack",
+            "difficulty": "medium"
         },
         {
             "question": "What does CPU stand for?",
@@ -172,7 +334,8 @@
                 "Control Processing Unit",
                 "Computer Processing Unit"
             ],
-            "correct": "1"
+            "answer": "Central Processing Unit",
+            "difficulty": "easy"
         },
         {
             "question": "What is the result of 2^3 in Python?",
@@ -182,37 +345,423 @@
                 "9",
                 "2"
             ],
-            "correct": "1"
+            "answer": "8",
+            "difficulty": "easy"
         },
         {
             "question": "Which algorithm is used for finding the shortest path in a graph?",
             "options": [
+                "Dijkstra's algorithm",
                 "Bubble sort",
                 "Binary search",
-                "Quick sort",
-                "Dijkstra's algorithm"
+                "Quick sort"
             ],
-            "correct": "4"
+            "answer": "Dijkstra's algorithm",
+            "difficulty": "hard"
         },
         {
-            "question": "Which data structure works on the principle of FIFO?",
-            "options": [
-                "Stack",
-                "Queue",
-                "Array",
-                "Graph"
-            ],
-            "correct": "2"
+            "question": "What is the time complexity of bubble sort?",
+            "options": ["O(n^2)", "O(n log n)", "O(n)", "O(1)"],
+            "correct": "1"
         },
         {
-            "question": "What is the binary equivalent of the decimal number 10?",
-            "options": [
-                "1100",
-                "1001",
-                "1010",
-                "1110"
-            ],
-            "correct": "3"
+            "question": "Which is not a fundamental data type?",
+            "options": ["Array", "Integer", "Character", "Boolean"],
+            "correct": "1"
+        },
+        {
+            "question": "What is a deadlock?",
+            "options": ["Resource conflict", "Memory overflow", "System crash", "Program error"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a sorting algorithm?",
+            "options": ["Binary sort", "Merge sort", "Quick sort", "Insertion sort"],
+            "correct": "1"
+        },
+        {
+            "question": "What is the purpose of a compiler?",
+            "options": ["Code translation", "Code execution", "Code editing", "Code storage"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not an operating system?",
+            "options": ["MySQL", "Windows", "Linux", "macOS"],
+            "correct": "1"
+        },
+        {
+            "question": "What is an algorithm?",
+            "options": ["Step-by-step procedure", "Programming language", "Computer hardware", "Data type"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is a linear data structure?",
+            "options": ["Array", "Tree", "Graph", "Binary Search Tree"],
+            "correct": "1"
+        },
+        {
+            "question": "What is cache memory?",
+            "options": ["Fast access memory", "Main memory", "Secondary memory", "Virtual memory"],
+            "correct": "1"
+        },
+        {
+            "question": "Which search method is fastest?",
+            "options": ["Binary search", "Linear search", "Sequential search", "Depth-first search"],
+            "correct": "1"
+        },
+        {
+            "question": "What is polymorphism?",
+            "options": ["Multiple forms", "Single form", "No form", "Fixed form"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a loop type?",
+            "options": ["unless", "while", "for", "do-while"],
+            "correct": "1"
+        },
+        {
+            "question": "What is encapsulation?",
+            "options": ["Data hiding", "Data showing", "Data copying", "Data moving"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a type of inheritance?",
+            "options": ["Circular", "Single", "Multiple", "Hierarchical"],
+            "correct": "1"
+        },
+        {
+            "question": "What is a pointer?",
+            "options": ["Memory address", "Data value", "Function name", "Variable name"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a memory type?",
+            "options": ["Quantum", "RAM", "ROM", "Cache"],
+            "correct": "1"
+        },
+        {
+            "question": "What is multithreading?",
+            "options": ["Parallel execution", "Sequential execution", "No execution", "Single execution"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not an access modifier?",
+            "options": ["Friend", "Public", "Private", "Protected"],
+            "correct": "1"
+        },
+        {
+            "question": "What is a constructor?",
+            "options": ["Initialization method", "Destruction method", "Normal method", "Static method"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a type of programming?",
+            "options": ["Circular", "Procedural", "Object-oriented", "Functional"],
+            "correct": "1"
+        },
+        {
+            "question": "What is debugging?",
+            "options": ["Error finding", "Error making", "Error hiding", "Error ignoring"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a software type?",
+            "options": ["Hardwired", "System", "Application", "Utility"],
+            "correct": "1"
+        },
+        {
+            "question": "What is abstraction?",
+            "options": ["Hiding complexity", "Showing complexity", "Adding complexity", "Removing complexity"],
+            "correct": "1"
+        }
+    ],
+    "Database Systems": [
+        {
+            "question": "What is a primary key?",
+            "options": ["Unique identifier", "Foreign key", "Index key", "Candidate key"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a SQL command?",
+            "options": ["MODIFY", "SELECT", "UPDATE", "DELETE"],
+            "correct": "1"
+        },
+        {
+            "question": "What is normalization?",
+            "options": ["Data organization", "Data deletion", "Data insertion", "Data selection"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a join type?",
+            "options": ["Diagonal", "Inner", "Left", "Right"],
+            "correct": "1"
+        },
+        {
+            "question": "What is ACID?",
+            "options": ["Transaction properties", "Database type", "Query language", "Storage engine"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a database model?",
+            "options": ["Linear", "Relational", "Hierarchical", "Network"],
+            "correct": "1"
+        },
+        {
+            "question": "What is an index?",
+            "options": ["Performance tool", "Data type", "Table type", "Query type"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a constraint?",
+            "options": ["DIFFERENT", "UNIQUE", "CHECK", "NOT NULL"],
+            "correct": "1"
+        },
+        {
+            "question": "What is a view?",
+            "options": ["Virtual table", "Physical table", "Database type", "Column type"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a key type?",
+            "options": ["Secondary", "Primary", "Foreign", "Composite"],
+            "correct": "1"
+        },
+        {
+            "question": "What is a trigger?",
+            "options": ["Automatic action", "Manual action", "Query type", "Table type"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not an SQL aggregate?",
+            "options": ["DIVIDE", "COUNT", "SUM", "AVG"],
+            "correct": "1"
+        },
+        {
+            "question": "What is a stored procedure?",
+            "options": ["Precompiled SQL", "Table type", "Column type", "Data type"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a NoSQL type?",
+            "options": ["SQL-based", "Document", "Key-value", "Graph"],
+            "correct": "1"
+        },
+        {
+            "question": "What is denormalization?",
+            "options": ["Performance optimization", "Data normalization", "Data deletion", "Data insertion"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a transaction state?",
+            "options": ["Suspended", "Active", "Committed", "Rolled back"],
+            "correct": "1"
+        },
+        {
+            "question": "What is referential integrity?",
+            "options": ["Data consistency", "Data redundancy", "Data anomaly", "Data duplication"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a database tier?",
+            "options": ["Middle", "Frontend", "Backend", "Database"],
+            "correct": "1"
+        },
+        {
+            "question": "What is CRUD?",
+            "options": ["Basic operations", "Database type", "Query language", "Storage type"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a relationship type?",
+            "options": ["2:2", "1:1", "1:N", "M:N"],
+            "correct": "1"
+        },
+        {
+            "question": "What is SQL injection?",
+            "options": ["Security attack", "Query type", "Join type", "Index type"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a database user?",
+            "options": ["Compiler", "Administrator", "Developer", "End user"],
+            "correct": "1"
+        },
+        {
+            "question": "What is data mining?",
+            "options": ["Pattern discovery", "Data deletion", "Data insertion", "Data update"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a backup type?",
+            "options": ["Sideways", "Full", "Incremental", "Differential"],
+            "correct": "1"
+        },
+        {
+            "question": "What is clustering?",
+            "options": ["Server grouping", "Data type", "Query type", "User type"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not an index type?",
+            "options": ["Diagonal", "Clustered", "Non-clustered", "Bitmap"],
+            "correct": "1"
+        },
+        {
+            "question": "What is replication?",
+            "options": ["Data copying", "Data deletion", "Data modification", "Data selection"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a database schema?",
+            "options": ["Physical", "Logical", "Conceptual", "External"],
+            "correct": "1"
+        },
+        {
+            "question": "What is partitioning?",
+            "options": ["Data division", "Data joining", "Data deletion", "Data selection"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a database language?",
+            "options": ["FQL", "DDL", "DML", "DCL"],
+            "correct": "1"
+        }
+    ],
+    "Web Development": [
+        {
+            "question": "What is HTML?",
+            "options": ["Markup language", "Programming language", "Database language", "Query language"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a CSS selector?",
+            "options": ["$select", "class", "id", "tag"],
+            "correct": "1"
+        },
+        {
+            "question": "What is JavaScript?",
+            "options": ["Scripting language", "Markup language", "Database language", "Query language"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not an HTTP method?",
+            "options": ["MAKE", "GET", "POST", "PUT"],
+            "correct": "1"
+        },
+        {
+            "question": "What is DOM?",
+            "options": ["Document model", "Database model", "Design model", "Development model"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a framework?",
+            "options": ["WebFlow", "React", "Angular", "Vue"],
+            "correct": "1"
+        },
+        {
+            "question": "What is AJAX?",
+            "options": ["Asynchronous JavaScript", "Database type", "Programming language", "Markup language"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a CSS unit?",
+            "options": ["meter", "px", "em", "rem"],
+            "correct": "1"
+        },
+        {
+            "question": "What is API?",
+            "options": ["Interface", "Language", "Database", "Framework"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a display property?",
+            "options": ["shown", "block", "inline", "flex"],
+            "correct": "1"
+        },
+        {
+            "question": "What is responsive design?",
+            "options": ["Adaptive layout", "Fixed layout", "Static layout", "Basic layout"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a JavaScript framework?",
+            "options": ["HTMLScript", "Node.js", "Express.js", "Next.js"],
+            "correct": "1"
+        },
+        {
+            "question": "What is SEO?",
+            "options": ["Search optimization", "Security protocol", "Server operation", "Style option"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a package manager?",
+            "options": ["webload", "npm", "yarn", "pnpm"],
+            "correct": "1"
+        },
+        {
+            "question": "What is webpack?",
+            "options": ["Module bundler", "Web server", "Database", "Framework"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a version control?",
+            "options": ["WebTrack", "Git", "SVN", "Mercurial"],
+            "correct": "1"
+        },
+        {
+            "question": "What is JWT?",
+            "options": ["Token format", "Framework", "Language", "Database"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a CSS preprocessor?",
+            "options": ["StylePlus", "SASS", "LESS", "Stylus"],
+            "correct": "1"
+        },
+        {
+            "question": "What is REST?",
+            "options": ["Architecture style", "Programming language", "Database type", "Framework"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a web server?",
+            "options": ["WebBox", "Apache", "Nginx", "IIS"],
+            "correct": "1"
+        },
+        {
+            "question": "What is SSL?",
+            "options": ["Security protocol", "Programming language", "Database type", "Framework"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a testing framework?",
+            "options": ["TestPro", "Jest", "Mocha", "Jasmine"],
+            "correct": "1"
+        },
+        {
+            "question": "What is PWA?",
+            "options": ["Progressive web app", "Programming language", "Database type", "Framework"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a build tool?",
+            "options": ["BuildMaster", "Grunt", "Gulp", "Vite"],
+            "correct": "1"
+        },
+        {
+            "question": "What is CDN?",
+            "options": ["Content network", "Code system", "Cache type", "Control protocol"],
+            "correct": "1"
+        },
+        {
+            "question": "Which is not a state management?",
+            "options": ["StateFlow", "Redux", "Vuex", "MobX"],
+            "correct": "1"
+        },
+        {
+            "question": "What is GraphQL?",
+            "options": ["Query language", "Programming language", "Database type", "Framework"],
+            "correct": "1"
         }
     ]
 }

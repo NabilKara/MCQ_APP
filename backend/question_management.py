@@ -48,30 +48,55 @@ def load_questions():
         return default_questions
 
 def prepare_quiz(self):
-    """Prepare quiz questions based on selected categories, choosing 7 questions randomly."""
+    """
+    Prepare quiz questions based on selected categories, choosing a balanced selection 
+    of questions from each category up to a total of 7 questions.
+    """
     self.questions = []
     self.score = []  # Initialize the score array
-
-    # Combine all questions from selected categories
+    
+    if not self.selected_categories:
+        return
+        
+    # Calculate how many questions to take from each category
+    num_categories = len(self.selected_categories)
+    questions_per_category = 7 // num_categories  # Integer division
+    remaining_questions = 7 % num_categories
+    
+    # Get questions from each category
     for category in self.selected_categories:
         category_questions = self.all_questions.get(category, [])
-        self.questions.extend([
-            {
+        
+        # Determine number of questions to take from this category
+        num_to_take = questions_per_category
+        if remaining_questions > 0:
+            num_to_take += 1
+            remaining_questions -= 1
+            
+        # Randomly select questions from this category
+        selected = random.sample(
+            category_questions,
+            min(num_to_take, len(category_questions))
+        )
+        
+        # Add category information to each question
+        for q in selected:
+            self.questions.append({
                 "question": q["question"],
                 "options": q["options"],
                 "correct": q["correct"],
                 "category": category
-            }
-            for q in category_questions
-        ])
+            })
+            
+        # Initialize score tracking for this category
         self.score.append((category, 0, 0))  # (category, current_score, num_questions)
-
-    # Shuffle and pick 7 random questions
+    
+    # Shuffle the final question list
     random.shuffle(self.questions)
-    self.questions = self.questions[:7]  # Limit to 7 questions
-
+    
+    # Ensure we don't exceed 7 questions total
+    self.questions = self.questions[:7]
     self.current_question = 0
-
 # def prepare_quiz(self):
 #     """Prepare quiz questions based on selected categories."""
 #     self.questions = []

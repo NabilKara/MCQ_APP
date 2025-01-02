@@ -57,7 +57,70 @@
     "test": {
         "password": "$2b$12$fLCuWD9QC7wKY9bZmmQzmeCAOjh3MtBP2ixVYp6XP3.FzWXnopEzO",
         "created_at": "2024-12-31 12:27",
-        "history": []
+        "history": [
+            {
+                "total_score": "5/7",
+                "date": "2025-01-02 23:09",
+                "categories": [
+                    {
+                        "category": "Python",
+                        "score": "2/3"
+                    },
+                    {
+                        "category": "Networking",
+                        "score": "3/3"
+                    },
+                    {
+                        "category": "Database Systems",
+                        "score": "0/1"
+                    },
+                    {
+                        "category": "Web Development",
+                        "score": "0/0"
+                    }
+                ]
+            },
+            {
+                "total_score": "5/7",
+                "date": "2025-01-02 23:14",
+                "categories": [
+                    {
+                        "category": "Python",
+                        "score": "4/5"
+                    },
+                    {
+                        "category": "Networking",
+                        "score": "1/2"
+                    }
+                ]
+            },
+            {
+                "total_score": "7/7",
+                "date": "2025-01-02 23:23",
+                "categories": [
+                    {
+                        "category": "Python",
+                        "score": "2/2"
+                    },
+                    {
+                        "category": "Networking",
+                        "score": "2/2"
+                    },
+                    {
+                        "category": "Computer Science",
+                        "score": "1/1"
+                    },
+                    {
+                        "category": "Database Systems",
+                        "score": "1/1"
+                    },
+                    {
+                        "category": "Web Development",
+                        "score": "1/1"
+                    }
+                ]
+            }
+        ]
     },
     "Ahmed": {
         "password": "$2b$12$70f6HrlmkUCb8G8Yo4ZJ9.iUiaJQkqSKDpED1RUt2Z09rBl.clWGe",
