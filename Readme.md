@@ -12,8 +12,6 @@ This Multiple-Choice Questionnaire (MCQ) application is designed for computer sc
 
 ### Quiz Features
 - Multiple quiz categories support
-- Online and offline quiz modes
-- Dynamic question loading
 - Real-time feedback on answers
 - Detailed score evaluation
 - Performance tracking and history
@@ -22,7 +20,7 @@ This Multiple-Choice Questionnaire (MCQ) application is designed for computer sc
 - Modern, responsive GUI using CustomTkinter
 - Intuitive navigation between screens
 - Progress tracking during quizzes
-- Color-coded feedback for correct/incorrect answers
+- Color-coded feedback for incorrect answers
 - Comprehensive score reports
 
 ## Installation
@@ -53,13 +51,15 @@ python main.py
 1. Launch the application
 2. Choose either "Login" or "Sign Up"
 3. Enter your credentials
-4. Select quiz mode (Online/Offline)
+4. Press the  start quiz button
 5. Choose your preferred categories
 6. Start the quiz
+
 
 ### Taking a Quiz
 - Read each question carefully
 - Select your answer from the provided options
+- Make sure that time doesn't run out
 - Submit your answer to proceed
 - Receive immediate feedback on your response
 - View your final score and performance evaluation
