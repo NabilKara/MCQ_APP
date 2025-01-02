@@ -1,4 +1,3 @@
-<img width="172" alt="image" src="https://github.com/user-attachments/assets/44e23190-2793-4dc7-9e15-14f65dc75ebd" /># MCQ Quiz Application
 
 ## Overview
 This Multiple-Choice Questionnaire (MCQ) application is designed for computer science students, offering an interactive way to test their knowledge across various subjects. Built with Python and CustomTkinter, it features a modern, user-friendly interface with multiple quiz modes and comprehensive user tracking.
