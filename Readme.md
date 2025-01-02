@@ -69,6 +69,7 @@ python main.py
 - Access your quiz history from the welcome screen
 - View detailed performance metrics for each attempt
 - Track your progress over time
+- Export your history to a CSV file.
 
 ## Project Structure
 
@@ -113,6 +114,7 @@ python main.py
 - Category-wise scores
 - Overall performance metrics
 - Historical trend analysis
+- Export History to a CSV file
 
 ## Contributing
 1. Fork the repository
