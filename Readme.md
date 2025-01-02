@@ -45,7 +45,7 @@ pip install customtkinter
 
 3. Run the application:
 ```bash
-python front.py
+python main.py
 ```
 
 ## Usage
@@ -75,14 +75,21 @@ python front.py
 
 ```
 .
-├── front.py                    # Main application file
 ├── backend/
-│   ├── question_management.py  # Question loading and management
-│   ├── score_evaluation.py     # Score calculation and evaluation
-│   └── user_management.py      # User authentication and data management
-└── data/
-    ├── questions.json         # Question database
-    └── users.json            # User data and history
+│   ├── __init__.py
+│   ├── question_management.py
+│   ├── score_evaluation.py
+│   └── user_management.py
+├── data/
+│   ├── questions.json
+│   └── users.json
+├── gui/
+│   ├── __init__.py
+│   └── front.py
+├── .gitignore
+├── LICENSE
+├── main.py
+└── README.md
 ```
 
 ## Features in Detail
