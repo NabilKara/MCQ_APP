@@ -1,5 +1,6 @@
 import json
 import os
+import random
 
 def load_questions():
     default_questions = {
@@ -46,10 +47,46 @@ def load_questions():
             json.dump(default_questions, f, indent=4)
         return default_questions
 
-def get_questions_for_categories(categories):
-    questions = load_questions()
-    selected_questions = []
-    for category in categories:
-        category_questions = questions.get(category, [])
-        selected_questions.extend(category_questions)
-    return selected_questions
+def prepare_quiz(self):
+    """Prepare quiz questions based on selected categories, choosing 7 questions randomly."""
+    self.questions = []
+    self.score = []  # Initialize the score array
+
+    # Combine all questions from selected categories
+    for category in self.selected_categories:
+        category_questions = self.all_questions.get(category, [])
+        self.questions.extend([
+            {
+                "question": q["question"],
+                "options": q["options"],
+                "correct": q["correct"],
+                "category": category
+            }
+            for q in category_questions
+        ])
+        self.score.append((category, 0, 0))  # (category, current_score, num_questions)
+
+    # Shuffle and pick 7 random questions
+    random.shuffle(self.questions)
+    self.questions = self.questions[:7]  # Limit to 7 questions
+
+    self.current_question = 0
+
+# def prepare_quiz(self):
+#     """Prepare quiz questions based on selected categories."""
+#     self.questions = []
+#     self.score = []  # Initialize the score array
+#
+#     for category in self.selected_categories:
+#         category_questions = self.all_questions.get(category, [])
+#         self.questions.extend([
+#             {
+#                 "question": q["question"],
+#                 "options": q["options"],
+#                 "correct": q["correct"],
+#                 "category": category
+#             }
+#             for q in category_questions
+#         ])
+#         self.score.append((category, 0, 0))  # (category, current_score, num_questions)
+#     self.current_question = 0

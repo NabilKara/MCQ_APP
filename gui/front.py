@@ -32,7 +32,6 @@ class MCQApp(ctk.CTk):
             "categories": CategoryFrame,
             "history": HistoryFrame,
             "quiz": QuizFrame,
-            "correct": CorrectFrame,
             "wrong": WrongFrame,
             "score": ScoreFrame
         }
@@ -47,25 +46,6 @@ class MCQApp(ctk.CTk):
         Frame = self.frames[frame_name]
         self.current_frame = Frame(self)
         self.current_frame.pack(fill="both", expand=True)
-
-    def prepare_quiz(self):
-        """Prepare quiz questions based on selected categories."""
-        self.questions = []
-        self.score = []  # Initialize the score array
-
-        for category in self.selected_categories:
-            category_questions = self.all_questions.get(category, [])
-            self.questions.extend([
-                {
-                    "question": q["question"],
-                    "options": q["options"],
-                    "correct": q["correct"],
-                    "category": category
-                }
-                for q in category_questions
-            ])
-            self.score.append((category, 0, 0))  # (category, current_score, num_questions)
-        self.current_question = 0
 
 class StartFrame(ctk.CTkFrame):
     def __init__(self, parent):
@@ -403,7 +383,7 @@ class CategoryFrame(ctk.CTkFrame):
             text="Start Quiz",
             fg_color="green",
             font=("Arial", 14),
-            command=self.start_quiz
+            command=lambda: self.start_quiz(parent)
         ).pack(side="left", padx=10)
 
         ctk.CTkButton(
@@ -414,7 +394,7 @@ class CategoryFrame(ctk.CTkFrame):
             command=lambda: parent.show_frame("mode")
         ).pack(side="left", padx=10)
 
-    def start_quiz(self):
+    def start_quiz(self, parent):
         selected = [cat for cat, var in self.category_vars.items() if var.get()]
         if not selected:
             warning = ctk.CTkLabel(
@@ -428,7 +408,7 @@ class CategoryFrame(ctk.CTkFrame):
             return
 
         self.master.selected_categories = selected
-        self.master.prepare_quiz()
+        qm.prepare_quiz(parent)
         self.master.show_frame("quiz")
 
 class QuizFrame(ctk.CTkFrame):
@@ -436,9 +416,11 @@ class QuizFrame(ctk.CTkFrame):
         super().__init__(parent, fg_color="#3f51b5")
         self.configure(width=600, height=400)
         self.pack_propagate(False)
-        
+
         self.parent = parent
         self.answer_var = ctk.StringVar()
+        self.initialTime = 30  # change this variable instead of changing all other variables
+        self.remaining_time = self.initialTime  # 30 seconds for the timer
 
         if not parent.questions:
             ctk.CTkLabel(self, text="No questions available", text_color="yellow", font=("Arial", 18)).pack(pady=50)
@@ -448,23 +430,28 @@ class QuizFrame(ctk.CTkFrame):
         progress_frame = ctk.CTkFrame(self, fg_color="#2196f3", height=40)
         progress_frame.pack(fill="x")
         progress_frame.pack_propagate(False)
-        
+
         progress_text = f"Question {parent.current_question + 1} of {len(parent.questions)}"
         progress_label = ctk.CTkLabel(progress_frame, text=progress_text, text_color="white", font=("Arial", 16, "bold"))
-        progress_label.pack(expand=True)
+        progress_label.pack(side="left", padx=10)
+
+        # Timer label
+        self.timer_label = ctk.CTkLabel(progress_frame, text=f"Time: {self.initialTime}", text_color="white", font=("Arial", 16, "bold"))
+        self.timer_label.pack(side="right", padx=10)
+        self.start_timer()
 
         # Question container
         question_container = ctk.CTkFrame(self, fg_color="transparent")
         question_container.pack(expand=True, fill="both", padx=20, pady=(10, 20))
 
         question = parent.questions[parent.current_question]
-        
+
         # Question title - centered
         title = ctk.CTkLabel(
-            question_container, 
-            text=question["question"], 
-            text_color="white", 
-            font=("Arial", 18, "bold"), 
+            question_container,
+            text=question["question"],
+            text_color="white",
+            font=("Arial", 18, "bold"),
             wraplength=500,
             justify="center"
         )
@@ -521,6 +508,28 @@ class QuizFrame(ctk.CTkFrame):
         )
         quit_btn.pack(side="left", padx=10)
 
+    def start_timer(self):
+        """Starts the 30-second timer."""
+        if self.remaining_time > 0:
+            self.timer_label.configure(text=f"Time: {self.remaining_time}s")
+            self.remaining_time -= 1
+            self.after(1000, self.start_timer)  # Update timer every second
+        else:
+            self.time_up()
+
+    def time_up(self):
+        """Handles what happens when time is up."""
+        self.show_error("Time's up! Moving to the next question.")
+        parent = self.parent
+        question = parent.questions[parent.current_question]
+
+        for i, (cat, current_score, num_questions) in enumerate(parent.score):
+            if cat == question["category"]:
+                parent.score[i] = (cat, current_score, num_questions + 1)
+                break
+        parent.show_frame("wrong")
+        # self.next_question()
+
     def check_answer(self):
         if not self.answer_var.get():
             self.show_error("Please select an answer")
@@ -539,12 +548,12 @@ class QuizFrame(ctk.CTkFrame):
                 if cat == question["category"]:
                     parent.score[i] = (cat, current_score + 1, num_questions)
                     break
-            # self.next_question()
-            parent.show_frame("correct")
+            self.next_question()
         else:
             parent.show_frame("wrong")
 
     def next_question(self):
+        self.remaining_time = self.initialTime  # Reset timer for the next question
         parent = self.parent
         parent.current_question += 1
         if parent.current_question >= len(parent.questions):
@@ -560,32 +569,6 @@ class QuizFrame(ctk.CTkFrame):
 
         ctk.CTkLabel(error_window, text=message, font=("Arial", 14), text_color="white").pack(pady=20)
         ctk.CTkButton(error_window, text="OK", command=error_window.destroy, width=100).pack(pady=10)
-
-class CorrectFrame(ctk.CTkFrame):
-    def __init__(self, parent):
-        super().__init__(parent, fg_color="#4CAF50")  # Green background for correct answer
-
-        ctk.CTkLabel(
-            self,
-            text="Correct!",
-            text_color="white",
-            font=("Arial", 24, "bold")
-        ).pack(pady=(150, 20))  # Vertically centered
-
-        ctk.CTkButton(
-            self,
-            text="Next Question",
-            fg_color="green",
-            font=("Arial", 14),
-            command=self.next_question
-        ).pack(pady=40)
-
-    def next_question(self):
-        self.master.current_question += 1
-        if self.master.current_question >= len(self.master.questions):
-            self.master.show_frame("score")
-        else:
-            self.master.show_frame("quiz")
 
 class WrongFrame(ctk.CTkFrame):
     def __init__(self, parent):
@@ -638,7 +621,6 @@ class HistoryFrame(ctk.CTkFrame):
         top_nav_frame = ctk.CTkFrame(self, fg_color="transparent")
         top_nav_frame.pack(fill="x", padx=20, pady=(10, 0))
 
-        # Return button
         ctk.CTkButton(
             top_nav_frame,
             text="← Return",
@@ -647,15 +629,24 @@ class HistoryFrame(ctk.CTkFrame):
             font=("Arial", 14),
             width=100,
             command=lambda: parent.show_frame("welcome")
-        ).pack(side="left")
+        ).pack(side="left", padx=(10, 0))
 
-        # Title
         ctk.CTkLabel(
-            self,
+            top_nav_frame,
             text=f"Quiz History for {parent.current_user}",
             text_color="white",
             font=("Arial", 24, "bold")
-        ).pack(pady=(10, 20))
+        ).pack(side="left", expand=True)
+
+        ctk.CTkButton(
+            top_nav_frame,
+            text="Export to CSV",
+            fg_color="#DDB700",  # Bright yellow
+            hover_color="#FFC107",  # Slightly darker shade of yellow for hover
+            font=("Arial", 14),
+            width=100,
+            command=lambda: um.export_csv(parent.current_user)
+        ).pack(side="right", padx=(0, 10))
 
         # Create scrollable frame for history entries
         history_container = ctk.CTkScrollableFrame(
@@ -756,13 +747,6 @@ class ScoreFrame(ctk.CTkFrame):
             text_color="white",
             font=("Arial", 24, "bold")
         ).pack(pady=(50, 20))
-
-        ctk.CTkLabel(
-            self,
-            text=f"Your Score: {percentage}",
-            text_color="white",
-            font=("Arial", 20)
-        ).pack(pady=10)
 
         ctk.CTkLabel(
             self,

@@ -2,6 +2,7 @@ import json
 import bcrypt
 from datetime import datetime
 import os
+import csv
 
 def ensure_data_directory():
     os.makedirs('data', exist_ok=True)
@@ -25,7 +26,7 @@ def login_user(username, password):
     users = load_users()
     if username not in users:
         return False, "User not found"
-        
+
     if bcrypt.checkpw(password.encode(), users[username]["password"].encode()):
         return True, users[username]
     return False, "Invalid password"
@@ -156,6 +157,28 @@ def check_user_singup(self):
     self.master.current_user = username
     self.master.current_userdata = new_user[username]
     self.master.show_frame("mode" if not users[username] else "welcome")
+
+def export_csv(username):
+    users = load_users()
+    if username not in users.keys():
+        return False, "User not found"
+
+    history = users[username]["history"]
+    output_file = f"{username}_{datetime.now().strftime("%Y-%m-%d-%H:%M")}.csv"
+    with open(output_file, mode="w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["Date", "Total Score", "Category", "Category Score"])
+
+        for entry in history:
+            date = entry["date"]
+            total_score = entry["total_score"]
+            for category in entry["categories"]:
+                writer.writerow([
+                    date,
+                    total_score,
+                    category["category"],
+                    category["score"]
+                ])
 
 def display_feedback(self, message, color):
     self.feedback_label.configure(text=message, text_color=color)

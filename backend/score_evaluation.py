@@ -6,7 +6,7 @@ def evaluate_performance(percentage):
     elif percentage >= 70:
         return "Good work! Keep it up!"
     elif percentage >= 60:
-        return "Not bad! Room for improvement."
+        return "Not bad! There's room for improvement."
     else:
         return "Keep practicing! You can do better!"
 

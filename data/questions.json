@@ -4,21 +4,21 @@
             "question": "What is the output of the following code?\nprint(type(3.14))",
             "options": [
                 "int",
-                "float",
                 "str",
+                "float",
                 "list"
             ],
-            "correct": "2"
+            "correct": "3"
         },
         {
             "question": "Which of the following methods is used to add an element to a list?",
             "options": [
-                "append()",
                 "add()",
                 "insert()",
+                "append()",
                 "push()"
             ],
-            "correct": "1"
+            "correct": "3"
         },
         {
             "question": "What keyword is used to define a function in Python?",
@@ -49,56 +49,96 @@
                 "except"
             ],
             "correct": "1"
+        },
+        {
+            "question": "Which keyword is used to create a class in Python?",
+            "options": [
+                "def",
+                "struct",
+                "module",
+                "class"
+            ],
+            "correct": "4"
+        },
+        {
+            "question": "What is the output of the following code?\nprint(len('Hello'))",
+            "options": [
+                "4",
+                "6",
+                "Error",
+                "5"
+            ],
+            "correct": "4"
         }
     ],
     "Networking": [
         {
             "question": "Which protocol is used to send email?",
             "options": [
-                "SMTP",
                 "HTTP",
                 "FTP",
-                "DNS"
+                "DNS",
+                "SMTP"
             ],
-            "correct": "1"
+            "correct": "4"
         },
         {
             "question": "What does the IP in IP address stand for?",
             "options": [
-                "Internet Protocol",
                 "Internet Packet",
                 "Internal Protocol",
+                "Internet Protocol",
                 "Information Protocol"
             ],
-            "correct": "1"
+            "correct": "3"
         },
         {
             "question": "Which layer of the OSI model handles routing?",
             "options": [
-                "Network",
                 "Transport",
                 "Data Link",
+                "Network",
                 "Session"
             ],
-            "correct": "1"
+            "correct": "3"
         },
         {
             "question": "What is the default port number for HTTP?",
             "options": [
-                "80",
                 "443",
+                "80",
                 "21",
                 "25"
             ],
-            "correct": "1"
+            "correct": "2"
         },
         {
             "question": "Which protocol is used to resolve IP addresses to MAC addresses?",
             "options": [
-                "ARP",
                 "DNS",
+                "ARP",
                 "RARP",
                 "DHCP"
+            ],
+            "correct": "2"
+        },
+        {
+            "question": "Which protocol provides secure communication over the internet?",
+            "options": [
+                "HTTPS",
+                "FTP",
+                "Telnet",
+                "SMTP"
+            ],
+            "correct": "1"
+        },
+        {
+            "question": "What is the main function of a router?",
+            "options": [
+                "Forward packets between networks",
+                "Connect devices within the same network",
+                "Assign IP addresses to devices",
+                "Encrypt data for transmission"
             ],
             "correct": "1"
         }
@@ -107,22 +147,22 @@
         {
             "question": "What is the time complexity of binary search?",
             "options": [
-                "O(log n)",
                 "O(n)",
                 "O(n^2)",
+                "O(log n)",
                 "O(1)"
             ],
-            "correct": "1"
+            "correct": "3"
         },
         {
             "question": "Which data structure is used for implementing recursion?",
             "options": [
-                "Stack",
                 "Queue",
+                "Stack",
                 "Linked List",
                 "Array"
             ],
-            "correct": "1"
+            "correct": "2"
         },
         {
             "question": "What does CPU stand for?",
@@ -147,12 +187,32 @@
         {
             "question": "Which algorithm is used for finding the shortest path in a graph?",
             "options": [
-                "Dijkstra's algorithm",
                 "Bubble sort",
                 "Binary search",
-                "Quick sort"
+                "Quick sort",
+                "Dijkstra's algorithm"
             ],
-            "correct": "1"
+            "correct": "4"
+        },
+        {
+            "question": "Which data structure works on the principle of FIFO?",
+            "options": [
+                "Stack",
+                "Queue",
+                "Array",
+                "Graph"
+            ],
+            "correct": "2"
+        },
+        {
+            "question": "What is the binary equivalent of the decimal number 10?",
+            "options": [
+                "1100",
+                "1001",
+                "1010",
+                "1110"
+            ],
+            "correct": "3"
         }
     ]
 }
