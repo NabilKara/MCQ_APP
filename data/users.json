@@ -110,6 +110,56 @@
                         "score": "5/5"
                     }
                 ]
+            },
+            {
+                "total_score": "6/7",
+                "date": "2025-01-02 21:54",
+                "categories": [
+                    {
+                        "category": "Networking",
+                        "score": "6/7"
+                    }
+                ]
+            },
+            {
+                "total_score": "6/7",
+                "date": "2025-01-02 21:55",
+                "categories": [
+                    {
+                        "category": "Networking",
+                        "score": "6/7"
+                    }
+                ]
+            },
+            {
+                "total_score": "7/7",
+                "date": "2025-01-02 22:10",
+                "categories": [
+                    {
+                        "category": "Python",
+                        "score": "7/7"
+                    }
+                ]
+            },
+            {
+                "total_score": "7/7",
+                "date": "2025-01-02 22:11",
+                "categories": [
+                    {
+                        "category": "Python",
+                        "score": "7/7"
+                    }
+                ]
+            },
+            {
+                "total_score": "7/7",
+                "date": "2025-01-02 22:13",
+                "categories": [
+                    {
+                        "category": "Python",
+                        "score": "7/7"
+                    }
+                ]
             }
         ]
     },

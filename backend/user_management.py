@@ -158,28 +158,49 @@ def check_user_singup(self):
     self.master.current_userdata = new_user[username]
     self.master.show_frame("mode" if not users[username] else "welcome")
 
-def export_csv(username):
+def export_csv(username, file_path=None):
+    """
+    Export user history to a CSV file at the specified path.
+    
+    Args:
+        username (str): Username whose history to export
+        file_path (str, optional): Path where the CSV should be saved. 
+                                 If None, generates a default filename in the current directory.
+        
+    Returns:
+        tuple: (bool, str) Success status and message
+    """
     users = load_users()
     if username not in users.keys():
         return False, "User not found"
-
-    history = users[username]["history"]
-    output_file = f"{username}_{datetime.now().strftime("%Y-%m-%d-%H:%M")}.csv"
-    with open(output_file, mode="w", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerow(["Date", "Total Score", "Category", "Category Score"])
-
-        for entry in history:
-            date = entry["date"]
-            total_score = entry["total_score"]
-            for category in entry["categories"]:
-                writer.writerow([
-                    date,
-                    total_score,
-                    category["category"],
-                    category["score"]
-                ])
-
+    
+    # If no file path provided, create default in current directory
+    if file_path is None:
+        default_filename = f"{username}_{datetime.now().strftime('%Y-%m-%d-%H-%M')}.csv"
+        file_path = os.path.join(os.getcwd(), default_filename)
+    
+    try:
+        history = users[username]["history"]
+        
+        with open(file_path, mode="w", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow(["Date", "Total Score", "Category", "Category Score"])
+            for entry in history:
+                date = entry["date"]
+                total_score = entry["total_score"]
+                for category in entry["categories"]:
+                    writer.writerow([
+                        date,
+                        total_score,
+                        category["category"],
+                        category["score"]
+                    ])
+        
+        return True, f"Successfully exported to {file_path}"
+    
+    except Exception as e:
+        return False, f"Error exporting file: {str(e)}"
+    
 def display_feedback(self, message, color):
     self.feedback_label.configure(text=message, text_color=color)
     self.after(3000, lambda: self.feedback_label.configure(text=""))

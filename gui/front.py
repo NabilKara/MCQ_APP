@@ -3,7 +3,8 @@ import customtkinter as ctk
 import backend.question_management as qm
 import backend.score_evaluation as se
 import backend.user_management as um
-
+from customtkinter import filedialog
+from datetime import datetime
 class MCQApp(ctk.CTk):
     def __init__(self):
         super().__init__()
@@ -641,11 +642,11 @@ class HistoryFrame(ctk.CTkFrame):
         ctk.CTkButton(
             top_nav_frame,
             text="Export to CSV",
-            fg_color="#DDB700",  # Bright yellow
-            hover_color="#FFC107",  # Slightly darker shade of yellow for hover
+            fg_color="#DDB700",
+            hover_color="#FFC107",
             font=("Arial", 14),
             width=100,
-            command=lambda: um.export_csv(parent.current_user)
+            command=lambda: self.handle_export(parent.current_user)
         ).pack(side="right", padx=(0, 10))
 
         # Create scrollable frame for history entries
@@ -733,6 +734,52 @@ class HistoryFrame(ctk.CTkFrame):
         # Add buttons at the bottom
         btn_frame = ctk.CTkFrame(self, fg_color="transparent")
         btn_frame.pack(pady=(20, 10), padx=20, fill="x", side="bottom")
+
+    def handle_export(self, username):
+        """Handle the export process including file dialog"""
+        try:
+            # Generate default filename
+            default_filename = f"{username}_{datetime.now().strftime('%Y-%m-%d-%H-%M')}.csv"
+            
+            # Open file dialog (this still uses tkinter's dialog under the hood)
+            file_path = filedialog.asksaveasfilename(
+                parent=self,
+                defaultextension='.csv',
+                initialfile=default_filename,
+                filetypes=[('CSV Files', '*.csv'), ('All Files', '*.*')],
+                title='Export Quiz History'
+            )
+            
+            if file_path:  # Only proceed if a file path was selected
+                success, message = um.export_csv(username, file_path)
+        except Exception as e:
+            self.show_message("Error", f"Failed to export: {str(e)}", "#f44336")
+
+    def show_message(self, title, message, text_color):
+        """Show a message dialog using CustomTkinter styling"""
+        dialog = ctk.CTkToplevel(self)
+        dialog.title(title)
+        dialog.geometry("300x150")
+        dialog.transient(self)
+        
+        # Use your app's styling
+        dialog.configure(fg_color="#3f51b5")
+        
+        ctk.CTkLabel(
+            dialog,
+            text=message,
+            font=("Arial", 14),
+            text_color=text_color
+        ).pack(pady=20)
+        
+        ctk.CTkButton(
+            dialog,
+            text="OK",
+            command=dialog.destroy,
+            width=100,
+            fg_color="#2196F3",
+            hover_color="#1976D2"
+        ).pack(pady=10)
 
 class ScoreFrame(ctk.CTkFrame):
     def __init__(self, parent):
