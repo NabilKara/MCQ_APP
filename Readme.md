@@ -122,7 +122,7 @@ python main.py
 5. Open a Pull Request
 
 ## Credits
-Developed as part of the Python Programming course at the University of Science and Technology Houari Boumediene, under the guidance of Professor MOUHOUN SAID.
+Developed by KARA Nabil, MEDJBER Abderrahim and KAMIRI Wassim as part of the Python Programming course at the University of Science and Technology Houari Boumediene, under the guidance of Professor MOUHOUN SAID.
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
