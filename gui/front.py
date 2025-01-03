@@ -4,7 +4,6 @@ import backend.question_management as qm
 import backend.score_evaluation as se
 import backend.user_management as um
 from customtkinter import filedialog
-from tkinter import font
 from datetime import datetime
 
 class MCQApp(ctk.CTk):
@@ -314,8 +313,6 @@ class WelcomeFrame(ctk.CTkFrame):
             command=lambda: parent.show_frame("start")
         ).pack(side="left", padx=10)
 
-    
-
 class CategoryFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
@@ -514,7 +511,6 @@ class QuizFrame(ctk.CTkFrame):
                 parent.score[i] = (cat, current_score, num_questions + 1)
                 break
         parent.show_frame("wrong")
-        # self.next_question()
 
     def check_answer(self):
         if not self.answer_var.get():
@@ -736,7 +732,7 @@ class HistoryFrame(ctk.CTkFrame):
             )
             
             if file_path:  # Only proceed if a file path was selected
-                success, message = um.export_csv(username, file_path)
+                um.export_csv(username, file_path)
         except Exception as e:
             self.show_message("Error", f"Failed to export: {str(e)}", "#f44336")
 
@@ -775,7 +771,7 @@ class ScoreFrame(ctk.CTkFrame):
         # Display score
         ctk.CTkLabel(
             self,
-            text="Quiz Complete!",
+            text="Quiz Completed!",
             text_color="white",
             font=("Arial", 24, "bold")
         ).pack(pady=(50, 20))

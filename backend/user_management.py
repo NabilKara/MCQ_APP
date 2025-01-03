@@ -7,55 +7,12 @@ import csv
 def ensure_data_directory():
     os.makedirs('data', exist_ok=True)
 
-def register_user(username, password):
-    users = load_users()
-    if username in users:
-        return False, "User already exists"
-        
-    hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-    users[username] = {
-        "password": hashed_password,
-        "created_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
-        "history": []
-    }
-    
-    save_users(users)
-    return True, users[username]
-    
-def login_user(username, password):
-    users = load_users()
-    if username not in users:
-        return False, "User not found"
-
-    if bcrypt.checkpw(password.encode(), users[username]["password"].encode()):
-        return True, users[username]
-    return False, "Invalid password"
-    
-def save_quiz_result(username, score, total_questions, categories):
-    users = load_users()
-    if username not in users:
-        return False
-        
-    score_entry = {
-        "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
-        "total_score": f"{score}/{total_questions}",
-        "categories": [{"category": cat, "score": score} for cat in categories]
-    }
-    
-    users[username]["history"].append(score_entry)
-    save_users(users)
-    return True
-    
 def load_users():
     try:
         with open('data/users.json', 'r') as f:
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
-        
-def save_users(users):
-    with open('data/users.json', 'w') as f:
-        json.dump(users, f, indent=4)
 
 def save_score(parent):
     """Save the quiz score to the user's history field in the JSON file."""
@@ -159,7 +116,6 @@ def check_user_singup(self):
     self.master.show_frame("mode" if not users[username] else "welcome")
 
 def export_csv(username, file_path=None):
-
     users = load_users()
     if username not in users.keys():
         return False, "User not found"
@@ -171,21 +127,15 @@ def export_csv(username, file_path=None):
     
     try:
         history = users[username]["history"]
-        
-        with open(file_path, mode="w", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow(["Date", "Total Score", "Category", "Category Score"])
-            for entry in history:
-                date = entry["date"]
-                total_score = entry["total_score"]
-                for category in entry["categories"]:
-                    writer.writerow([
-                        date,
-                        total_score,
-                        category["category"],
-                        category["score"]
-                    ])
-        
+
+        file = open(file_path, mode="w", newline="")
+        writer = csv.writer(file)
+        writer.writerow(["Date", "Total Score", "Category", "Category Score"])
+        for entry in history:
+            date = entry["date"]
+            total_score = entry["total_score"]
+            writer.writerows([[date, total_score, cat["category"], cat["score"]] for cat in entry["categories"]])
+
         return True, f"Successfully exported to {file_path}"
     
     except Exception as e:
