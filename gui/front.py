@@ -350,7 +350,10 @@ class ModeFrame(ctk.CTkFrame):
 class CategoryFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
-
+        
+        # Center the frame content
+        self.grid_columnconfigure(0, weight=1)
+        
         title = ctk.CTkLabel(
             self,
             text="Select Categories:",
@@ -362,19 +365,32 @@ class CategoryFrame(ctk.CTkFrame):
         self.category_vars = {}
         categories = list(parent.all_questions.keys())
 
+        # Create a frame for checkboxes with fixed width
         checkbox_frame = ctk.CTkFrame(self, fg_color="transparent")
         checkbox_frame.pack(pady=20)
-
+        
+        # Calculate the width needed for the longest category name
+        max_width = max(len(category) for category in categories) * 10  # Approximate width based on characters
+        
+        # Create checkboxes with consistent width
         for category in categories:
             var = ctk.BooleanVar()
             self.category_vars[category] = var
-            ctk.CTkCheckBox(
-                checkbox_frame,
+            
+            # Create a container frame for each checkbox to ensure consistent width
+            container = ctk.CTkFrame(checkbox_frame, fg_color="transparent")
+            container.pack(fill="x", pady=5)
+            
+            checkbox = ctk.CTkCheckBox(
+                container,
                 text=category,
                 variable=var,
                 text_color="white",
-                font=("Arial", 14)
-            ).pack(pady=10, padx=20, anchor="w")
+                font=("Arial", 14),
+                width=max_width
+            )
+            # Center the checkbox in its container
+            checkbox.pack(expand=True)
 
         btn_frame = ctk.CTkFrame(self, fg_color="transparent")
         btn_frame.pack(pady=30)
