@@ -1,4 +1,5 @@
 import json
+
 import customtkinter as ctk
 import backend.question_management as qm
 import backend.score_evaluation as se
@@ -254,23 +255,41 @@ class WelcomeFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
 
-        # Welcome message
+        # Header
         ctk.CTkLabel(
             self,
             text=f"Welcome, {parent.current_user}!",
             text_color="white",
             font=("Arial", 24, "bold")
-        ).pack(pady=(50, 20))
+        ).pack(pady=(20, 10))
 
-        # Spacer to push content above
-        spacer = ctk.CTkLabel(self, text="")
-        spacer.pack(expand=True)  # Expand fills the available vertical space
+        # Stats container
+        stats_container = ctk.CTkFrame(self, fg_color="#1a237e", corner_radius=10)
+        stats_container.pack(pady=10, padx=20, fill="x")
 
-        # Create a frame for the buttons
+        # Calculate user stats
+        stats = self.calculate_user_stats(parent.current_user)
+        
+        # Display stats
+        ctk.CTkLabel(
+            stats_container,
+            text="Your Statistics",
+            text_color="white",
+            font=("Arial", 18, "bold")
+        ).pack(pady=(10, 5))
+
+        for stat, value in stats.items():
+            ctk.CTkLabel(
+                stats_container,
+                text=f"{stat}: {value}",
+                text_color="white",
+                font=("Arial", 14)
+            ).pack(pady=2)
+
+        # Button container at bottom
         button_container = ctk.CTkFrame(self, fg_color="transparent")
-        button_container.pack(side="bottom", pady=20)  # Place at the bottom with padding
+        button_container.pack(side="bottom", pady=20)
 
-        # Button to view history
         ctk.CTkButton(
             button_container,
             text="Display History",
@@ -279,7 +298,6 @@ class WelcomeFrame(ctk.CTkFrame):
             command=lambda: parent.show_frame("history")
         ).pack(side="left", padx=10)
 
-        # Button to start a new quiz
         ctk.CTkButton(
             button_container,
             text="Start Quiz",
@@ -288,7 +306,6 @@ class WelcomeFrame(ctk.CTkFrame):
             command=lambda: parent.show_frame("mode")
         ).pack(side="left", padx=10)
 
-        # Button to log out and return to login screen
         ctk.CTkButton(
             button_container,
             text="Log out",
@@ -296,6 +313,54 @@ class WelcomeFrame(ctk.CTkFrame):
             font=("Arial", 14),
             command=lambda: parent.show_frame("start")
         ).pack(side="left", padx=10)
+
+    def calculate_user_stats(self, username):
+        try:
+            with open('data/users.json', 'r') as f:
+                users = json.load(f)
+                history = users[username]['history']
+
+                if not history:
+                    return {
+                        "Overall Score": "No quizzes taken",
+                        "Total Questions": "0",
+                        "Quizzes Completed": "0"
+                    }
+
+                total_correct = 0
+                total_questions = 0
+                category_scores = {}
+
+                for entry in history:
+                    score_parts = entry['total_score'].split('/')
+                    total_correct += int(score_parts[0])
+                    total_questions += int(score_parts[1])
+
+                    for cat in entry['categories']:
+                        cat_name = cat['category']
+                        cat_score = cat['score'].split('/')
+                        if cat_name not in category_scores:
+                            category_scores[cat_name] = {'correct': 0, 'total': 0}
+                        category_scores[cat_name]['correct'] += int(cat_score[0])
+                        category_scores[cat_name]['total'] += int(cat_score[1])
+
+                stats = {
+                    "Overall Score": f"{(total_correct/total_questions)*100:.1f}%",
+                    "Total Questions": str(total_questions),
+                    "Quizzes Completed": str(len(history))
+                }
+
+                for cat, scores in category_scores.items():
+                    percentage = (scores['correct'] / scores['total']) * 100
+                    stats[f"{cat}"] = f"{percentage:.1f}% ({scores['correct']}/{scores['total']})"
+
+                return stats
+
+        except Exception as e:
+            print(f"Error calculating stats: {e}")
+            return {
+                "Error": "Could not load statistics"
+            }
 
 class ModeFrame(ctk.CTkFrame):
     def __init__(self, parent):

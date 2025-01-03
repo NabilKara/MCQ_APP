@@ -175,6 +175,26 @@
                         "score": "0/1"
                     }
                 ]
+            },
+            {
+                "total_score": "5/7",
+                "date": "2025-01-03 11:14",
+                "categories": [
+                    {
+                        "category": "Python",
+                        "score": "5/7"
+                    }
+                ]
+            },
+            {
+                "total_score": "7/7",
+                "date": "2025-01-03 15:05",
+                "categories": [
+                    {
+                        "category": "Computer Science",
+                        "score": "7/7"
+                    }
+                ]
             }
         ]
     },
