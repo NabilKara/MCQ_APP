@@ -357,6 +357,50 @@
                         "score": "3/3"
                     }
                 ]
+            },
+            {
+                "total_score": "4/7",
+                "date": "2025-01-03 21:36",
+                "categories": [
+                    {
+                        "category": "Python",
+                        "score": "1/2"
+                    },
+                    {
+                        "category": "Networking",
+                        "score": "2/2"
+                    },
+                    {
+                        "category": "Computer Science",
+                        "score": "1/1"
+                    },
+                    {
+                        "category": "Database Systems",
+                        "score": "0/1"
+                    },
+                    {
+                        "category": "Web Development",
+                        "score": "0/1"
+                    }
+                ]
+            },
+            {
+                "total_score": "5/7",
+                "date": "2025-01-03 21:38",
+                "categories": [
+                    {
+                        "category": "Computer Science",
+                        "score": "2/3"
+                    },
+                    {
+                        "category": "Database Systems",
+                        "score": "2/2"
+                    },
+                    {
+                        "category": "Web Development",
+                        "score": "1/2"
+                    }
+                ]
             }
         ]
     },

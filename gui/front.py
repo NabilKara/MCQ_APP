@@ -1,16 +1,16 @@
 import json
-
 import customtkinter as ctk
 import backend.question_management as qm
 import backend.score_evaluation as se
 import backend.user_management as um
 from customtkinter import filedialog
 from datetime import datetime
+
 class MCQApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("MCQ Quiz App")
-        self.geometry("600x400")
+        self.geometry("1366x768")
         self.resizable(False, False)
         self.configure(fg_color="#3f51b5")
 
@@ -30,7 +30,6 @@ class MCQApp(ctk.CTk):
             "login": LoginFrame,
             "signup": SignupFrame,
             "welcome": WelcomeFrame,
-            "mode": ModeFrame,
             "categories": CategoryFrame,
             "history": HistoryFrame,
             "quiz": QuizFrame,
@@ -340,7 +339,7 @@ class WelcomeFrame(ctk.CTkFrame):
         
         # Button configurations
         buttons = [
-            ("Start Quiz", "#4caf50", "mode"),
+            ("Start Quiz", "#4caf50", "categories"),
             ("History", "#2196f3", "history"),
             ("Log Out", "#f44336", "start")
         ]
@@ -363,58 +362,6 @@ class WelcomeFrame(ctk.CTkFrame):
         rgb = tuple(int(hex_color[i:i+2], 16) for i in (1, 3, 5))
         new_rgb = [max(0, min(255, c + factor)) for c in rgb]
         return f"#{new_rgb[0]:02x}{new_rgb[1]:02x}{new_rgb[2]:02x}"
-
-    
-
-class ModeFrame(ctk.CTkFrame):
-    def __init__(self, parent):
-        super().__init__(parent, fg_color="#3f51b5")
-
-        title = ctk.CTkLabel(
-            self,
-            text="Choose your mode:",
-            text_color="white",
-            font=("Arial", 20)
-        )
-        title.pack(pady=(100, 20))
-
-        self.mode_var = ctk.StringVar()
-
-        online = ctk.CTkRadioButton(
-            self,
-            text="Online Mode",
-            variable=self.mode_var,
-            value="online",
-            text_color="white",
-            font=("Arial", 16)
-        )
-        online.pack(pady=5)
-
-        offline = ctk.CTkRadioButton(
-            self,
-            text="Offline Mode",
-            variable=self.mode_var,
-            value="offline",
-            text_color="white",
-            font=("Arial", 16)
-        )
-        offline.pack(pady=5)
-
-        ctk.CTkButton(
-            self,
-            text="Continue",
-            fg_color="green",
-            font=("Arial", 14),
-            command=lambda: parent.show_frame("categories")
-        ).pack(pady=(20, 0))
-
-        ctk.CTkButton(
-            self,
-            text="Return",
-            fg_color="red",
-            font=("Arial", 14),
-            command=lambda: parent.show_frame("welcome")
-        ).pack(pady=10)
 
 class CategoryFrame(ctk.CTkFrame):
     def __init__(self, parent):
@@ -474,10 +421,10 @@ class CategoryFrame(ctk.CTkFrame):
 
         ctk.CTkButton(
             btn_frame,
-            text="Change Mode",
+            text="Return to Main Menu",
             fg_color="red",
             font=("Arial", 14),
-            command=lambda: parent.show_frame("mode")
+            command=lambda: parent.show_frame("welcome")
         ).pack(side="left", padx=10)
 
     def start_quiz(self, parent):
@@ -584,7 +531,7 @@ class QuizFrame(ctk.CTkFrame):
         quit_btn = ctk.CTkButton(
             button_container,
             text="Quit Quiz",
-            command=lambda: parent.show_frame("mode"),
+            command=lambda: parent.show_frame("welcome"),
             fg_color="#f44336",
             hover_color="#d32f2f",
             font=("Arial", 14, "bold"),
@@ -913,10 +860,10 @@ class ScoreFrame(ctk.CTkFrame):
 
         ctk.CTkButton(
             btn_frame,
-            text="Try Again",
+            text="Return to Main Menu",
             fg_color="green",
             font=("Arial", 14),
-            command=lambda: parent.show_frame("mode")
+            command=lambda: parent.show_frame("welcome")
         ).pack(side="left", padx=10)
 
         ctk.CTkButton(
