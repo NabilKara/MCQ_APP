@@ -50,7 +50,7 @@ def load_questions():
 def prepare_quiz(self):
     """
     Prepare quiz questions based on selected categories, choosing a balanced selection 
-    of questions from each category up to a total of 7 questions.
+    of questions from each category up to a total of 7 questions, with randomized options.
     """
     self.questions = []
     self.score = []  # Initialize the score array
@@ -79,12 +79,26 @@ def prepare_quiz(self):
             min(num_to_take, len(category_questions))
         )
         
-        # Add category information to each question
+        # Add category information to each question and randomize options
         for q in selected:
+            # Create pairs of options with their indices
+            options = q["options"]
+            correct_idx = int(q["correct"]) - 1
+            option_pairs = list(enumerate(options))
+            
+            # Shuffle the pairs
+            random.shuffle(option_pairs)
+            
+            # Unpack the shuffled pairs
+            indices, shuffled_options = zip(*option_pairs)
+            
+            # Find where the correct answer went
+            new_correct = str(indices.index(correct_idx) + 1)
+            
             self.questions.append({
                 "question": q["question"],
-                "options": q["options"],
-                "correct": q["correct"],
+                "options": list(shuffled_options),
+                "correct": new_correct,
                 "category": category
             })
             
