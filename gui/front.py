@@ -101,7 +101,7 @@ class SignupFrame(ctk.CTkFrame):
         greeting.pack(pady=(40, 20))
 
         login_container = ctk.CTkFrame(self, fg_color="#3949ab", corner_radius=15)
-        login_container.pack(pady=20, padx=40)
+        login_container.pack(pady=80, padx=40)
 
         self.username_entry = ctk.CTkEntry(
             login_container,
@@ -179,7 +179,7 @@ class LoginFrame(ctk.CTkFrame):
         greeting.pack(pady=(40, 20))
         # Login Container
         login_container = ctk.CTkFrame(self, fg_color="#3949ab", corner_radius=15)
-        login_container.pack(pady=20, padx=40)
+        login_container.pack(pady=80, padx=40)
 
         # Feedback Label
         self.feedback_label = ctk.CTkLabel(
@@ -453,7 +453,7 @@ class QuizFrame(ctk.CTkFrame):
                 variable=self.answer_var,
                 value=str(i),
                 text_color="white",
-                font=("Arial", 14),
+                font=("Arial", 16),
                 hover_color="#4a5fc1",
                 fg_color="#2196f3"
             )
