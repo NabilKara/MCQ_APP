@@ -159,17 +159,7 @@ def check_user_singup(self):
     self.master.show_frame("mode" if not users[username] else "welcome")
 
 def export_csv(username, file_path=None):
-    """
-    Export user history to a CSV file at the specified path.
-    
-    Args:
-        username (str): Username whose history to export
-        file_path (str, optional): Path where the CSV should be saved. 
-                                 If None, generates a default filename in the current directory.
-        
-    Returns:
-        tuple: (bool, str) Success status and message
-    """
+
     users = load_users()
     if username not in users.keys():
         return False, "User not found"

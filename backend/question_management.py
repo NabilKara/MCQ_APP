@@ -111,21 +111,3 @@ def prepare_quiz(self):
     # Ensure we don't exceed 7 questions total
     self.questions = self.questions[:7]
     self.current_question = 0
-# def prepare_quiz(self):
-#     """Prepare quiz questions based on selected categories."""
-#     self.questions = []
-#     self.score = []  # Initialize the score array
-#
-#     for category in self.selected_categories:
-#         category_questions = self.all_questions.get(category, [])
-#         self.questions.extend([
-#             {
-#                 "question": q["question"],
-#                 "options": q["options"],
-#                 "correct": q["correct"],
-#                 "category": category
-#             }
-#             for q in category_questions
-#         ])
-#         self.score.append((category, 0, 0))  # (category, current_score, num_questions)
-#     self.current_question = 0

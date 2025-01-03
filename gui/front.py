@@ -4,6 +4,7 @@ import backend.question_management as qm
 import backend.score_evaluation as se
 import backend.user_management as um
 from customtkinter import filedialog
+from tkinter import font
 from datetime import datetime
 
 class MCQApp(ctk.CTk):
@@ -326,7 +327,7 @@ class CategoryFrame(ctk.CTkFrame):
             self,
             text="Select Categories:",
             text_color="white",
-            font=("Arial", 20)
+            font=("Arial Bold", 22)
         )
         title.pack(pady=(50, 20))
 
@@ -354,30 +355,30 @@ class CategoryFrame(ctk.CTkFrame):
                 text=category,
                 variable=var,
                 text_color="white",
-                font=("Arial", 14),
+                font=("Arial", 16),
                 width=max_width
             )
             # Center the checkbox in its container
             checkbox.pack(expand=True)
 
         btn_frame = ctk.CTkFrame(self, fg_color="transparent")
-        btn_frame.pack(pady=30)
+        btn_frame.pack(pady=80)
 
         ctk.CTkButton(
             btn_frame,
             text="Start Quiz",
             fg_color="green",
-            font=("Arial", 14),
+            font=("Arial", 16),
             command=lambda: self.start_quiz(parent)
-        ).pack(side="left", padx=10)
+        ).pack(side="left", padx=20)
 
         ctk.CTkButton(
             btn_frame,
-            text="Return to Main Menu",
+            text="Return to Menu",
             fg_color="red",
-            font=("Arial", 14),
+            font=("Arial", 16),
             command=lambda: parent.show_frame("welcome")
-        ).pack(side="left", padx=10)
+        ).pack(side="left", padx=20)
 
     def start_quiz(self, parent):
         selected = [cat for cat, var in self.category_vars.items() if var.get()]
