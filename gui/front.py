@@ -11,7 +11,7 @@ class MCQApp(ctk.CTk):
         super().__init__()
         self.title("MCQ Quiz App")
         self.geometry("600x400")
-
+        self.resizable(False, False)
         self.configure(fg_color="#3f51b5")
 
         # Initialize instance variables
