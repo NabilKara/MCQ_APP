@@ -254,113 +254,117 @@ class LoginFrame(ctk.CTkFrame):
 class WelcomeFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
-
+        
+        scroll_frame = ctk.CTkScrollableFrame(
+            self,
+            fg_color="transparent",
+            height=350
+        )
+        scroll_frame.pack(fill="both", expand=True, padx=20, pady=20)
+        
         # Header
         ctk.CTkLabel(
-            self,
-            text=f"Welcome, {parent.current_user}!",
-            text_color="white",
-            font=("Arial", 24, "bold")
-        ).pack(pady=(20, 10))
-
-        # Stats container
-        stats_container = ctk.CTkFrame(self, fg_color="#1a237e", corner_radius=10)
-        stats_container.pack(pady=10, padx=20, fill="x")
-
-        # Calculate user stats
-        stats = self.calculate_user_stats(parent.current_user)
+            scroll_frame,
+            text=f"Welcome back, {parent.current_user}!",
+            text_color="#ffffff",
+            font=("Helvetica", 28, "bold")
+        ).pack(pady=(0, 20))
         
-        # Display stats
+        # Stats container
+        stats_frame = ctk.CTkFrame(scroll_frame, fg_color="#3949ab", corner_radius=15)
+        stats_frame.pack(fill="x", pady=10)
+        
+        # Dashboard title
         ctk.CTkLabel(
-            stats_container,
-            text="Your Statistics",
-            text_color="white",
-            font=("Arial", 18, "bold")
-        ).pack(pady=(10, 5))
-
-        for stat, value in stats.items():
+            stats_frame,
+            text="Performance Dashboard",
+            text_color="#ffffff",
+            font=("Helvetica", 20, "bold")
+        ).pack(pady=15)
+        
+        # Stats grid
+        stats_grid = ctk.CTkFrame(stats_frame, fg_color="transparent")
+        stats_grid.pack(padx=20, pady=(0, 15))
+        
+        # Statistics data
+        stats = {
+            'Overall Score': '93.1%',
+            'Total Questions': '72',
+            'Quizzes Completed': '10',
+            'Python': '100.0% (36/36)',
+            'Networking': '86.2% (25/29)',
+            'Database Systems': '85.7% (6/7)'
+        }
+        
+        for idx, (stat, value) in enumerate(stats.items()):
+            row = idx // 2
+            col = idx % 2
+            
+            # Individual stat container
+            stat_container = ctk.CTkFrame(
+                stats_grid,
+                fg_color="#283593",
+                corner_radius=10,
+                width=220,
+                height=120
+            )
+            stat_container.grid(row=row, column=col, padx=10, pady=10)
+            stat_container.grid_propagate(False)
+            
+            # Center container for vertical alignment
+            text_container = ctk.CTkFrame(stat_container, fg_color="transparent")
+            text_container.place(relx=0.5, rely=0.5, anchor="center")
+            
+            # Stat label
             ctk.CTkLabel(
-                stats_container,
-                text=f"{stat}: {value}",
-                text_color="white",
-                font=("Arial", 14)
-            ).pack(pady=2)
+                text_container,
+                text=stat,
+                text_color="#b0b0cf",
+                font=("Helvetica", 14)
+            ).pack()
+            
+            # Value label
+            ctk.CTkLabel(
+                text_container,
+                text=value,
+                text_color="#ffffff",
+                font=("Helvetica", 20, "bold")
+            ).pack()
+        
+        # Configure grid columns
+        stats_grid.grid_columnconfigure((0, 1), weight=1, minsize=220)
+        
+        # Buttons container
+        button_frame = ctk.CTkFrame(scroll_frame, fg_color="transparent")
+        button_frame.pack(fill="x", pady=(20, 0))
+        
+        # Button configurations
+        buttons = [
+            ("Start Quiz", "#4caf50", "mode"),
+            ("History", "#2196f3", "history"),
+            ("Log Out", "#f44336", "start")
+        ]
+        
+        # Create buttons
+        for text, color, frame in buttons:
+            ctk.CTkButton(
+                button_frame,
+                text=text,
+                fg_color=color,
+                hover_color=self._adjust_color(color, -20),
+                corner_radius=8,
+                font=("Helvetica", 15, "bold"),
+                height=40,
+                command=lambda f=frame: parent.show_frame(f)
+            ).pack(side="left", padx=5, fill="x", expand=True)
+    
+    def _adjust_color(self, hex_color, factor):
+        """Adjust color brightness by factor"""
+        rgb = tuple(int(hex_color[i:i+2], 16) for i in (1, 3, 5))
+        new_rgb = [max(0, min(255, c + factor)) for c in rgb]
+        return f"#{new_rgb[0]:02x}{new_rgb[1]:02x}{new_rgb[2]:02x}"
 
-        # Button container at bottom
-        button_container = ctk.CTkFrame(self, fg_color="transparent")
-        button_container.pack(side="bottom", pady=20)
-
-        ctk.CTkButton(
-            button_container,
-            text="Display History",
-            fg_color="#FF9800",
-            font=("Arial", 14),
-            command=lambda: parent.show_frame("history")
-        ).pack(side="left", padx=10)
-
-        ctk.CTkButton(
-            button_container,
-            text="Start Quiz",
-            fg_color="green",
-            font=("Arial", 14),
-            command=lambda: parent.show_frame("mode")
-        ).pack(side="left", padx=10)
-
-        ctk.CTkButton(
-            button_container,
-            text="Log out",
-            fg_color="red",
-            font=("Arial", 14),
-            command=lambda: parent.show_frame("start")
-        ).pack(side="left", padx=10)
-
-    def calculate_user_stats(self, username):
-        try:
-            with open('data/users.json', 'r') as f:
-                users = json.load(f)
-                history = users[username]['history']
-
-                if not history:
-                    return {
-                        "Overall Score": "No quizzes taken",
-                        "Total Questions": "0",
-                        "Quizzes Completed": "0"
-                    }
-
-                total_correct = 0
-                total_questions = 0
-                category_scores = {}
-
-                for entry in history:
-                    score_parts = entry['total_score'].split('/')
-                    total_correct += int(score_parts[0])
-                    total_questions += int(score_parts[1])
-
-                    for cat in entry['categories']:
-                        cat_name = cat['category']
-                        cat_score = cat['score'].split('/')
-                        if cat_name not in category_scores:
-                            category_scores[cat_name] = {'correct': 0, 'total': 0}
-                        category_scores[cat_name]['correct'] += int(cat_score[0])
-                        category_scores[cat_name]['total'] += int(cat_score[1])
-
-                stats = {
-                    "Overall Score": f"{(total_correct/total_questions)*100:.1f}%",
-                    "Total Questions": str(total_questions),
-                    "Quizzes Completed": str(len(history))
-                }
-
-                for cat, scores in category_scores.items():
-                    percentage = (scores['correct'] / scores['total']) * 100
-                    stats[f"{cat}"] = f"{percentage:.1f}% ({scores['correct']}/{scores['total']})"
-
-                return stats
-
-        except Exception as e:
-            print(f"Error calculating stats: {e}")
-            return {
-                "Error": "Could not load statistics"
-            }
+    
 
 class ModeFrame(ctk.CTkFrame):
     def __init__(self, parent):
