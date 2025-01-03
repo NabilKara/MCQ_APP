@@ -10,7 +10,7 @@ class MCQApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("MCQ Quiz App")
-        self.geometry("1366x768")
+        self.geometry("600x400")
         self.resizable(False, False)
         self.configure(fg_color="#3f51b5")
 
@@ -302,7 +302,7 @@ class WelcomeFrame(ctk.CTkFrame):
             text="Start Quiz",
             fg_color="green",
             font=("Arial", 14),
-            command=lambda: parent.show_frame("mode")
+            command=lambda: parent.show_frame("categories")
         ).pack(side="left", padx=10)
 
         ctk.CTkButton(
