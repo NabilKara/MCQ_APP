@@ -10,7 +10,7 @@ class MCQApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("MCQ Quiz App")
-        self.geometry("600x400")
+        self.geometry("700x500")
         self.resizable(False, False)
         self.configure(fg_color="#3f51b5")
 
@@ -637,7 +637,7 @@ class HistoryFrame(ctk.CTkFrame):
         history_container = ctk.CTkScrollableFrame(
             self,
             width=500,
-            height=300,
+            height=400,
             fg_color="transparent"
         )
         history_container.pack(pady=20, padx=20, fill="both", expand=True)

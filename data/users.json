@@ -401,6 +401,32 @@
                         "score": "1/2"
                     }
                 ]
+            },
+            {
+                "total_score": "6/7",
+                "date": "2025-01-03 22:56",
+                "categories": [
+                    {
+                        "category": "Python",
+                        "score": "2/2"
+                    },
+                    {
+                        "category": "Networking",
+                        "score": "2/2"
+                    },
+                    {
+                        "category": "Computer Science",
+                        "score": "1/1"
+                    },
+                    {
+                        "category": "Database Systems",
+                        "score": "0/1"
+                    },
+                    {
+                        "category": "Web Development",
+                        "score": "1/1"
+                    }
+                ]
             }
         ]
     },
