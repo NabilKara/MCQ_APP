@@ -309,6 +309,16 @@
                         "score": "6/7"
                     }
                 ]
+            },
+            {
+                "total_score": "3/7",
+                "date": "2025-01-04 09:48",
+                "categories": [
+                    {
+                        "category": "Web Development",
+                        "score": "3/7"
+                    }
+                ]
             }
         ]
     },
@@ -497,5 +507,15 @@
                 ]
             }
         ]
+    },
+    "batata": {
+        "password": "$2b$12$j32HW.29qJnKBSNYAnc5Uu1FQ9EEP4bsbri221akJPdfJEH65WT3K",
+        "created_at": "2025-01-04 09:59",
+        "history": []
+    },
+    "momo": {
+        "password": "$2b$12$dSYsJBELPYho7l72sxzGfODxCAbg1duD/7TLom3v1NhL25W0ND1Q.",
+        "created_at": "2025-01-04 10:07",
+        "history": []
     }
 }

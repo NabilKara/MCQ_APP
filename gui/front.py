@@ -131,7 +131,18 @@ class SignupFrame(ctk.CTkFrame):
             show="*"
         )
         self.password_entry.pack(pady=(10, 10), padx=20)
-        self.password_entry.bind('<Return>', lambda e: um.check_user_singup(self))
+        self.username_entry.bind('<Return>', lambda e: um.check_user_singup(self))
+        self.confirm_password_entry = ctk.CTkEntry(
+            login_container,
+            placeholder_text="Confirm password",
+            width=280,
+            fg_color="white",
+            text_color="black",
+            font=("Arial", 14),
+            show="*"
+        )
+        self.confirm_password_entry.pack(pady=(10, 10), padx=20)
+        self.confirm_password_entry.bind('<Return>', lambda e: um.check_user_singup(self))
 
         button_container = ctk.CTkFrame(login_container, fg_color="transparent")
         button_container.pack(pady=(10, 20))
@@ -620,15 +631,7 @@ class HistoryFrame(ctk.CTkFrame):
             font=("Arial", 24, "bold")
         ).pack(side="left", expand=True)
 
-        ctk.CTkButton(
-            top_nav_frame,
-            text="Export to CSV",
-            fg_color="#DDB700",
-            hover_color="#FFC107",
-            font=("Arial", 14),
-            width=100,
-            command=lambda: self.handle_export(parent.current_user)
-        ).pack(side="right", padx=(0, 10))
+        
 
         # Create scrollable frame for history entries
         history_container = ctk.CTkScrollableFrame(
@@ -654,6 +657,15 @@ class HistoryFrame(ctk.CTkFrame):
                         font=("Arial", 16)
                     ).pack(pady=20)
                 else:
+                    ctk.CTkButton(
+                        top_nav_frame,
+                        text="Export to CSV",
+                        fg_color="#DDB700",
+                        hover_color="#FFC107",
+                        font=("Arial", 14),
+                        width=100,
+                        command=lambda: self.handle_export(parent.current_user)
+                    ).pack(side="right", padx=(0, 10))
                     # Display each history entry
                     for entry in reversed(history):
                         entry_frame = ctk.CTkFrame(
@@ -722,7 +734,7 @@ class HistoryFrame(ctk.CTkFrame):
             # Generate default filename
             default_filename = f"{username}_{datetime.now().strftime('%Y-%m-%d-%H-%M')}.csv"
             
-            # Open file dialog (this still uses tkinter's dialog under the hood)
+            # Open file dialog to select save location)
             file_path = filedialog.asksaveasfilename(
                 parent=self,
                 defaultextension='.csv',

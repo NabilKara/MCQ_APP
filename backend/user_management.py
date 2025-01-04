@@ -56,7 +56,16 @@ def check_fields(self):
     if not password:
         display_feedback(self, "⚠️ Please enter a password.", "yellow")
         return False
-
+    try:
+        confirm_password = self.confirm_password_entry.get().strip()
+        if not confirm_password:
+            display_feedback(self, "⚠️ Please confirm your password.", "yellow")
+            return False
+        if password != confirm_password:
+            display_feedback(self, "⚠️ Passwords do not match.", "yellow")
+            return False
+    except AttributeError:
+        pass
     # Load user data
     try:
         with open('data/users.json', 'r') as file:
