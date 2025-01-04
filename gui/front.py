@@ -1,4 +1,5 @@
 import json
+import bcrypt
 import customtkinter as ctk
 import backend.question_management as qm
 import backend.score_evaluation as se
@@ -264,15 +265,28 @@ class LoginFrame(ctk.CTkFrame):
 class WelcomeFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
-
+        top_bar = ctk.CTkFrame(self,fg_color="#1a237e",height=50)
+        top_bar.pack(fill="x", pady=(0, 20))
+        top_bar.pack_propagate(False)
         # Header
         ctk.CTkLabel(
-            self,
+            top_bar,
             text=f"Welcome, {parent.current_user}!",
             text_color="white",
             font=("Arial", 24, "bold")
-        ).pack(pady=(20, 10))
-
+        ).pack(side="left", padx=20)
+        #account button
+        self.account_btn = ctk.CTkButton(
+            top_bar,
+            text="👤",  # Using emoji as icon
+            width=40,
+            height=40,
+            fg_color="transparent",
+            hover_color="#303f9f",
+            command=self.show_account_menu
+        )
+        self.account_btn.pack(side="right", padx=10)
+        
         # Stats container
         stats_container = ctk.CTkFrame(self, fg_color="#1a237e", corner_radius=10)
         stats_container.pack(pady=10, padx=20, fill="x")
@@ -323,6 +337,97 @@ class WelcomeFrame(ctk.CTkFrame):
             font=("Arial", 14),
             command=lambda: parent.show_frame("start")
         ).pack(side="left", padx=10)
+
+    def show_account_menu(self):
+        menu = ctk.CTkToplevel(self)
+        menu.geometry("200x50")
+        menu.overrideredirect(True)
+        
+        # Position menu below account button
+        x = self.account_btn.winfo_rootx()
+        y = self.account_btn.winfo_rooty() + self.account_btn.winfo_height()
+        menu.geometry(f"+{x}+{y}")
+
+        # Delete account button
+        ctk.CTkButton(
+            menu,
+            text="Delete Account",
+            fg_color="#f44336",
+            hover_color="#d32f2f",
+            command=lambda: self.confirm_delete_account(menu)
+        ).pack(fill="x", padx=5, pady=5)
+
+    def confirm_delete_account(self, menu):
+        menu.destroy()
+        dialog = ctk.CTkToplevel(self)
+        dialog.title("Delete Account")
+        dialog.geometry("400x300")
+        dialog.resizable(False,False)
+        dialog.configure(fg_color="#3f51b5")
+        dialog.transient(self)
+
+        ctk.CTkLabel(
+            dialog,
+            text="Enter your password to delete account:",
+            font=("Arial", 14)
+        ).pack(pady=(20, 10))
+
+        password_entry = ctk.CTkEntry(dialog, show="*", width=200)
+        password_entry.pack(pady=10)
+        password_entry.configure(placeholder_text="Enter password")
+
+        confirm_entry = ctk.CTkEntry(dialog, show="*", width=200)
+        confirm_entry.pack(pady=10)
+        confirm_entry.configure(placeholder_text="Confirm password")
+
+        feedback_label = ctk.CTkLabel(dialog, text="", text_color="red")
+        feedback_label.pack(pady=10)
+
+        def validate_and_delete():
+            password = password_entry.get()
+            confirm = confirm_entry.get()
+
+            if password != confirm:
+                feedback_label.configure(text="Passwords do not match!")
+                return
+
+            # Verify password against stored hash
+            try:
+                with open('data/users.json', 'r') as f:
+                    users = json.load(f)
+                    stored_hash = users[self.master.current_user]["password"]
+                    
+                if bcrypt.checkpw(password.encode(), stored_hash.encode()):
+                    # Delete user
+                    del users[self.master.current_user]
+                    with open('data/users.json', 'w') as f:
+                        json.dump(users, f, indent=4)
+                    dialog.destroy()
+                    self.master.show_frame("start")
+                else:
+                    feedback_label.configure(text="Incorrect password!")
+            except Exception as e:
+                feedback_label.configure(text="An error occurred!")
+
+        button_frame = ctk.CTkFrame(dialog, fg_color="transparent")
+        button_frame.pack(pady=20)
+
+        ctk.CTkButton(
+            button_frame,
+            text="Delete Account",
+            fg_color="#f44336",
+            hover_color="#d32f2f",
+            command=validate_and_delete
+        ).pack(side="left", padx=10)
+
+        ctk.CTkButton(
+            button_frame,
+            text="Cancel",
+            fg_color="#4CAF50",
+            hover_color="#388E3C",
+            command=dialog.destroy
+        ).pack(side="left", padx=10)
+        
 
 class CategoryFrame(ctk.CTkFrame):
     def __init__(self, parent):
