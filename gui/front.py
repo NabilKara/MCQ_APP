@@ -265,20 +265,21 @@ class LoginFrame(ctk.CTkFrame):
 class WelcomeFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent, fg_color="#3f51b5")
+        self.account_menu = None
         top_bar = ctk.CTkFrame(self,fg_color="#1a237e",height=50)
         top_bar.pack(fill="x", pady=(0, 20))
         top_bar.pack_propagate(False)
-        # Header
+        
         ctk.CTkLabel(
             top_bar,
             text=f"Welcome, {parent.current_user}!",
             text_color="white",
             font=("Arial", 24, "bold")
         ).pack(side="left", padx=20)
-        #account button
+        
         self.account_btn = ctk.CTkButton(
             top_bar,
-            text="👤",  # Using emoji as icon
+            text="👤",
             width=40,
             height=40,
             fg_color="transparent",
@@ -287,14 +288,11 @@ class WelcomeFrame(ctk.CTkFrame):
         )
         self.account_btn.pack(side="right", padx=10)
         
-        # Stats container
         stats_container = ctk.CTkFrame(self, fg_color="#1a237e", corner_radius=10)
         stats_container.pack(pady=10, padx=20, fill="x")
 
-        # Calculate user stats
         stats = se.calculate_user_stats(parent.current_user)
         
-        # Display stats
         ctk.CTkLabel(
             stats_container,
             text="Your Statistics",
@@ -310,7 +308,6 @@ class WelcomeFrame(ctk.CTkFrame):
                 font=("Arial", 14)
             ).pack(pady=2)
 
-        # Button container at bottom
         button_container = ctk.CTkFrame(self, fg_color="transparent")
         button_container.pack(side="bottom", pady=20)
 
@@ -339,26 +336,52 @@ class WelcomeFrame(ctk.CTkFrame):
         ).pack(side="left", padx=10)
 
     def show_account_menu(self):
-        menu = ctk.CTkToplevel(self)
-        menu.geometry("200x50")
-        menu.overrideredirect(True)
+        # Destroy existing menu if it exists
+        if self.account_menu:
+            self.account_menu.destroy()
+            self.master.unbind('<Button-1>')
         
-        # Position menu below account button
-        x = self.account_btn.winfo_rootx()
+        # Create new menu
+        self.account_menu = ctk.CTkToplevel(self)
+        self.account_menu.geometry("200x50")
+        self.account_menu.overrideredirect(True)
+        self.account_menu.configure(fg_color="white")
+        
+        x = self.account_btn.winfo_rootx() - 250
         y = self.account_btn.winfo_rooty() + self.account_btn.winfo_height()
-        menu.geometry(f"+{x}+{y}")
+        self.account_menu.geometry(f"+{x}+{y}")
 
-        # Delete account button
         ctk.CTkButton(
-            menu,
+            self.account_menu,
             text="Delete Account",
             fg_color="#f44336",
             hover_color="#d32f2f",
-            command=lambda: self.confirm_delete_account(menu)
+            command=lambda: self.confirm_delete_account(self.account_menu)
         ).pack(fill="x", padx=5, pady=5)
+        
+        # Bind click event to handle clicking outside menu
+        self.master.bind('<Button-1>', self.handle_click_outside)
+
+    def handle_click_outside(self, event):
+        if self.account_menu:
+            # Get menu widget coordinates
+            menu_x = self.account_menu.winfo_x()
+            menu_y = self.account_menu.winfo_y()
+            menu_width = self.account_menu.winfo_width()
+            menu_height = self.account_menu.winfo_height()
+            
+            # Check if click is outside menu boundaries
+            if event.x_root < menu_x or event.x_root > menu_x + menu_width or \
+               event.y_root < menu_y or event.y_root > menu_y + menu_height:
+                self.account_menu.destroy()
+                self.account_menu = None
+                self.master.unbind('<Button-1>')
 
     def confirm_delete_account(self, menu):
         menu.destroy()
+        self.master.unbind('<Button-1>')
+        self.account_menu = None
+        
         dialog = ctk.CTkToplevel(self)
         dialog.title("Delete Account")
         dialog.geometry("400x300")
@@ -391,14 +414,12 @@ class WelcomeFrame(ctk.CTkFrame):
                 feedback_label.configure(text="Passwords do not match!")
                 return
 
-            # Verify password against stored hash
             try:
                 with open('data/users.json', 'r') as f:
                     users = json.load(f)
                     stored_hash = users[self.master.current_user]["password"]
                     
                 if bcrypt.checkpw(password.encode(), stored_hash.encode()):
-                    # Delete user
                     del users[self.master.current_user]
                     with open('data/users.json', 'w') as f:
                         json.dump(users, f, indent=4)
