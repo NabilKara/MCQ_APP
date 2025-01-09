@@ -78,14 +78,14 @@ def prepare_quiz(self):
             category_questions,
             min(num_to_take, len(category_questions))
         )
-        
+
         # Add category information to each question and randomize options
         for q in selected:
             # Create pairs of options with their indices
             options = q["options"]
             correct_idx = int(q["correct"]) - 1
             option_pairs = list(enumerate(options))
-            
+
             # Shuffle the pairs
             random.shuffle(option_pairs)
             

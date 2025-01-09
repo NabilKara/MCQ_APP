@@ -322,150 +322,6 @@
             }
         ]
     },
-    "a": {
-        "password": "$2b$12$UQHWUF63Vbivcf78dTDLi.FpMM1jrFyFRkKcNapiw9cJYOrmeG9YC",
-        "created_at": "2025-01-01 22:39",
-        "history": [
-            {
-                "total_score": "5/5",
-                "date": "2025-01-01 23:03",
-                "categories": [
-                    {
-                        "category": "Networking",
-                        "score": "5/5"
-                    }
-                ]
-            },
-            {
-                "total_score": "7/20",
-                "date": "2025-01-01 23:04",
-                "categories": [
-                    {
-                        "category": "Networking",
-                        "score": "5/10"
-                    },
-                    {
-                        "category": "Computer Science",
-                        "score": "2/10"
-                    }
-                ]
-            },
-            {
-                "total_score": "4/7",
-                "date": "2025-01-02 21:20",
-                "categories": [
-                    {
-                        "category": "Python",
-                        "score": "1/2"
-                    },
-                    {
-                        "category": "Networking",
-                        "score": "0/2"
-                    },
-                    {
-                        "category": "Computer Science",
-                        "score": "3/3"
-                    }
-                ]
-            },
-            {
-                "total_score": "4/7",
-                "date": "2025-01-03 21:36",
-                "categories": [
-                    {
-                        "category": "Python",
-                        "score": "1/2"
-                    },
-                    {
-                        "category": "Networking",
-                        "score": "2/2"
-                    },
-                    {
-                        "category": "Computer Science",
-                        "score": "1/1"
-                    },
-                    {
-                        "category": "Database Systems",
-                        "score": "0/1"
-                    },
-                    {
-                        "category": "Web Development",
-                        "score": "0/1"
-                    }
-                ]
-            },
-            {
-                "total_score": "5/7",
-                "date": "2025-01-03 21:38",
-                "categories": [
-                    {
-                        "category": "Computer Science",
-                        "score": "2/3"
-                    },
-                    {
-                        "category": "Database Systems",
-                        "score": "2/2"
-                    },
-                    {
-                        "category": "Web Development",
-                        "score": "1/2"
-                    }
-                ]
-            },
-            {
-                "total_score": "6/7",
-                "date": "2025-01-03 22:56",
-                "categories": [
-                    {
-                        "category": "Python",
-                        "score": "2/2"
-                    },
-                    {
-                        "category": "Networking",
-                        "score": "2/2"
-                    },
-                    {
-                        "category": "Computer Science",
-                        "score": "1/1"
-                    },
-                    {
-                        "category": "Database Systems",
-                        "score": "0/1"
-                    },
-                    {
-                        "category": "Web Development",
-                        "score": "1/1"
-                    }
-                ]
-            },
-            {
-                "total_score": "7/7",
-                "date": "2025-01-03 23:32",
-                "categories": [
-                    {
-                        "category": "Python",
-                        "score": "2/2"
-                    },
-                    {
-                        "category": "Networking",
-                        "score": "2/2"
-                    },
-                    {
-                        "category": "Computer Science",
-                        "score": "1/1"
-                    },
-                    {
-                        "category": "Database Systems",
-                        "score": "1/1"
-                    },
-                    {
-                        "category": "Web Development",
-                        "score": "1/1"
-                    }
-                ]
-            }
-        ]
-    },
     "b": {
         "password": "$2b$12$urj2TXq1pTkdxmQ7s5Arp.rdLUzmSsN1H7E3ZuYBucTBTHLuqjmXO",
         "created_at": "2025-01-02 21:24",
@@ -516,6 +372,11 @@
     "momo": {
         "password": "$2b$12$dSYsJBELPYho7l72sxzGfODxCAbg1duD/7TLom3v1NhL25W0ND1Q.",
         "created_at": "2025-01-04 10:07",
+        "history": []
+    },
+    "a": {
+        "password": "$2b$12$kRgtxlYA6zYGp41p1ghaF.U7VExpVBn1AlRriCtFEXTPqQy1DVP.m",
+        "created_at": "2025-01-09 10:33",
         "history": []
     }
 }
