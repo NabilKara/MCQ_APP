@@ -195,6 +195,20 @@
                         "score": "7/7"
                     }
                 ]
+            },
+            {
+                "total_score": "3/7",
+                "date": "2025-01-11 20:35",
+                "categories": [
+                    {
+                        "category": "Python",
+                        "score": "2/4"
+                    },
+                    {
+                        "category": "Computer Science",
+                        "score": "1/3"
+                    }
+                ]
             }
         ]
     },

@@ -343,9 +343,9 @@ class WelcomeFrame(ctk.CTkFrame):
         
         # Create new menu
         self.account_menu = ctk.CTkToplevel(self)
-        self.account_menu.geometry("200x50")
+        self.account_menu.geometry("190x30")
         self.account_menu.overrideredirect(True)
-        self.account_menu.configure(fg_color="white")
+        self.account_menu.configure(fg_color="red")
         
         x = self.account_btn.winfo_rootx() - 250
         y = self.account_btn.winfo_rooty() + self.account_btn.winfo_height()
@@ -354,10 +354,10 @@ class WelcomeFrame(ctk.CTkFrame):
         ctk.CTkButton(
             self.account_menu,
             text="Delete Account",
-            fg_color="#f44336",
-            hover_color="#d32f2f",
+            fg_color="red",
+            hover_color="#c62828",
             command=lambda: self.confirm_delete_account(self.account_menu)
-        ).pack(fill="x", padx=5, pady=5)
+        ).pack(fill="both",expand=True)
         
         # Bind click event to handle clicking outside menu
         self.master.bind('<Button-1>', self.handle_click_outside)
