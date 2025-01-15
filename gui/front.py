@@ -329,7 +329,7 @@ class WelcomeFrame(ctk.CTkFrame):
             text="Delete Account",
             fg_color="#c62828",
             hover_color="#8B0000",
-            command=lambda: self.confirm_delete_account(self.account_menu)
+            command=lambda: self.confirm_delete_account()
         ).pack(side="left", padx=10)
 
     def confirm_delete_account(self):
