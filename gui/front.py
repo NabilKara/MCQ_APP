@@ -332,25 +332,7 @@ class WelcomeFrame(ctk.CTkFrame):
             command=lambda: self.confirm_delete_account(self.account_menu)
         ).pack(side="left", padx=10)
 
-    def handle_click_outside(self, event):
-        if self.account_menu:
-            # Get menu widget coordinates
-            menu_x = self.account_menu.winfo_x()
-            menu_y = self.account_menu.winfo_y()
-            menu_width = self.account_menu.winfo_width()
-            menu_height = self.account_menu.winfo_height()
-            
-            # Check if click is outside menu boundaries
-            if event.x_root < menu_x or event.x_root > menu_x + menu_width or \
-               event.y_root < menu_y or event.y_root > menu_y + menu_height:
-                self.account_menu.destroy()
-                self.account_menu = None
-                self.master.unbind('<Button-1>')
-
-    def confirm_delete_account(self, menu):
-        self.master.unbind('<Button-1>')
-        self.account_menu = None
-        
+    def confirm_delete_account(self):
         dialog = ctk.CTkToplevel(self)
         dialog.title("Delete Account")
         dialog.geometry("400x300")
