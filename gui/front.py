@@ -276,18 +276,7 @@ class WelcomeFrame(ctk.CTkFrame):
             text_color="white",
             font=("Arial", 24, "bold")
         ).pack(side="left", padx=20)
-        
-        self.account_btn = ctk.CTkButton(
-            top_bar,
-            text="👤",
-            width=40,
-            height=40,
-            fg_color="transparent",
-            hover_color="#303f9f",
-            command=self.show_account_menu
-        )
-        self.account_btn.pack(side="right", padx=10)
-        
+
         stats_container = ctk.CTkFrame(self, fg_color="#1a237e", corner_radius=10)
         stats_container.pack(pady=10, padx=20, fill="x")
 
@@ -313,54 +302,35 @@ class WelcomeFrame(ctk.CTkFrame):
 
         ctk.CTkButton(
             button_container,
-            text="Display History",
-            fg_color="#FF9800",
-            font=("Arial", 14),
-            command=lambda: parent.show_frame("history")
+            text="Start Quiz",
+            fg_color="green",
+            hover_color="#228B22",
+            command=lambda: parent.show_frame("categories")
         ).pack(side="left", padx=10)
 
         ctk.CTkButton(
             button_container,
-            text="Start Quiz",
-            fg_color="green",
-            font=("Arial", 14),
-            command=lambda: parent.show_frame("categories")
+            text="Display History",
+            fg_color="#FF9800",
+            hover_color="#E68900",
+            command=lambda: parent.show_frame("history")
         ).pack(side="left", padx=10)
 
         ctk.CTkButton(
             button_container,
             text="Log out",
             fg_color="red",
-            font=("Arial", 14),
+            hover_color="#B22222",
             command=lambda: parent.show_frame("start")
         ).pack(side="left", padx=10)
 
-    def show_account_menu(self):
-        # Destroy existing menu if it exists
-        if self.account_menu:
-            self.account_menu.destroy()
-            self.master.unbind('<Button-1>')
-        
-        # Create new menu
-        self.account_menu = ctk.CTkToplevel(self)
-        self.account_menu.geometry("190x30")
-        self.account_menu.overrideredirect(True)
-        self.account_menu.configure(fg_color="red")
-        
-        x = self.account_btn.winfo_rootx() - 250
-        y = self.account_btn.winfo_rooty() + self.account_btn.winfo_height()
-        self.account_menu.geometry(f"+{x}+{y}")
-
         ctk.CTkButton(
-            self.account_menu,
+            button_container,
             text="Delete Account",
-            fg_color="red",
-            hover_color="#c62828",
+            fg_color="#c62828",
+            hover_color="#8B0000",
             command=lambda: self.confirm_delete_account(self.account_menu)
-        ).pack(fill="both",expand=True)
-        
-        # Bind click event to handle clicking outside menu
-        self.master.bind('<Button-1>', self.handle_click_outside)
+        ).pack(side="left", padx=10)
 
     def handle_click_outside(self, event):
         if self.account_menu:
@@ -378,7 +348,6 @@ class WelcomeFrame(ctk.CTkFrame):
                 self.master.unbind('<Button-1>')
 
     def confirm_delete_account(self, menu):
-        menu.destroy()
         self.master.unbind('<Button-1>')
         self.account_menu = None
         
