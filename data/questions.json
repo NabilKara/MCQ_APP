@@ -307,58 +307,53 @@
         {
             "question": "What is the time complexity of binary search?",
             "options": [
-                "O(log n)",
                 "O(n)",
+                "O(log n)",
                 "O(n^2)",
                 "O(1)"
             ],
-            "answer": "O(log n)",
-            "difficulty": "medium"
+            "correct": 2
         },
         {
             "question": "Which data structure is used for implementing recursion?",
             "options": [
-                "Stack",
                 "Queue",
+                "Stack",
                 "Linked List",
                 "Array"
             ],
-            "answer": "Stack",
-            "difficulty": "medium"
+            "correct": 2
         },
         {
             "question": "What does CPU stand for?",
             "options": [
-                "Central Processing Unit",
                 "Central Process Unit",
-                "Control Processing Unit",
-                "Computer Processing Unit"
+                "Computer Processing Unit",
+                "Central Processing Unit",
+                "Control Processing Unit"
             ],
-            "answer": "Central Processing Unit",
-            "difficulty": "easy"
+            "correct": 3
         },
         {
             "question": "What is the result of 2^3 in Python?",
             "options": [
-                "8",
                 "6",
-                "9",
-                "2"
+                "2",
+                "8",
+                "9"
             ],
-            "answer": "8",
-            "difficulty": "easy"
+            "correct": 3
         },
         {
             "question": "Which algorithm is used for finding the shortest path in a graph?",
             "options": [
-                "Dijkstra's algorithm",
                 "Bubble sort",
                 "Binary search",
-                "Quick sort"
+                "Quick sort",
+                "Dijkstra's algorithm"
             ],
-            "answer": "Dijkstra's algorithm",
-            "difficulty": "hard"
-        },
+            "correct": 4
+        },        
         {
             "question": "What is the time complexity of bubble sort?",
             "options": ["O(n^2)", "O(n log n)", "O(n)", "O(1)"],
