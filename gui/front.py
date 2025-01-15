@@ -364,11 +364,19 @@ class WelcomeFrame(ctk.CTkFrame):
             font=("Arial", 14)
         ).pack(pady=(20, 10))
 
-        password_entry = ctk.CTkEntry(dialog, show="*", width=200)
+        password_entry = ctk.CTkEntry(
+            dialog, show="*", width=200,
+            fg_color="white",
+            text_color="black"
+        )
         password_entry.pack(pady=10)
         password_entry.configure(placeholder_text="Enter password")
 
-        confirm_entry = ctk.CTkEntry(dialog, show="*", width=200)
+        confirm_entry = ctk.CTkEntry(
+            dialog, show="*", width=200,
+            fg_color="white",
+            text_color="black"
+        )
         confirm_entry.pack(pady=10)
         confirm_entry.configure(placeholder_text="Confirm password")
 
