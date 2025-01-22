@@ -3,6 +3,9 @@ import os
 import random
 
 def load_questions():
+    """
+    Load the quiz questions from the JSON file. If the file does not exist or is empty, return a default set of questions.
+    """
     default_questions = {
         "Python": [
             {

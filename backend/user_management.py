@@ -8,6 +8,9 @@ def ensure_data_directory():
     os.makedirs('data', exist_ok=True)
 
 def load_users():
+    """
+    Load the user data from the JSON file. If the file does not exist or is empty, return an empty dictionary.
+    """
     try:
         with open('data/users.json', 'r') as f:
             return json.load(f)
@@ -15,8 +18,9 @@ def load_users():
         return {}
 
 def save_score(parent):
-    """Save the quiz score to the user's history field in the JSON file."""
-
+    """
+    Save the quiz score to the user's history field in the JSON file.
+    """
     try:
         with open('data/users.json', 'r') as f:
             users = json.load(f)
@@ -47,6 +51,9 @@ def save_score(parent):
         json.dump(users, f, indent=4)
 
 def check_fields(self):
+    """
+    Check if the username and password fields in the login and signup frame are filled and return the values.
+    """
     username = self.username_entry.get().strip()
     if not username:
         display_feedback(self, "⚠️ Please enter a username.", "yellow")
@@ -77,6 +84,9 @@ def check_fields(self):
     return True, username, password, users
 
 def check_user_login(self):
+    """
+    Check if the user exists in the user data and if the password is correct. If so, log in the user.
+    """
     result = check_fields(self)
     if not result:
         return
@@ -95,6 +105,8 @@ def check_user_login(self):
     return
 
 def check_user_singup(self):
+    """
+    Check if the user already exists in the user data. If not, create a new user."""
     result = check_fields(self)
     if not result:
         return
@@ -125,6 +137,9 @@ def check_user_singup(self):
     self.master.show_frame("mode" if not users[username] else "welcome")
 
 def export_csv(username, file_path=None):
+    """
+    Export the user's quiz history to a CSV file.
+    """
     users = load_users()
     if username not in users.keys():
         return False, "User not found"
@@ -151,5 +166,9 @@ def export_csv(username, file_path=None):
         return False, f"Error exporting file: {str(e)}"
     
 def display_feedback(self, message, color):
+    """
+    Display feedback message to the
+    user on the main window.
+    """
     self.feedback_label.configure(text=message, text_color=color)
     self.after(3000, lambda: self.feedback_label.configure(text=""))

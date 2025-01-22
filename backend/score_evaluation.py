@@ -1,5 +1,6 @@
 import json
 def evaluate_performance(percentage):
+    """Evaluate user performance based on percentage score."""
     if percentage >= 90:
         return "Excellent! Outstanding performance!"
     elif percentage >= 80:
@@ -27,7 +28,10 @@ def calculate_percentage(score):
     return (total_score / nb_questions) * 100
 
 def calculate_user_stats(username):
-        try:
+    """
+    Calculate user statistics based on quiz history.
+    """
+    try:
             with open('data/users.json', 'r') as f:
                 users = json.load(f)
                 history = users[username]['history']
@@ -68,7 +72,7 @@ def calculate_user_stats(username):
 
                 return stats
 
-        except Exception as e:
+    except Exception as e:
             print(f"Error calculating stats: {e}")
             return {
                 "Error": "Could not load statistics"
