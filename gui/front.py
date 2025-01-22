@@ -365,30 +365,6 @@ class WelcomeFrame(ctk.CTkFrame):
         feedback_label = ctk.CTkLabel(dialog, text="", text_color="red")
         feedback_label.pack(pady=10)
 
-        def validate_and_delete():
-            password = password_entry.get()
-            confirm = confirm_entry.get()
-
-            if password != confirm:
-                feedback_label.configure(text="Passwords do not match!")
-                return
-
-            try:
-                with open('data/users.json', 'r') as f:
-                    users = json.load(f)
-                    stored_hash = users[self.master.current_user]["password"]
-                    
-                if bcrypt.checkpw(password.encode(), stored_hash.encode()):
-                    del users[self.master.current_user]
-                    with open('data/users.json', 'w') as f:
-                        json.dump(users, f, indent=4)
-                    dialog.destroy()
-                    self.master.show_frame("start")
-                else:
-                    feedback_label.configure(text="Incorrect password!")
-            except Exception as e:
-                feedback_label.configure(text="An error occurred!")
-
         button_frame = ctk.CTkFrame(dialog, fg_color="transparent")
         button_frame.pack(pady=20)
 
@@ -397,7 +373,7 @@ class WelcomeFrame(ctk.CTkFrame):
             text="Delete Account",
             fg_color="#f44336",
             hover_color="#d32f2f",
-            command=validate_and_delete
+            command=lambda: um.validate_and_delete(dialog, password_entry, confirm_entry, feedback_label, self.master)
         ).pack(side="left", padx=10)
 
         ctk.CTkButton(

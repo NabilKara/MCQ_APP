@@ -3,6 +3,7 @@ import bcrypt
 from datetime import datetime
 import os
 import csv
+import gui.front as fr
 
 def ensure_data_directory():
     os.makedirs('data', exist_ok=True)
@@ -172,3 +173,28 @@ def display_feedback(self, message, color):
     """
     self.feedback_label.configure(text=message, text_color=color)
     self.after(3000, lambda: self.feedback_label.configure(text=""))
+
+def validate_and_delete(dialog, password_entry, confirm_entry, feedback_label, master):
+   
+    password = password_entry.get()
+    confirm = confirm_entry.get()
+
+    if password != confirm:
+        feedback_label.configure(text="Passwords do not match!")
+        return
+
+    try:
+        with open('data/users.json', 'r') as f:
+            users = json.load(f)
+            stored_hash = users[master.current_user]["password"]
+            
+        if bcrypt.checkpw(password.encode(), stored_hash.encode()):
+            del users[master.current_user]
+            with open('data/users.json', 'w') as f:
+                json.dump(users, f, indent=4)
+            dialog.destroy()
+            master.show_frame("start")
+        else:
+            feedback_label.configure(text="Incorrect password!")
+    except Exception as e:
+        feedback_label.configure(text="An error occurred!")
