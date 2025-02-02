@@ -60,16 +60,18 @@ pip install bcrypt
 
 4. Run the application:
 ```bash
-python3 main.py
+python3 ./main.py
 ```
 
 ## Usage
 
 ### Getting Started
 1. Launch the application
+     >⚠️ **Important**: Always run the application from the project's root directory using `python3 ./main.py`. Running it from any other directory will cause file path issues and prevent the application from functioning properly.
+
 2. Choose either "Login" or "Sign Up"
 3. Enter your credentials
-4. Press the  start quiz button
+4. Press the start quiz button
 5. Choose your preferred categories
 6. Start the quiz
 
