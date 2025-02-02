@@ -59,7 +59,7 @@ pip3 install customtkinter
 pip3 install bcrypt
 
 pip3 install tk
-(or for Mac OS)
+# (or for Mac OS)
 brew install python-tk
 ```
 
