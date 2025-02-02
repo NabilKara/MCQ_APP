@@ -33,6 +33,7 @@ This Multiple-Choice Questionnaire (MCQ) application is designed for computer sc
 1. Clone the repository:
 ```bash
 git clone https://github.com/NabilKara/MCQ_APP.git
+cd MCQ_APP
 ```
 
 2. Create and activate a virtual environment:
@@ -54,8 +55,12 @@ venv\Scripts\activate
 
 3. Install required dependencies:
 ```bash
-pip install customtkinter
-pip install bcrypt
+pip3 install customtkinter
+pip3 install bcrypt
+
+pip3 install tk
+     (or for Mac OS)
+brew install python-tk
 ```
 
 4. Run the application:
