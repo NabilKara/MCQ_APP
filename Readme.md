@@ -57,9 +57,10 @@ venv\Scripts\activate
 ```bash
 pip3 install customtkinter
 pip3 install bcrypt
+
 pip3 install tk 
-or
-brew install python-tk (this works for mac only)
+# Or using Mac OS's default package manager, homebrew
+brew install python-tk
 ```
 
 4. Run the application:
