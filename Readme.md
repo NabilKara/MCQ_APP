@@ -1,4 +1,3 @@
-
 ## Overview
 This Multiple-Choice Questionnaire (MCQ) application is designed for computer science students, offering an interactive way to test their knowledge across various subjects. Built with Python and CustomTkinter, it features a modern, user-friendly interface with multiple quiz modes and comprehensive user tracking.
 
@@ -28,21 +27,40 @@ This Multiple-Choice Questionnaire (MCQ) application is designed for computer sc
 ### Prerequisites
 - Python 3.x
 - CustomTkinter library
+- bcrypt library
 
 ### Setup
 1. Clone the repository:
 ```bash
-git clone https://github.com/NabilKara/QCM_app
+git clone https://github.com/NabilKara/MCQ_APP.git
 ```
 
-2. Install required dependencies:
+2. Create and activate a virtual environment:
+
+On all platforms:
+```bash
+python3 -m venv venv
+```
+
+For Linux & Mac OS:
+```bash
+source venv/bin/activate
+```
+
+For Windows (command prompt):
+```bash
+venv\Scripts\activate
+```
+
+3. Install required dependencies:
 ```bash
 pip install customtkinter
+pip install bcrypt
 ```
 
-3. Run the application:
+4. Run the application:
 ```bash
-python main.py
+python3 main.py
 ```
 
 ## Usage
@@ -54,7 +72,6 @@ python main.py
 4. Press the  start quiz button
 5. Choose your preferred categories
 6. Start the quiz
-
 
 ### Taking a Quiz
 - Read each question carefully
